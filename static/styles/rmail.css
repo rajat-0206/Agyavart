@@ -1,4 +1,5 @@
-body { background-image:  url("rmail.jpg");
+{% load static %}
+body { background-image:  url("/static/images/rmail.jpg");
 		background-repeat: no-repeat;
 		background-size: cover; 
 		margin:0 auto;

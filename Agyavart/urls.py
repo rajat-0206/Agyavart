@@ -3,8 +3,9 @@ from . import views
 
 urlpatterns = [
     path('',views.home,name='home'),
-    path('login',views.home,name='home'),
-    path('login.html',views.home,name='home'),
+    path('rmail.html',views.home,name='home'),
+    path('login',views.login,name='login'),
+    path('login.html',views.login,name='login'),
     path('signup',views.register,name='register'),
     path('signup.html',views.register,name='register')
 
