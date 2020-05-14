@@ -24,7 +24,8 @@ LOGIN
  </center>
    <div class="container">
    
-       <form>
+       <form method="post" action='auth'>
+        {% csrf_token %}
       
           <div class="form-input">
              <input type="text" name="username" placeholder="Username" autofocus>
