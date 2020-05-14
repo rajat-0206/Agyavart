@@ -29,7 +29,8 @@ signup
 <span class="right" onclick="plusSlides(1)">&#62;</span>
 
 <div class="contain">	
-<form>
+<form method="POST" action="register">
+{% csrf_token %}
 <input type="text" name="NAME" placeholder="NAME" class="SIGN" autofocus>
 <br>
 <input type="text" name="USERNAME" placeholder="USERNAME" class="SIGN" ><br>
