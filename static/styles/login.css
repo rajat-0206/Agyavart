@@ -20,18 +20,20 @@
 
 
 
-.container {height:280px;	
+.container1 {height:280px;	
 			width:500px;
 		   background-color: rgba(53,74, 94,0.5);
 		   text-align: center;
 		    border-radius: 5px;
 		    margin:0 auto;
 			margin-top: 1px;
-			margin-bottom: 130px;}
+			margin-bottom: 130px;
+			padding: 10px;
+			padding-top: 50px; }
 
 
 
-input   {height:45px;
+.container input   {height:45px;
 	outline: none;
 		width:400px;
 		border:none;
@@ -63,7 +65,8 @@ input:focus  {box-shadow: 5px 0px 30px black;
 
 .naved {margin-top:12px;}
 
-.forget{ color:black; }
+.container1 .forget{ color:black;
+			font-size: 20px; }
 
 h2   {text-align: center;
 		color:blue;
@@ -151,7 +154,7 @@ header h2 { display: none; }
 		position: relative;
 		 }
 
-@media screen and (max-width:424px )
+@media screen and (max-width:991px )
 	 
 	 {
 	 		body { background-image: none;
@@ -179,48 +182,24 @@ header h2 { display: none; }
 	 		 }
 
 
-	 .container { width:96%;
-	 			background-color: rgba(53,74, 94,1);
-	 		margin-top:90px;
+	 .container1 { width:96%;
+	 		background-color: rgba(53,74, 94,1);
+	 		margin-top:100px;
 	 		border-radius: 0px;
-	 		height:260px;
 	 		box-shadow: none;
-	 		margin-bottom: 10px;
+	 		
 	  }
 
 	 .tite { display: none; }
 
-	 input { width:350px;
-	 	margin-top:30px;
+	 .container1 input { width:350px;
 	 	box-shadow: none; }
 
-	 input:focus { box-shadow: none; }
+	 .container1 input:focus { box-shadow: none; }
 
-	 	.btn-login { width:350px; }
-
-	 	.logon1 { display: block;
-	 			margin-top:10px;
-	 			width:95%; 
-	 			line-height: 50px;
-	 			color:black;
-	 			font-weight: bolder;	
-	 			font-family: roboto;}
-
-	 footer { background: rgba( 43,54,98,0.9);
-	 		position: fixed;
-	 		bottom:0px;
-	 		height:20px;
-	 		width: 100%;
-	  }
+	 	.container1 .btn-login { width:350px; }
 
 
-	 .foot-bar a { display: none; }
+	 	container1 .forget{ display: block;
 
-	 h7 { margin-top: 0px; 
-	 	position: fixed;
-	 	bottom: 7px;
-	 	right:2px;}
-
-	 .right{ display: none; }
-
-	 }
+	
