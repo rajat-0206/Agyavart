@@ -46,26 +46,74 @@ def banao(request):
 	gender = request.POST["GENDER"]
 	bday = str(day)+'/'+str(month)+'/'+str(year)
 
-	result = firebase.put('/users',username,{'Name':name,'Password':password,'Email':email,'Mobile':mob,'Birtdate':bday,"Gender":gender})
 
-	if(result):
-		return render(request,'Login.html')
-
+	errormsg = []
+	if(username==""):
+		errormsg.append("Username cannot be empty.")
+	elif(len(username)<8):
+		errormsg.append("Username must be atleast 8 character long.")
+	elif(username.isalnum()==False):
+		errormsg.append("Invalid Username.")
+	if(password==""):
+		errormsg.append("Password cannot be empty.")
+	elif(len(password)<8):
+		errormsg.append("Password should be atleast 8 character long.")
+	if(email==""):
+		errormsg.append("Email id cannot be empty.")
+	elif('@' not in email):
+		errormsg.append("Invalid Email.")
+	if(len(mob)!=10):
+		errormsg.append("Invalid Mobile Number.")
+	if(day=="0" or month=="0" or year=="0"):
+		errormsg.append("Please provide correct birthdate.")
+	if(gender=="Gender"):
+		errormsg.append("Please select a Gender.")
+	if(len(errormsg)>0):
+		return render(request,'signup.html',{"warning":errormsg})
 	else:
-		return render(request,'signup.html')
+		result  = firebase.get("/users",username)
+		if(result):
+			errormsg.append("This username already taken. Please choose another one.")
+			return render(request,'signup.html',{warning:errormsg})
+		else:
+
+			result = firebase.put('/users',username,{'Name':name,'Password':password,'Email':email,'Mobile':mob,'Birtdate':bday,"Gender":gender})
+			mobres =	firebase.put('/mobile',mob,{"username":username})
+			if(result):
+				return render(request,'Login.html')
+			else:
+				errormsg =['Some Unknown Error Happened. Please Try again later.']
+				return render(request,'signup.html',{'warning':errormsg})
 
 
 
 def checkkaro(request):
 	username = request.POST["username"]
 	password = request.POST["password"]
-	result=firebase.get("/users",username)
-	if(result):
-	    text=result["Password"]
-	    if(text==password):
-	    	return render(request,'welcome.html',{'msg':'login success'})
-	    else:
-	    	return render(request,'welcome.html',{'msg':'wrong password','user':username,'pass':password})
+	errormsg = []
+	if(username==""):
+		errormsg.append("Username cannot be empty.")
+	elif(len(username)<8):
+		errormsg.append("Username must be atleast 8 character long.")
+	elif(username.isalnum()==False):
+		errormsg.append("Invalid Username.")
+	if(password==""):
+		errormsg.append("Password cannot be empty.")
+	elif(len(password)<8):
+		errormsg.append("Password should be atleast 8 character long.")
+
+	if(len(errormsg)>0):
+		return render(request,'login.html',{"warning":errormsg})
 	else:
-		return render(request,'welcome.html',{'msg':'wrong username','error':result,'user':username,'pass':password})
+		result=firebase.get("/users",username)
+		if(result):
+		    text=result["Password"]
+		    if(text==password):
+		    	return render(request,'welcome.html',{'msg':'login success.'})
+		    else:
+		    	errormsg.append("Wrong Password.")
+		    	return render(request,'login.html',{'warning':errormsg})
+		else:
+			errormsg.append("Username not in our records!! Please Signup.")
+			return render(request,'login.html',{'warning':errormsg})
 

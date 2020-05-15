@@ -190,7 +190,9 @@ header h2 { display: none; }
 	 		
 	  }
 
-	 .tite { display: none; }
+	  .tite {
+	  	margin-top: 100px;
+	  }
 
 	 .container1 input { width:350px;
 	 	box-shadow: none; }
@@ -200,6 +202,6 @@ header h2 { display: none; }
 	 	.container1 .btn-login { width:350px; }
 
 
-	 	container1 .forget{ display: block;
+	 	.container1 .forget{ display: block;
 
 	
