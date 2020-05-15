@@ -9,6 +9,10 @@ urlpatterns = [
     path('signup',views.register,name='register'),
     path('signup.html',views.register,name='register'),
     path('register',views.banao,name="create_user"),
-    path('auth',views.checkkaro,name="auth")
+    path('auth',views.checkkaro,name="auth"),
+    path('fpass',views.forgotpass,name="password"),
+    path('fuser',views.forgotusername,name="username")
+
+
 
 ]
