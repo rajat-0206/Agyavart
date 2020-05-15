@@ -5,10 +5,25 @@
   <title>Login</title>
   <link rel="stylesheet" type="text/css" href="{% static 'styles/mail.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+
+
+
 </head>
 {%endblock %}
 
 {% block content %}
+
+<div id="error" style="display: none; margin-top:100px;">
+<div class="alert alert-danger alert-dismissible fade show" >
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong><h1>Warning!</h1></strong>
+          <ol>
+          {% for i in warning %}
+          <li>{{i}}</li>
+          {% endfor %}
+
+</div>
+</div>
 <center>
  <div class="tite" style="margin-top: 100px;">
  <h2>LOGIN</h2></div>
@@ -19,10 +34,11 @@
         {% csrf_token %}
       
           <div class="form-input">
-             <input type="text" name="username" placeholder="Username" autofocus>
+             <input type="text" name="username" placeholder="Username" autofocus required>
              </div>
+          
           <div class="form-input">
-             <input type="password" name="password" class="naved" placeholder="Password">
+             <input type="password" name="password" class="naved" placeholder="Password" required>
              </div>
           <input type="submit" name="submit" value="LOGIN" class="btn-login"></a>
           <br>
@@ -30,6 +46,14 @@
              </form>
              </div>
 
-            
+<script type="text/javascript">
+
+error = document.getElementById("error");
+
+  {% if warning %}
+  error.style.display ='block';
+  {% endif %}
+
+</script>
 
 {% endblock %}

@@ -10,6 +10,18 @@
 
 {% block content %}
 
+<div id="error" style="display: none; margin-top:100px;">
+<div class="alert alert-danger alert-dismissible fade show" >
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong><h1>Warning!</h1></strong>
+          <ol>
+          {% for i in warning %}
+          <li>{{i}}</li>
+          {% endfor %}
+
+</div>
+</div>
+
  <div class="tite" style="margin-top: 100px;">
   <center>
  <h2>SIGN UP</h2>
@@ -20,19 +32,19 @@
 <form method="POST" action="register">
   {% csrf_token %}
     <div class="form-group col-md-8">
-      <input type="text" class="form-control" id="inputUserame4" placeholder="Username" name="USERNAME">
+      <input type="text" class="form-control" id="inputUserame4" placeholder="Username" name="USERNAME" required>
     </div>
     <div class="form-group col-md-8">
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="password">
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="password" required>
     </div>
   <div class="form-group col-md-8">
-    <input type="text" class="form-control" id="inputName" placeholder="Name" name="NAME">
+    <input type="text" class="form-control" id="inputName" placeholder="Name" name="NAME" required>
   </div>
     <div class="form-group col-md-8">
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="EMAIL">
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="EMAIL" required>
     </div>
   <div class="form-group col-md-8">
-    <input type="text" class="form-control" id="inputMobile" placeholder="Phone Number" name="MOBILE">
+    <input type="text" class="form-control" id="inputMobile" placeholder="Phone Number" name="MOBILE" required>
   </div>
     <div class="form-group col-md-8">
 	<select class="form-control" id="inputGender" name="GENDER" value="Gender">
@@ -60,4 +72,15 @@
 </form>
 </div>
 </div>
+
+<script type="text/javascript">
+
+error = document.getElementById("error");
+
+
+  {% if warning %}
+  error.style.display ='block';
+  {% endif %}
+
+</script>
 {% endblock %}
