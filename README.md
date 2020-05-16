@@ -1,6 +1,6 @@
 # Django-Project
 
-#Agyavart 
+# <a href = "http://rajathandsom.pythonanywhere.com/">Agyavart </a?
 
 <h3> Building world with anonymity, yet closer together </h3>
 
@@ -10,9 +10,9 @@
 
 <h2> Session comming soon!!!<h2>
 
-#Thanks
-# a joint venture of
+# Thanks
+# A joint venture of
 # Rajat Shrivastava
-#UI improved by - Priyanshu Ranjan
+# UI improved by - Priyanshu Ranjan
 
 # Extra functions by - Muskan Maheshwari
