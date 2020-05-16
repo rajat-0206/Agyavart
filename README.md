@@ -1,6 +1,6 @@
 # Django-Project
 
-# <a href = "http://rajathandsom.pythonanywhere.com/">Agyavart </a?
+# <a href = "http://rajathandsom.pythonanywhere.com/">Agyavart </a>
 
 <h3> Building world with anonymity, yet closer together </h3>
 
