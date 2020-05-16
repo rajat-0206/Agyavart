@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+
 import hashlib, binascii, os
+
+from .models import Rmail
 
 from firebase import firebase
 firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/', None)
@@ -21,6 +24,9 @@ firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/'
 # auth = firebase.auth()
 
 #Hasing Functions
+
+def temp(request):
+	return render(request,'signup1.html')
 
 def hash_password(password):
     """Hash a password for storing."""
@@ -67,13 +73,14 @@ def banao(request):
 	year = request.POST["birthday_year"]
 	gender = request.POST["GENDER"]
 	bday = str(day)+'/'+str(month)+'/'+str(year)
-
+	dp = "/media/images/user.png"
+	cover = "/media/images/cover.jpeg"
 
 	errormsg = []
 	if(username==""):
 		errormsg.append("Username cannot be empty.")
-	elif(len(username)<8):
-		errormsg.append("Username must be atleast 8 character long.")
+	elif(len(username)<4):
+		errormsg.append("Username must be atleast 4 character long.")
 	elif(username.isalnum()==False):
 		errormsg.append("Invalid Username.")
 	if(password==""):
@@ -99,7 +106,7 @@ def banao(request):
 			return render(request,'signup.html',{warning:errormsg})
 		else:
 			has_pass = hash_password(password)
-			result = firebase.put('/users',username,{'Name':name,'Password':has_pass,'Email':email,'Mobile':mob,'Birtdate':bday,"Gender":gender})
+			result = firebase.put('/users',username,{'Name':name,'Password':has_pass,'Email':email,'Mobile':mob,'Birtdate':bday,"Gender":gender,"DP":dp,"Cover":cover})
 			mobres =	firebase.put('/mobile',mob,{"username":username})
 			if(result):
 				return render(request,'Login.html')
@@ -115,8 +122,8 @@ def checkkaro(request):
 	errormsg = []
 	if(username==""):
 		errormsg.append("Username cannot be empty.")
-	elif(len(username)<8):
-		errormsg.append("Username must be atleast 8 character long.")
+	elif(len(username)<4):
+		errormsg.append("Username must be atleast 4 character long.")
 	elif(username.isalnum()==False):
 		errormsg.append("Invalid Username.")
 	if(password==""):
@@ -132,7 +139,7 @@ def checkkaro(request):
 		    text=result["Password"]
 
 		    if(verify_password(result['Password'],password)):
-		    	return render(request,'welcome.html',{'msg':'login success.'})
+		    	return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],'durl':result['DP'],'curl':['Cover']})
 		    else:
 		    	errormsg.append("Wrong Password.")
 		    	return render(request,'login.html',{'warning':errormsg,"title":"Login Error"})
@@ -148,8 +155,8 @@ def forgotpass(request):
 	errormsg = []
 	if(fuser==""):
 		errormsg.append("Username cannot be empty.")
-	elif(len(fuser)<8):
-		errormsg.append("Username must be atleast 8 character long.")
+	elif(len(fuser)<4):
+		errormsg.append("Username must be atleast 4 character long.")
 	elif(fuser.isalnum()==False):
 		errormsg.append("Invalid Username.")
 	if(fpas==""):
@@ -166,7 +173,7 @@ def forgotpass(request):
 			if(fmob==result["Mobile"]):
 				hash_pass = hash_password(fpas);
 				firebase.delete("/users",fuser)
-				res = firebase.put('/users',fuser,{'Name':result['Name'],'Password':hash_pass,'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],"Gender":result['Gender']})
+				res = firebase.put('/users',fuser,{'Name':result['Name'],'Password':hash_pass,'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],"Gender":result['Gender'],"DP":result['DP'],"Cover":result['Cover']})
 				return render(request,'login.html',{'info':'Password changed successfully. Now you can login.'})
 			else:
 				errormsg = ['Mobile Number did not match. Try Again!!']
@@ -184,7 +191,6 @@ def forgotusername(request):
 	else:
 
 		result = firebase.get("/mobile",gmob)
-
 		if(result):
 			msg = 'Your username is ' + result['username']+'. You can use it to login.'
 			return render(request,'login.html',{'info':msg,'title':'Forgot Username'})
@@ -192,3 +198,35 @@ def forgotusername(request):
 			errormsg = ['No username associated with this number.']
 			return render(request,'login.html',{"warning":errormsg,"title":"Forgot Username"})
 
+def handle_uploaded_file(f):
+    with open('/static/rajat.txt', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+
+def imgcng(request):
+		changedp = request.FILES['dp']
+		usernaam = request.POST["username"]
+		print(changedp.name)
+		result = firebase.get("/users",usernaam)
+		if(result["DP"]=="/media/images/user.png"):
+			changedp.name = usernaam+"1"+".jpg"
+		else:
+			i = int(result["DP"][-5])
+			changedp.name = usernaam+str(i+1)+".jpg"
+		print(changedp.name)
+		dpurl = "/media/images/"+changedp.name 
+		user = Rmail(pic = changedp)
+		user.save()
+		firebase.delete("/users",usernaam)
+		res = firebase.put('/users',usernaam,{'Name':result['Name'],'Password':result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],"Gender":result['Gender'],"DP":dpurl,"Cover":result['Cover']})
+		result = firebase.get("/users",usernaam)
+		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':usernaam,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],'durl':result['DP'],'curl':['Cover']})
+		# result = firebase.update("users",username,{'DP':dpurl})
+		# return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],'durl':durl})
+
+# def imgcng(request):
+#     if request.method == 'POST':
+#         uploadFileForm(request.POST, request.FILES)
+#         handle_uploaded_file(request.FILES['file'])
+#         return render(request,'welcome.html')
