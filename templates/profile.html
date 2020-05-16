@@ -7,6 +7,7 @@
 	<title>{{title }}</title>
   {% endblock %}
 	<!-- CSS only -->
+<link rel="icon" href="{% static 'images/rmailLogoConcept.svg' %}">
 <meta content=’width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0′ name=’viewport’ />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -24,9 +25,11 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
 	<img src="{% static 'images/graphic.png' %}" class ="imag" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 10px; cursor: pointer;" onclick="openNav()">
    <a class="navbar-brand" href="rmail.html" style="font-size: 30px;">
-    <img src="{% static 'images/logo.png' %}" width="40" height="40" class="d-inline-block align-top" alt="Rmail Logo">
-    Rmail
-  </a>   
+   <a class="navbar-brand" href="rmail.html" style="font-size: 30px;">
+    <img src="{% static 'images/rmailLogoConcept.svg' %}" width="25" class="align-top" alt="Rmail Logo">
+    gyavart
+  </a>
+  
   <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
         <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
