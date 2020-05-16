@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .forms import UploadFileForm
 import hashlib, binascii, os
 
 from firebase import firebase
@@ -21,6 +22,9 @@ firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/'
 # auth = firebase.auth()
 
 #Hasing Functions
+
+def temp(request):
+	return render(request,'signup1.html')
 
 def hash_password(password):
     """Hash a password for storing."""
@@ -132,7 +136,7 @@ def checkkaro(request):
 		    text=result["Password"]
 
 		    if(verify_password(result['Password'],password)):
-		    	return render(request,'welcome.html',{'msg':'login success.'})
+		    	return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender']})
 		    else:
 		    	errormsg.append("Wrong Password.")
 		    	return render(request,'login.html',{'warning':errormsg,"title":"Login Error"})
@@ -184,7 +188,6 @@ def forgotusername(request):
 	else:
 
 		result = firebase.get("/mobile",gmob)
-
 		if(result):
 			msg = 'Your username is ' + result['username']+'. You can use it to login.'
 			return render(request,'login.html',{'info':msg,'title':'Forgot Username'})
@@ -192,3 +195,16 @@ def forgotusername(request):
 			errormsg = ['No username associated with this number.']
 			return render(request,'login.html',{"warning":errormsg,"title":"Forgot Username"})
 
+def handle_uploaded_file(f):
+    with open('/static/rajat.txt', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+# def imgcng(request):
+# 	upload = request.FILES['dp']
+# 	return render(request,'welcome.html',{'user':upload})
+
+def imgcng(request):
+    if request.method == 'POST':
+        uploadFileForm(request.POST, request.FILES)
+        handle_uploaded_file(request.FILES['file'])
+        return render(request,'welcome.html')
