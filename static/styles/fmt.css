@@ -1,4 +1,21 @@
 ﻿ /*based on and powered by w3.CSS 4.12 November 2018 by Jan Egil and Borge Refsnes */
+
+
+.loginbox{
+	transform: translate(50%);
+}
+
+@media screen and ( max-width:600px)
+{
+	.loginbox {
+		transform: translate(0%);
+	}
+}
+
+
+
+
+
 html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
 /* Extract from normalize.css by Nicolas Gallagher and Jonathan Neal git.io/normalize */
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
