@@ -29,26 +29,34 @@
 </div>
 </div>
 <center>
- <div class="tite" style="margin-top: 100px;">
- <h2>LOGIN</h2></div>
+ <div class="tite" style="margin-top: 80px;">
+  <b>
+ <h2 class="display-3 " style="color: #EC7063 ;">LOGIN</h2></b></div>
  </center>
-   <div class="container1">
-   
-       <form method="post" action='auth'>
+  <div class="fmt-col m6 loginbox">
+    <div class="work-box">
+      <form action="auth" method = "post">
         {% csrf_token %}
-      
-          <div class="form-input">
-             <input type="text" name="username" placeholder="Username" autofocus required>
-             </div>
-          
-          <div class="form-input">
-             <input type="password" name="password" class="naved" placeholder="Password" required>
-             </div>
-          <input type="submit" name="submit" value="LOGIN" class="btn-login"></a>
-          <br>
-              <a href="#" class="forget" data-toggle="modal" data-target="#myModal">Trouble Login?</a>
-             </form>
-             </div>
+      <label class="input-label" for="email">Your username.</label>
+      <input class="edit-text-box" type="text" id="email" name="username" required>
+      <br /><br /><br />
+      <label class="input-label" for="pass">Secret passphrase.</label>
+      <input class="edit-text-box" type="password" id="pass" name ="password" required>
+      <br /><br /><br />
+      <div class="fmt-row">
+        <div class="fmt-col m5">
+          <button type="submit" class="fmt-left button-block" style="background-color: #14bb4c;">Let's go</button>
+
+        </div>
+        <div class="fmt-col m7">
+          <a href="#" data-toggle="modal" data-target="#myModal" style="margin-top:12px" class="fmt-right button-tab">Any problem?</a>
+        </div>
+      </div>
+      <br />
+    </div>
+  </form>
+  </div>
+</div>
 
 <!-- Forgot password section -->
 <!-- Modal -->
