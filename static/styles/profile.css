@@ -152,6 +152,17 @@ body, html {
 		transition: opacity 0.5s ease;
 }
 
+.hide {
+	display: none;
+}
+
+.slow {
+		display: inline -block;
+	}
+
+#navbarTogglerDemo02{
+      transform: translate(50%,0%);
+    }
 
 @media screen and (max-width:991px)
 {
@@ -164,4 +175,19 @@ body, html {
 		margin-left: 50px;
 		margin-bottom: 30px;
 	}
+
+
+	.hide {
+		display: block;
+	}
+
+	.slow {
+	display: none;
+}
+
+
+	#navbarTogglerDemo02{
+      transform: translate(0%,0%);
+    }
+
 }

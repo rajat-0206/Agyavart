@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from datetime import datetime
 
 import hashlib, binascii, os
 
@@ -278,8 +279,40 @@ def imgcng(request):
 		# result = firebase.update("users",username,{'DP':dpurl})
 		# return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],'durl':durl})
 
-# def imgcng(request):
-#     if request.method == 'POST':
-#         uploadFileForm(request.POST, request.FILES)
-#         handle_uploaded_file(request.FILES['file'])
-#         return render(request,'welcome.html')
+def newmsg(request):
+	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+		if request.method == "POST":
+			username = request.session['username']
+			recipient = request.POST['recipient']
+			msg = request.POST['message']
+			now = datetime.now()
+			dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+			timestamp = dt_string
+			sender = username
+
+			#for sender side message 
+
+			data = firebase.get('/sentmessage',sender)
+			res = {'message': msg,'recipient':recipient,'time':timestamp}
+			if(data is None):
+			    data =[]
+			    data.append(res)
+			else:
+			    data.append(res)
+			firebase.put('/sentmessage',sender,data)
+
+			#for reciever side message
+			sen = {'message': msg,'time': timestamp}
+			another = firebase.get('/recieved',recipient)
+			if(another is None):
+			    another = []
+			    another.append(sen)
+			else:
+			    another.append(sen)
+			firebase.put('/recieved',recipient,another)
+			return render(request,'welcome.html')
+		else:
+			return redirect('profile')
+	else:
+		return redirect('login')
+

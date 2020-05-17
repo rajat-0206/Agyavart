@@ -24,7 +24,8 @@ urlpatterns = [
     path('passupdate.html',views.passupdate,name='passupdate'),
     path('profile.html',views.profile,name='profile'),
     path('profile',views.profile,name='profile'),
-    path('logout.html',views.logout,name="logout")
+    path('logout.html',views.logout,name="logout"),
+    path('newmsg',views.newmsg,name = "newmsg")
 
 
 
