@@ -14,7 +14,7 @@ urlpatterns = [
     path('signup',views.register,name='register'),
     path('signup.html',views.register,name='register'),
     path('register',views.banao,name="create_user"),
-    path('auth',views.checkkaro,name="auth"),
+    path('auth',views.login,name="auth"),
     path('fpass',views.forgotpass,name="password"),
     path('fuser',views.forgotusername,name="username"),
     path("temp",views.temp,name ="temp"),
@@ -22,7 +22,10 @@ urlpatterns = [
     path('setting.html',views.setting,name='setting'),
     path('update.html',views.update,name='update'),
     path('passupdate.html',views.passupdate,name='passupdate'),
-    path('profile.html',views.profile,name='profile')
+    path('profile.html',views.profile,name='profile'),
+    path('profile',views.profile,name='profile'),
+    path('logout.html',views.logout,name="logout"),
+    path('newmsg',views.newmsg,name = "newmsg")
 
 
 

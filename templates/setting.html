@@ -24,9 +24,10 @@
 <style type="text/css">
   /* Set height of body and the document to 100% to enable "full page tabs" */
 body, html {
-  height: 80%;
-  margin-top:125px;
+  height: 70%;
+  margin-top:50px;
   font-family: Arial;
+  color: blue;
 }
 
 label{
@@ -57,11 +58,14 @@ label{
   padding: 100px 20px;
   height: 100%;
 }
+h2{
+  text-align: center;
+}
 
 #Home {background-color: white;}
-#News {background-color: green;}
-#Contact {background-color: blue;}
-#About {background-color: orange;}
+#News {background-color: white;}
+#Contact {background-color: white;}
+#About {background-color: white;}
 </style>
 </head>
 <body>
@@ -107,12 +111,16 @@ label{
 </div>
 </div>
 {% endblock %} 
+<div>
+<center><h2>USER SETTINGS</h2></center>
+</div>
 
 {% block content %}
+
 <button class="tablink" onclick="openPage('Home', this, 'black')">Update basic info</button>
-<button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
-<button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
-<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
+<button class="tablink" onclick="openPage('News', this, 'black')" id="defaultOpen">Update Education Qualifications</button>
+<button class="tablink" onclick="openPage('Contact', this, 'black')">Update Contact Details</button>
+<button class="tablink" onclick="openPage('About', this, 'black')">Security Settings</button>
 
 <div id="Home" class="tabcontent">
   <div class="tite" >
@@ -145,18 +153,89 @@ label{
 </div>
 
 <div id="News" class="tabcontent">
-  <h3>News</h3>
-  <p>Some news this fine day!</p>
+  <div class="container center_div">
+  <div class="content_center">
+<form method="POST" action="">
+  {% csrf_token %}
+  <h5>
+    <div class="form-group col-md-8">
+      <label>School</label>
+      <input type="text" class="form-control" id="school" placeholder="Enter the School Name" name="USERNAME" required>
+    </div>
+  <div class="form-group col-md-8">
+    <label>College</label>
+    <input type="text" class="form-control" id="college" placeholder="Enter the College Name" name="NAME" required>
+  </div>
+  <div class="form-group col-md-8">
+      <label>Highest Qualification</label>
+      <input type="text" class="form-control" id="school" placeholder="Enter the Highest Qualification" name="USERNAME" required>
+    </div>
+  <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; ">UPDATE</button></center>
+
+</h5>
+</form>
+</div>
+</div>
+</div>
 </div>
 
 <div id="Contact" class="tabcontent">
-  <h3>Contact</h3>
-  <p>Get in touch, or swing by for a cup of coffee.</p>
+  <div class="container center_div">
+  <div class="content_center">
+<form method="POST" action="">
+  {% csrf_token %}
+  <h5>
+    <div class="form-group col-md-8">
+      <label>Update Facebook Id</label>
+      <input type="text" class="form-control" id="fb_id" placeholder="Enter the Id" name="USERNAME" required>
+    </div>
+  <div class="form-group col-md-8">
+    <label>Update Instagram Id</label>
+    <input type="text" class="form-control" id="insta_id" placeholder="Enter the Id" name="NAME" required>
+  </div>
+    <div class="form-group col-md-8">
+      <label>Update Twitter Id</label>
+      <input type="email" class="form-control" id="Twitter_id" placeholder="Enter the Id" name="EMAIL" required>
+    </div>
+    </div>
+      <div class="form-group col-md-8">
+    <label>Update Ticktok Id</label>
+    <input type="text" class="form-control" id="tictok_id" placeholder="Enter the Id" name="NAME" required>
+  </div>
+  <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; ">UPDATE</button></center>
+
+</h5>
+</form>
+</div>
+</div>
+</div>
 </div>
 
 <div id="About" class="tabcontent">
-  <h3>About</h3>
-  <p>Who we are and what we do.</p>
+  <div class="container center_div">
+  <div class="content_center">
+<form method="POST" action="">
+  {% csrf_token %}
+  <h5>
+    <div class="form-group col-md-8">
+      
+    <div class="form-group col-md-8">
+      <label>Change Password</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Enter the Password" name="password" required>
+    </div>
+
+  <center><button type="submit" class="btn btn-outline-dark" style="width: 25%;">CHANGE</button></center>
+<center><h2 style="font-family: cursive; color: black;">OR</h2></center>
+
+ 
+  
+    <!-- <button type="button" class="btn btn-danger" style="  position : absolute; width:100%; left: 50%;">Delete My Account</button> -->
+    <center><button type="" class="btn btn-danger" style="width: 25%; margin-top: 5px;">Delete My Account</button></center>
+  </div>
+</div>
+
+</div>
+  
 </div>
 
 {% endblock %}

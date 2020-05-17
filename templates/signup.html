@@ -35,11 +35,15 @@
   <h5>
     <div class="form-group col-md-8">
       <label>Username</label>
+      <a href="#" data-toggle="tooltip" data-placement="bottom" title="Username must be 4 character long">
       <input type="text" class="form-control" id="inputUserame4" placeholder="Enter the Username" value="{{USERNAME}}" name="USERNAME" required>
+    </a>
     </div>
     <div class="form-group col-md-8">
       <label>Password</label>
+      <a href="#" data-toggle="tooltip" data-placement="bottom" title="Password must be 8 character long">
       <input type="password" class="form-control" id="inputPassword4" placeholder="Enter the Password" name="password" required>
+    </a>
     </div>
   <div class="form-group col-md-8">
     <label>Name</label>
@@ -51,7 +55,9 @@
     </div>
   <div class="form-group col-md-8">
     <label>Phone Number</label>
+    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Phone number should be 10 digit only">
     <input type="text" class="form-control" id="inputMobile" value ="{{MOBILE}}" placeholder="Enter the Phone Number" name="MOBILE" required>
+  </a>
   </div>
     <div class="form-group col-md-8">
       <label>Gender</label>
@@ -86,6 +92,9 @@
 </div>
 
 <script type="text/javascript">
+  $(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
 
 error = document.getElementById("error");
 
