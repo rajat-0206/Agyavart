@@ -64,18 +64,20 @@ def register(request):
 
 
 def setting(request):
-	return render(request,'setting.html')
+	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+		username = request.session['username']
+		result = firebase.get('/users',username)
+		return render(request,'setting.html',{'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twiiter":result["Twitter"],"tok":result["Tok"]})
+	else:
+		return redirect('login')
 
 def profile(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
 		username = request.session['username']
 		result = firebase.get('/users',username)
-		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],'durl':result['DP'],'curl':['Cover']})
+		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':['Cover']})
 	else:
 		return redirect('login')
-
-
-	return render(request,'profile.html')
 
 def banao(request):
 	username = request.POST["USERNAME"]
@@ -90,6 +92,13 @@ def banao(request):
 	bday = str(day)+'/'+str(month)+'/'+str(year)
 	dp = "/media/images/user.png"
 	cover = "/media/images/cover.jpeg"
+	fb = "UA"
+	insta = "UA"
+	twiiter ="UA"
+	tok ="UA"
+	school="UA"
+	college="UA"
+	higher="UA"
 
 	errormsg = []
 	if(username==""):
@@ -123,7 +132,7 @@ def banao(request):
 	if(gender=="Gender"):
 		errormsg.append("Please select a Gender.")
 	if(len(errormsg)>0):
-		return render(request,'signup.html',{"warning":errormsg,"USERNAME":username,"NAME":name,"EMAIL":email,"MOBILE":mob,"GENDER":gender})
+		return render(request,'signup.html',{"warning":errormsg,"USERNAME":username,"NAME":name,"EMAIL":email,"MOBILE":mob,"GENDER":gender,})
 	else:
 		result  = firebase.get("/users",username)
 		if(result):
@@ -132,7 +141,7 @@ def banao(request):
 			return render(request,'signup.html',{"warning":errormsg,"USERNAME":username,"NAME":name,"EMAIL":email,"MOBILE":mob,"GENDER":gender})
 		else:
 			has_pass = hash_password(password)
-			result = firebase.put('/users',username,{'Name':name,'Password':has_pass,'Email':email,'Mobile':mob,'Birtdate':bday,"Gender":gender,"DP":dp,"Cover":cover})
+			result = firebase.put('/users',username,{'Name':name,'Password':has_pass,'Email':email,'Mobile':mob,'Birtdate':bday,"Gender":gender,"DP":dp,"Cover":cover,"School":school,"College":college,"Higher":higher,"FB":fb,"Insta":insta,"Twitter":twiiter,"Tok":tok})
 			mobres =	firebase.put('/mobile',mob,{"username":username})
 			if(result):
 				request.session['is_logged'] = True
@@ -310,3 +319,28 @@ def newmsg(request):
 	else:
 		return redirect('login')
 
+
+def detupt(request):
+	if request.method == "POST":
+		username = request.POST["USERNAME"]
+		name = request.POST["NAME"]
+		email = request.POST["EMAIL"]
+		mob = request.POST["MOBILE"]
+		day = request.POST["birthday_day"]
+		month = request.POST["birthday_month"]
+		year = request.POST["birthday_year"]
+		gender = request.POST["GENDER"]
+		bday = str(day)+'/'+str(month)+'/'+str(year)
+		dp = "/media/images/user.png"
+		cover = "/media/images/cover.jpeg"
+		fb = "UA"
+		insta = "UA"
+		twiiter ="UA"
+		tok ="UA"
+		school="UA"
+		college="UA"
+		higher="UA"
+
+		if(username==request.session['username']):
+			result = firebase.get("/users",request.session['username'])
+			password = result['Password']
