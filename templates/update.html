@@ -1,0 +1,71 @@
+{% extends 'rmail.html' %}
+{% load static %}
+
+{% block temp %}
+<head>
+	<title>UPDATE INFO</title>
+<link rel="stylesheet" type="text/css" href="{% static 'styles/signup.css' %}">
+</head>
+{% endblock %}
+
+{% block content %}
+
+<div id="error" style="display: none; margin-top:100px;">
+<div class="alert alert-danger alert-dismissible fade show" >
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong><h1>Warning!</h1></strong>
+          <ol>
+          {% for i in warning %}
+          <li>{{i}}</li>
+          {% endfor %}
+
+</div>
+</div>
+
+ <div class="tite" style="margin-top: 100px;">
+  <center>
+ <h1>UPDATE INFO</h1>
+</center>
+</div>
+<div class="container center_div">
+	<div class="content_center">
+<form method="POST" action="">
+  {% csrf_token %}
+  <h5>
+    <div class="form-group col-md-8">
+      <label>Username</label>
+      <input type="text" class="form-control" id="inputUserame4" placeholder="Enter the Username" name="USERNAME" required>
+    </div>
+    <div class="form-group col-md-8">
+      <label>Password</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Enter the Password" name="password" required>
+    </div>
+  <div class="form-group col-md-8">
+    <label>Name</label>
+    <input type="text" class="form-control" id="inputName" placeholder="Enter the Name" name="NAME" required>
+  </div>
+    <div class="form-group col-md-8">
+      <label>Email</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Enter the Email" name="EMAIL" required>
+    </div>
+    </div>
+
+  <center><button type="submit" class="btn btn-outline-dark" style="width: 20%;">UPDATE</button></center>
+
+</h5>
+</form>
+</div>
+</div>
+
+<script type="text/javascript">
+
+error = document.getElementById("error");
+
+
+  {% if warning %}
+  error.style.display ='block';
+  {% endif %}
+
+</script>
+{% endblock %}
+</html>
