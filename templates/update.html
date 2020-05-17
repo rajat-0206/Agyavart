@@ -1,12 +1,30 @@
-{% extends 'rmail.html' %}
+{% extends 'profile.html' %}
 {% load static %}
 
 {% block temp %}
 <head>
 	<title>General settings</title>
+  <link rel="stylesheet" href="/static/styles/fmt.css">
+<link rel="stylesheet" href="/static/styles/main_setup.css">
+<link rel="stylesheet" href="/static/styles/side_nav.css">
+  {% endblock %}
 <link rel="stylesheet" type="text/css" href="{% static 'styles/signup.css' %}">
 </head>
+
+<!--side Navbar -->
+{% block sidenav %}
+<div id="sidenav" class="bar">
+<div class="navhead">
+<div id="cross">&times;</div>
+<a href="profile.html">PROFILE</a>
+<a href="msg.html">MESSAGE</a>
+<a href="settings.html" class="active">SETTINGS</a>
+<a href="#" class="spcl">SEARCH</a>
+<a href="login.html" class="spcl">LOGOUT</a>
+</div>
+</div>
 {% endblock %}
+
 
 {% block content %}
 
