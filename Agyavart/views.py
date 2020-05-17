@@ -65,6 +65,10 @@ def register(request):
 def update(request):
 	return render(request,'update.html')
 
+
+def passupdate(request):
+	return render(request,'passupdate.html')
+
 def settings(request):
 	return render(request,'settings.html')
 
