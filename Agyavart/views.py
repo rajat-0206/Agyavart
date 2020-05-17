@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import redirect
 
 import hashlib, binascii, os
 
 from .models import Rmail
+
+from django.contrib.sessions.models import Session
 
 from firebase import firebase
 firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/', None)
@@ -50,14 +53,10 @@ def verify_password(stored_password, provided_password):
 # Create your views here.
 
 def home(request):
-
-	#result = firebase.put('/users','rajathandsom',{'username':'rajathandsom','password':'rajat'})
-
-
-	return render(request,'rmail.html')
-
-def login(request):
-	return render(request,'Login.html')
+	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+		return redirect('profile')
+	else:
+		return render(request,'rmail.html')
 
 def register(request):
 	return render(request,'signup.html')
@@ -73,6 +72,14 @@ def settings(request):
 	return render(request,'settings.html')
 
 def profile(request):
+	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+		username = request.session['username']
+		result = firebase.get('/users',username)
+		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],'durl':result['DP'],'curl':['Cover']})
+	else:
+		return redirect('login')
+
+
 	return render(request,'profile.html')
 
 def banao(request):
@@ -112,6 +119,10 @@ def banao(request):
 	if(len(mob)!=10 or mob.isnumeric()==False):
 		errormsg.append("Invalid Mobile Number.")
 		mob = ""
+	else:
+		mobchk = firebase.get('/mobile',mob)
+		if(mobchk):
+			errormsg.append("This mobile number is in use. Please choose another one.")
 	if(day=="0" or month=="0" or year=="0"):
 		errormsg.append("Please provide correct birthdate.")
 	if(gender=="Gender"):
@@ -129,43 +140,61 @@ def banao(request):
 			result = firebase.put('/users',username,{'Name':name,'Password':has_pass,'Email':email,'Mobile':mob,'Birtdate':bday,"Gender":gender,"DP":dp,"Cover":cover})
 			mobres =	firebase.put('/mobile',mob,{"username":username})
 			if(result):
-				return render(request,'Login.html')
+				request.session['is_logged'] = True
+				request.session['username'] = username
+				return redirect('profile')
 			else:
 				errormsg =['Some Unknown Error Happened. Please Try again later.']
 				return render(request,'signup.html',{'warning':errormsg})
 
 
 
-def checkkaro(request):
-	username = request.POST["username"]
-	password = request.POST["password"]
-	errormsg = []
-	if(username==""):
-		errormsg.append("Username cannot be empty.")
-	elif(len(username)<4):
-		errormsg.append("Username must be atleast 4 character long.")
-	elif(username.isalnum()==False):
-		errormsg.append("Invalid Username.")
-	if(password==""):
-		errormsg.append("Password cannot be empty.")
-	elif(len(password)<8):
-		errormsg.append("Password should be atleast 8 character long.")
+def login(request):
+	if request.method == "POST":
+		username = request.POST["username"]
+		password = request.POST["password"]
+		errormsg = []
+		if(username==""):
+			errormsg.append("Username cannot be empty.")
+		elif(len(username)<4):
+			errormsg.append("Username must be atleast 4 character long.")
+		elif(username.isalnum()==False):
+			errormsg.append("Invalid Username.")
+		if(password==""):
+			errormsg.append("Password cannot be empty.")
+		elif(len(password)<8):
+			errormsg.append("Password should be atleast 8 character long.")
 
-	if(len(errormsg)>0):
-		return render(request,'login.html',{"warning":errormsg,"title":"Login Error"})
-	else:
-		result=firebase.get("/users",username)
-		if(result):
-		    text=result["Password"]
-
-		    if(verify_password(result['Password'],password)):
-		    	return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],'durl':result['DP'],'curl':['Cover']})
-		    else:
-		    	errormsg.append("Wrong Password.")
-		    	return render(request,'login.html',{'warning':errormsg,"title":"Login Error"})
+		if(len(errormsg)>0):
+			return render(request,'login.html',{"warning":errormsg,"title":"Login Error"})
 		else:
-			errormsg.append("Username not in our records!! Please Signup.")
-			return render(request,'login.html',{'warning':errormsg,"title":"Login Error"})
+			result=firebase.get("/users",username)
+			if(result):
+			    text=result["Password"]
+			    if(verify_password(result['Password'],password)):
+			    	request.session['is_logged'] = True
+			    	request.session['username'] = username
+			    	return redirect('profile')
+			    else:
+			    	errormsg.append("Wrong Password.")
+			    	return render(request,'login.html',{'warning':errormsg,"title":"Login Error"})
+			else:
+				errormsg.append("Username not in our records!! Please Signup.")
+				return render(request,'login.html',{'warning':errormsg,"title":"Login Error"})
+	else:
+		if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+			print("yes")
+			print(request.session['username'])
+			return redirect('profile')
+		else:
+			return render(request,'Login.html')
+
+def logout(request):
+	request.session['is_logged'] = False
+	request.session['username'] == None
+	print(request.session['is_logged'])
+	print(request.session['username'])
+	return render(request,'Login.html')
 
 
 def forgotpass(request):
@@ -244,8 +273,8 @@ def imgcng(request):
 		user.save()
 		firebase.delete("/users",usernaam)
 		res = firebase.put('/users',usernaam,{'Name':result['Name'],'Password':result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],"Gender":result['Gender'],"DP":dpurl,"Cover":result['Cover']})
-		result = firebase.get("/users",usernaam)
-		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':usernaam,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],'durl':result['DP'],'curl':['Cover']})
+
+		return redirect('profile')
 		# result = firebase.update("users",username,{'DP':dpurl})
 		# return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],'durl':durl})
 
