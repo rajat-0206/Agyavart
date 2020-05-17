@@ -3,7 +3,7 @@
 
 {% block temp %}
 <head>
-	<title>UPDATE INFO</title>
+	<title>General settings</title>
 <link rel="stylesheet" type="text/css" href="{% static 'styles/signup.css' %}">
 </head>
 {% endblock %}
@@ -33,19 +33,15 @@
   {% csrf_token %}
   <h5>
     <div class="form-group col-md-8">
-      <label>Username</label>
+      <label>Update Username</label>
       <input type="text" class="form-control" id="inputUserame4" placeholder="Enter the Username" name="USERNAME" required>
     </div>
-    <div class="form-group col-md-8">
-      <label>Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Enter the Password" name="password" required>
-    </div>
   <div class="form-group col-md-8">
-    <label>Name</label>
+    <label>Update Name</label>
     <input type="text" class="form-control" id="inputName" placeholder="Enter the Name" name="NAME" required>
   </div>
     <div class="form-group col-md-8">
-      <label>Email</label>
+      <label>Update Email</label>
       <input type="email" class="form-control" id="inputEmail4" placeholder="Enter the Email" name="EMAIL" required>
     </div>
     </div>
