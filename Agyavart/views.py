@@ -69,8 +69,8 @@ def update(request):
 def passupdate(request):
 	return render(request,'passupdate.html')
 
-def settings(request):
-	return render(request,'settings.html')
+def setting(request):
+	return render(request,'setting.html')
 
 def profile(request):
 	return render(request,'profile.html')
