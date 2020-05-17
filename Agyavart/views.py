@@ -65,8 +65,15 @@ def register(request):
 def update(request):
 	return render(request,'update.html')
 
+
+def passupdate(request):
+	return render(request,'passupdate.html')
+
 def settings(request):
 	return render(request,'settings.html')
+
+def profile(request):
+	return render(request,'profile.html')
 
 def banao(request):
 	username = request.POST["USERNAME"]
@@ -85,31 +92,38 @@ def banao(request):
 	errormsg = []
 	if(username==""):
 		errormsg.append("Username cannot be empty.")
+		username = ""
 	elif(len(username)<4):
 		errormsg.append("Username must be atleast 4 character long.")
+		username = ""
 	elif(username.isalnum()==False):
 		errormsg.append("Invalid Username.")
+		username = ""
 	if(password==""):
 		errormsg.append("Password cannot be empty.")
 	elif(len(password)<8):
 		errormsg.append("Password should be atleast 8 character long.")
 	if(email==""):
 		errormsg.append("Email id cannot be empty.")
+		email = ""
 	elif('@' not in email):
 		errormsg.append("Invalid Email.")
+		email = ""
 	if(len(mob)!=10 or mob.isnumeric()==False):
 		errormsg.append("Invalid Mobile Number.")
+		mob = ""
 	if(day=="0" or month=="0" or year=="0"):
 		errormsg.append("Please provide correct birthdate.")
 	if(gender=="Gender"):
 		errormsg.append("Please select a Gender.")
 	if(len(errormsg)>0):
-		return render(request,'signup.html',{"warning":errormsg})
+		return render(request,'signup.html',{"warning":errormsg,"USERNAME":username,"NAME":name,"EMAIL":email,"MOBILE":mob,"GENDER":gender})
 	else:
 		result  = firebase.get("/users",username)
 		if(result):
 			errormsg.append("This username already taken. Please choose another one.")
-			return render(request,'signup.html',{warning:errormsg})
+			username =""
+			return render(request,'signup.html',{"warning":errormsg,"USERNAME":username,"NAME":name,"EMAIL":email,"MOBILE":mob,"GENDER":gender})
 		else:
 			has_pass = hash_password(password)
 			result = firebase.put('/users',username,{'Name':name,'Password':has_pass,'Email':email,'Mobile':mob,'Birtdate':bday,"Gender":gender,"DP":dp,"Cover":cover})

@@ -1,0 +1,60 @@
+{% extends 'profile.html' %}
+{% load static %}
+
+{% block temp %}
+<head>
+	<title>security settings</title>
+  <link rel="stylesheet" href="/static/styles/fmt.css">
+<link rel="stylesheet" href="/static/styles/main_setup.css">
+<link rel="stylesheet" href="/static/styles/side_nav.css">
+  {% endblock %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles/signup.css' %}">
+</head>
+
+<!--side Navbar -->
+{% block sidenav %}
+<div id="sidenav" class="bar">
+<div class="navhead">
+<div id="cross">&times;</div>
+<a href="profile.html" >PROFILE</a>
+<a href="msg.html">MESSAGE</a>
+<a href="settings.html" class="active">SETTINGS</a>
+<a href="#" class="spcl">SEARCH</a>
+<a href="login.html" class="spcl">LOGOUT</a>
+</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="tite" style="margin-top: 100px;">
+  <center>
+ <h1>Security</h1>
+</center>
+</div>
+<div class="container center_div">
+	<div class="content_center">
+<form method="POST" action="">
+  {% csrf_token %}
+  <h5>
+    <div class="form-group col-md-8">
+      
+    <div class="form-group col-md-8">
+      <label>Change Password</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Enter the Password" name="password" required>
+    </div>
+
+  <center><button type="submit" class="btn btn-outline-dark" style="width: 25%;">CHANGE</button></center>
+<center><h2 style="font-family: cursive;">OR</h2></center>
+ 
+	
+		<!-- <button type="button" class="btn btn-danger" style="  position : absolute; width:100%; left: 50%;">Delete My Account</button> -->
+		<center><button type="" class="btn btn-danger" style="width: 25%; margin-top: 5px;">Delete My Account</button></center>
+	</div>
+</div>
+
+</div>
+
+
+
+  {% endblock %}
