@@ -18,7 +18,8 @@ urlpatterns = [
     path('fpass',views.forgotpass,name="password"),
     path('fuser',views.forgotusername,name="username"),
     path("temp",views.temp,name ="temp"),
-    path('imgcng',views.imgcng,name="DP change")
+    path('imgcng',views.imgcng,name="DP change"),
+    path('settings.html',views.update,name='update')
 
 
 

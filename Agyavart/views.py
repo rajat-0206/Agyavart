@@ -62,6 +62,12 @@ def login(request):
 def register(request):
 	return render(request,'signup.html')
 
+def update(request):
+	return render(request,'update.html')
+
+def settings(request):
+	return render(request,'settings.html')
+
 def banao(request):
 	username = request.POST["USERNAME"]
 	password = request.POST["password"]
@@ -197,6 +203,10 @@ def forgotusername(request):
 		else:
 			errormsg = ['No username associated with this number.']
 			return render(request,'login.html',{"warning":errormsg,"title":"Forgot Username"})
+
+
+
+
 
 def handle_uploaded_file(f):
     with open('/static/rajat.txt', 'wb+') as destination:
