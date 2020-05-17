@@ -62,12 +62,6 @@ def home(request):
 def register(request):
 	return render(request,'signup.html')
 
-def update(request):
-	return render(request,'update.html')
-
-
-def passupdate(request):
-	return render(request,'passupdate.html')
 
 def setting(request):
 	return render(request,'setting.html')
