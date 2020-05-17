@@ -21,7 +21,8 @@ urlpatterns = [
     path('imgcng',views.imgcng,name="DP change"),
     path('settings.html',views.settings,name='settings'),
     path('update.html',views.update,name='update'),
-    path('passupdate.html',views.passupdate,name='passupdate')
+    path('passupdate.html',views.passupdate,name='passupdate'),
+    path('profile.html',views.profile,name='profile')
 
 
 
