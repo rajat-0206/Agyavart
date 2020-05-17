@@ -1,12 +1,30 @@
-{% extends 'rmail.html' %}
+{% extends 'profile.html' %}
 {% load static %}
 
 {% block temp %}
 <head>
-	<title>UPDATE INFO</title>
+	<title>General settings</title>
+  <link rel="stylesheet" href="/static/styles/fmt.css">
+<link rel="stylesheet" href="/static/styles/main_setup.css">
+<link rel="stylesheet" href="/static/styles/side_nav.css">
+  {% endblock %}
 <link rel="stylesheet" type="text/css" href="{% static 'styles/signup.css' %}">
 </head>
+
+<!--side Navbar -->
+{% block sidenav %}
+<div id="sidenav" class="bar">
+<div class="navhead">
+<div id="cross">&times;</div>
+<a href="profile.html">PROFILE</a>
+<a href="msg.html">MESSAGE</a>
+<a href="settings.html" class="active">SETTINGS</a>
+<a href="#" class="spcl">SEARCH</a>
+<a href="login.html" class="spcl">LOGOUT</a>
+</div>
+</div>
 {% endblock %}
+
 
 {% block content %}
 
@@ -33,19 +51,15 @@
   {% csrf_token %}
   <h5>
     <div class="form-group col-md-8">
-      <label>Username</label>
+      <label>Update Username</label>
       <input type="text" class="form-control" id="inputUserame4" placeholder="Enter the Username" name="USERNAME" required>
     </div>
-    <div class="form-group col-md-8">
-      <label>Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Enter the Password" name="password" required>
-    </div>
   <div class="form-group col-md-8">
-    <label>Name</label>
+    <label>Update Name</label>
     <input type="text" class="form-control" id="inputName" placeholder="Enter the Name" name="NAME" required>
   </div>
     <div class="form-group col-md-8">
-      <label>Email</label>
+      <label>Update Email</label>
       <input type="email" class="form-control" id="inputEmail4" placeholder="Enter the Email" name="EMAIL" required>
     </div>
     </div>
