@@ -1,11 +1,14 @@
+{% extends 'profile.html' %}
+
 {% load static %}
 
 <!DOCTYPE html>
 <html>
 <head>
+
   {% block title %}
-  <title>{{title }}</title>
-  {% endblock %}
+  <title>Settings</title>
+
   <!-- CSS only -->
 <link rel="icon" href="{% static 'images/rmailLogoConcept.svg' %}">
 <meta content=’width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0′ name=’viewport’ />
@@ -42,6 +45,7 @@ label{
   border: none;
   outline: none;
   cursor: pointer;
+  height: 70px;
   padding: 14px 16px;
   font-size: 17px;
   width: 25%;
@@ -68,57 +72,28 @@ h2{
 #About {background-color: white;}
 </style>
 </head>
-<body>
-<!--top nav bar -->
-
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-  <img src="{% static 'images/graphic.png' %}" class ="imag" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 10px; cursor: pointer;" onclick="openNav()">
-   <a class="navbar-brand" href="rmail.html" style="font-size: 30px;">
-   <a class="navbar-brand" href="rmail.html" style="font-size: 30px;">
-    <img src="{% static 'images/rmailLogoConcept.svg' %}" width="25" class="align-top" alt="Rmail Logo">
-    gyavart
-  </a>
-  
-  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"> </a>
-      </li>
-    </ul>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-
+{% endblock %}
 <!-- <side Navbar---! -->
 {% block sidenav %}
 <div id="sidenav" class="bar">
 <div class="navhead">
 <div id="cross">&times;</div>
-<a href="profile.html" class="active">PROFILE</a>
+<a href="profile.html" >PROFILE</a>
 <a href="msg.html">MESSAGE</a>
-<a href="setting.html">SETTINGS</a>
+<a href="setting.html" class="active">SETTINGS</a>
 <a href="#" class="spcl">SEARCH</a>
-<a href="login.html" class="spcl">LOGOUT</a>
+<a href="logout.html" class="spcl">LOGOUT</a>
 </div>
 </div>
 {% endblock %} 
+
+
+{% block content %}
 <div>
 <center><h2>USER SETTINGS</h2></center>
 </div>
-
-{% block content %}
-
-<button class="tablink" onclick="openPage('Home', this, 'black')">Update basic info</button>
-<button class="tablink" onclick="openPage('News', this, 'black')" id="defaultOpen">Update Education Qualifications</button>
+<button class="tablink" onclick="openPage('Home', this, 'black')" id="defaultOpen">Update basic info</button>
+<button class="tablink" onclick="openPage('News', this, 'black')" >Update Education Qualifications</button>
 <button class="tablink" onclick="openPage('Contact', this, 'black')">Update Contact Details</button>
 <button class="tablink" onclick="openPage('About', this, 'black')">Security Settings</button>
 
@@ -127,20 +102,20 @@ h2{
 </div>
 <div class="container center_div">
   <div class="content_center">
-<form method="POST" action="">
+<form method="POST" action="detupt">
   {% csrf_token %}
   <h5>
     <div class="form-group col-md-8">
       <label>Update Username</label>
-      <input type="text" class="form-control" id="inputUserame4" placeholder="Enter the Username" name="USERNAME" required>
+      <input type="text" class="form-control" id="inputUserame4" value ="{{username}}" placeholder="Enter the Username" name="USERNAME" required>
     </div>
   <div class="form-group col-md-8">
     <label>Update Name</label>
-    <input type="text" class="form-control" id="inputName" placeholder="Enter the Name" name="NAME" required>
+    <input type="text" class="form-control" id="inputName" value="{{Name}}" placeholder="Enter the Name" name="NAME" required>
   </div>
     <div class="form-group col-md-8">
       <label>Update Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Enter the Email" name="EMAIL" required>
+      <input type="email" class="form-control" id="inputEmail4" value="{{Email}}" placeholder="Enter the Email" name="EMAIL" required>
     </div>
     </div>
 
@@ -155,20 +130,20 @@ h2{
 <div id="News" class="tabcontent">
   <div class="container center_div">
   <div class="content_center">
-<form method="POST" action="">
+<form method="POST" action="detupt">
   {% csrf_token %}
   <h5>
     <div class="form-group col-md-8">
       <label>School</label>
-      <input type="text" class="form-control" id="school" placeholder="Enter the School Name" name="USERNAME" required>
+      <input type="text" class="form-control" id="school" value="{{school}}" placeholder="Enter the School Name" name="USERNAME" required>
     </div>
   <div class="form-group col-md-8">
     <label>College</label>
-    <input type="text" class="form-control" id="college" placeholder="Enter the College Name" name="NAME" required>
+    <input type="text" class="form-control" id="college" value="{{college}}" placeholder="Enter the College Name" name="NAME" required>
   </div>
   <div class="form-group col-md-8">
       <label>Highest Qualification</label>
-      <input type="text" class="form-control" id="school" placeholder="Enter the Highest Qualification" name="USERNAME" required>
+      <input type="text" class="form-control" id="school" value="{{higher}}" placeholder="Enter the Highest Qualification" name="USERNAME" required>
     </div>
   <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; ">UPDATE</button></center>
 
@@ -182,25 +157,25 @@ h2{
 <div id="Contact" class="tabcontent">
   <div class="container center_div">
   <div class="content_center">
-<form method="POST" action="">
+<form method="POST" action="detupt">
   {% csrf_token %}
   <h5>
     <div class="form-group col-md-8">
       <label>Update Facebook Id</label>
-      <input type="text" class="form-control" id="fb_id" placeholder="Enter the Id" name="USERNAME" required>
+      <input type="text" class="form-control" id="fb_id" value="{{fb}}" placeholder="Enter the Id" name="USERNAME" required>
     </div>
   <div class="form-group col-md-8">
     <label>Update Instagram Id</label>
-    <input type="text" class="form-control" id="insta_id" placeholder="Enter the Id" name="NAME" required>
+    <input type="text" class="form-control" id="insta_id" value="{{insta}}" placeholder="Enter the Id" name="NAME" required>
   </div>
     <div class="form-group col-md-8">
       <label>Update Twitter Id</label>
-      <input type="email" class="form-control" id="Twitter_id" placeholder="Enter the Id" name="EMAIL" required>
+      <input type="email" class="form-control" id="Twitter_id" value="{{twitter}}" placeholder="Enter the Id" name="EMAIL" required>
     </div>
     </div>
       <div class="form-group col-md-8">
     <label>Update Ticktok Id</label>
-    <input type="text" class="form-control" id="tictok_id" placeholder="Enter the Id" name="NAME" required>
+    <input type="text" class="form-control" id="tictok_id" value="{{tok}}" placeholder="Enter the Id" name="NAME" required>
   </div>
   <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; ">UPDATE</button></center>
 
@@ -238,7 +213,7 @@ h2{
   
 </div>
 
-{% endblock %}
+
 <script type="text/javascript">
 document.getElementById("defaultOpen").click();
 function openNav() {
@@ -268,5 +243,4 @@ function openPage(pageName, elmnt, color) {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 </script> 
-</body>
-</html>
+{% endblock %}
