@@ -19,6 +19,7 @@ urlpatterns = [
     path('fuser',views.forgotusername,name="username"),
     path("temp",views.temp,name ="temp"),
     path('imgcng',views.imgcng,name="DP change"),
+    path('covercng',views.covercng,name="cover change"),
     path('setting.html',views.setting,name='setting'),
     path('profile.html',views.profile,name='profile'),
     path('profile',views.profile,name='profile'),

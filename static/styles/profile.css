@@ -64,16 +64,50 @@ color:white;}
 	margin:0px auto;
 }
 
-.dpimg {
-	width:300px;
-	height: 300px;
-	border-radius: 100%;
-	border:3px solid #fff;
-	align-self: center;
+.dp {
 	position: absolute;
 	top:100px;
 	left:30px;
+	width:300px;
+	height: 300px;
+	border-radius: 100%;
+}
+.dpimg {
+	width:300px;
+	height: 300px;	
+	border-radius: 100%;
+	border:3px solid #fff;
+	align-self: center;
+
 } 
+
+
+
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1;
+  width: 100%;
+  height: 100%;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  font-size: 30px;
+  padding: 20px;
+  text-align: center;
+  border-radius: 100%;
+  vertical-align: center;
+  padding-top: 45%; 
+  cursor: pointer;
+}
+
+/* When you mouse over the container, fade in the overlay title */
+.dp:hover .overlay {
+  opacity: 1;
+}
 
 .name {
 	position: absolute;
@@ -135,7 +169,6 @@ body, html {
 	width: 100%;
 	position: absolute;
 	height:250px;
-	top:22px;
 	opacity: 0;
 	background-color: rgba(0,0,0,0.5);
 }

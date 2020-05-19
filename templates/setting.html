@@ -89,6 +89,19 @@ h2{
 
 
 {% block content %}
+<div id="error" style="display: none; margin-top:100px;"> 
+<div class="alert alert-danger alert-dismissible fade show" >
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong><h2>Error</h2></strong>
+          <ol>
+          {% for i in warning %}
+          <li>{{i}}</li>
+          {% endfor %}
+    </ol>
+  </div>
+</div>
+
+
 <div>
 <center><h2>USER SETTINGS</h2></center>
 </div>
@@ -105,17 +118,17 @@ h2{
 <form method="POST" action="detupt">
   {% csrf_token %}
   <h5>
-    <div class="form-group col-md-8">
-      <label>Update Username</label>
-      <input type="text" class="form-control" id="inputUserame4" value ="{{username}}" placeholder="Enter the Username" name="USERNAME" required>
-    </div>
   <div class="form-group col-md-8">
     <label>Update Name</label>
-    <input type="text" class="form-control" id="inputName" value="{{Name}}" placeholder="Enter the Name" name="NAME" required>
+    <input type="text" class="form-control" id="inputName" value="{{Name}}" placeholder="Enter the Name" name="newNAME" required>
   </div>
     <div class="form-group col-md-8">
       <label>Update Email</label>
-      <input type="email" class="form-control" id="inputEmail4" value="{{Email}}" placeholder="Enter the Email" name="EMAIL" required>
+      <input type="email" class="form-control" id="inputEmail4" value="{{Email}}" placeholder="Enter the Email" name="newEMAIL" required>
+    </div>
+    <div class="form-group col-md-8">
+      <label>Update Mobile</label>
+      <input type="text" class="form-control" id="inputUserame4" value ="{{Mobile}}" placeholder="Enter the Mobile Number" name="newMOBILE" required>
     </div>
     </div>
 
@@ -135,15 +148,15 @@ h2{
   <h5>
     <div class="form-group col-md-8">
       <label>School</label>
-      <input type="text" class="form-control" id="school" value="{{school}}" placeholder="Enter the School Name" name="USERNAME" required>
+      <input type="text" class="form-control" id="school" value="{{school}}" placeholder="Enter the School Name" name="newSCHOOL" required>
     </div>
   <div class="form-group col-md-8">
     <label>College</label>
-    <input type="text" class="form-control" id="college" value="{{college}}" placeholder="Enter the College Name" name="NAME" required>
+    <input type="text" class="form-control" id="college" value="{{college}}" placeholder="Enter the College Name" name="newCOLLEGE" required>
   </div>
   <div class="form-group col-md-8">
       <label>Highest Qualification</label>
-      <input type="text" class="form-control" id="school" value="{{higher}}" placeholder="Enter the Highest Qualification" name="USERNAME" required>
+      <input type="text" class="form-control" id="school" value="{{higher}}" placeholder="Enter the Highest Qualification" name="newHIGHER" required>
     </div>
   <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; ">UPDATE</button></center>
 
@@ -162,20 +175,39 @@ h2{
   <h5>
     <div class="form-group col-md-8">
       <label>Update Facebook Id</label>
-      <input type="text" class="form-control" id="fb_id" value="{{fb}}" placeholder="Enter the Id" name="USERNAME" required>
+      <div class="input-group mb-3">
+      <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon3">https://facebook.com/</span>
+  </div>
+      <input type="text" class="form-control" id="fb_id" value="{{fb}}" placeholder="Enter the Id" name="newFB" required>
     </div>
+  </div>
   <div class="form-group col-md-8">
     <label>Update Instagram Id</label>
-    <input type="text" class="form-control" id="insta_id" value="{{insta}}" placeholder="Enter the Id" name="NAME" required>
+    <div class="input-group mb-3">
+    <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon3">https://instagram.com/</span>
+  </div>
+    <input type="text" class="form-control" id="insta_id" value="{{insta}}" placeholder="Enter the Id" name="newINSTA" required>
+  </div>
   </div>
     <div class="form-group col-md-8">
       <label>Update Twitter Id</label>
-      <input type="email" class="form-control" id="Twitter_id" value="{{twitter}}" placeholder="Enter the Id" name="EMAIL" required>
+      <div class="input-group mb-3">
+      <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon3">https://twitter.com/</span>
+  </div>
+      <input type="text" class="form-control" id="Twitter_id" value="{{twitter}}" placeholder="Enter the Id" name="newTWITTER" required>
+    </div>
     </div>
     </div>
       <div class="form-group col-md-8">
     <label>Update Ticktok Id</label>
-    <input type="text" class="form-control" id="tictok_id" value="{{tok}}" placeholder="Enter the Id" name="NAME" required>
+    <div class="input-group mb-3">
+    <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon3">@</span>
+  </div>
+    <input type="text" class="form-control" id="tictok_id" value="{{tok}}" placeholder="Enter the Id" name="newTOK" required>
   </div>
   <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; ">UPDATE</button></center>
 

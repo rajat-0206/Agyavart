@@ -109,16 +109,17 @@
 {% block content %}
 <div class="cover">
 	<div class ="blck">
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  		Change Display Images
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#coverModal">
+  		Change Cover Image
 		</button>
 </form>
 	</div>
-	<img src="{%static 'images/cover.jpeg' %}" width="100%" height ="250px" alt="">
+	<img src="{{curl}}" width="100%" height ="250px" alt="">
 </div>
 <div class = "content">
 	<div class= "dp">
 		<img src="{{durl}}" class="dpimg" >
+    <div class="overlay" data-toggle="modal" data-target="#exampleModal">Change</div>
 	</div>
 	<div class="name">
 		<h1>{{Name }}</h1>
@@ -188,19 +189,19 @@
   <tbody>
     <tr>
       <td >Facebook</td>
-      <td>{{fb}}</td>
+      <td><a href="https://www.facebook.com/{{fb}}">https://www.facebook.com/{{fb}}</a></td>
     </tr>
     <tr>
       <td>Instagram</td>
-      <td>{{insta}}</td>
+      <td><a href=" https://www.instagram.com/{{insta}}"> https://www.instagram.com/{{insta}}</a></td>
     </tr>
         <tr>
       <td>Twitter</td>
-      <td>{{twitter}}</td>
+      <td><a href="https://www.twitter.com/{{twitter}}">https://www.twitter.com/{{twitter}}</td>
     </tr>
         <tr>
       <td>Tik Tok</td>
-      <td>{{tok}}</td>
+      <td>@{{tok}}</td>
     </tr>
   </tbody>
 </table>
@@ -217,7 +218,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
+        <h5 class="modal-title">Change Profile Picture</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -232,6 +233,31 @@
  		 </div>
  		 <button type="submit" class="btn btn-primary">Save changes</button>
  		</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal for cover image change -->
+<div class="modal fade" tabindex="-1" id ="coverModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Cover Picture</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="covercng" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+      <div class="form-group">
+    <label for="exampleFormControlFile1">Choose Cover Picture</label>
+    <input type="tezt" name="username" value="{{username}}" style="display: none;">
+    <input type="file" class="form-control-file" name ="cover" id="exampleFormControlFile1">
+     </div>
+     <button type="submit" class="btn btn-primary">Save changes</button>
+    </form>
       </div>
     </div>
   </div>

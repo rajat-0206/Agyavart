@@ -67,7 +67,7 @@ def setting(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
 		username = request.session['username']
 		result = firebase.get('/users',username)
-		return render(request,'setting.html',{'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twiiter":result["Twitter"],"tok":result["Tok"]})
+		return render(request,'setting.html',{'Name':result['Name'],'username':username,'Mobile':result["Mobile"],'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"]})
 	else:
 		return redirect('login')
 
@@ -75,7 +75,7 @@ def profile(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
 		username = request.session['username']
 		result = firebase.get('/users',username)
-		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':['Cover']})
+		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
 	else:
 		return redirect('login')
 
@@ -276,11 +276,25 @@ def imgcng(request):
 		user = Rmail(pic = changedp)
 		user.save()
 		firebase.delete("/users",usernaam)
-		res = firebase.put('/users',usernaam,{'Name':result['Name'],'Password':result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],"Gender":result['Gender'],"DP":dpurl,"Cover":result['Cover']})
-
+		firebase.put('/users',usernaam,{'Name':result['Name'],"Password":result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":dpurl,"Cover":result['Cover']})
 		return redirect('profile')
-		# result = firebase.update("users",username,{'DP':dpurl})
-		# return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],'durl':durl})
+
+def covercng(request):
+		changecover = request.FILES['cover']
+		usernaam = request.POST["username"]
+		result = firebase.get("/users",usernaam)
+		if(result["Cover"]=="/media/images/cover.jpeg"):
+			changecover.name = usernaam+"cover1"+".jpg"
+		else:
+			i = int(result["Cover"][-5])
+			changecover.name = usernaam+"cover"+str(i+1)+".jpg"
+		curl = "/media/images/"+changecover.name 
+		user = Rmail(pic = changecover)
+		user.save()
+		firebase.delete("/users",usernaam)
+		firebase.put('/users',usernaam,{'Name':result['Name'],"Password":result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":result['DP'],"Cover":curl})
+		return redirect('profile')
+	
 
 def newmsg(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
@@ -322,25 +336,79 @@ def newmsg(request):
 
 def detupt(request):
 	if request.method == "POST":
-		username = request.POST["USERNAME"]
-		name = request.POST["NAME"]
-		email = request.POST["EMAIL"]
-		mob = request.POST["MOBILE"]
-		day = request.POST["birthday_day"]
-		month = request.POST["birthday_month"]
-		year = request.POST["birthday_year"]
-		gender = request.POST["GENDER"]
-		bday = str(day)+'/'+str(month)+'/'+str(year)
-		dp = "/media/images/user.png"
-		cover = "/media/images/cover.jpeg"
-		fb = "UA"
-		insta = "UA"
-		twiiter ="UA"
-		tok ="UA"
-		school="UA"
-		college="UA"
-		higher="UA"
+		username = request.session['username']
+		result = firebase.get("/users",username)
+		try:
+			name = request.POST["newNAME"]
+		except:
+			name = result['Name']
+		try:
+			email = request.POST["newEMAIL"]
+		except:
+			email = result['Email']
+		try:
+			mob = request.POST["newMOBILE"]
+		except:
+			mob = str(result['Mobile'])
 
-		if(username==request.session['username']):
-			result = firebase.get("/users",request.session['username'])
-			password = result['Password']
+		password = result['Password']
+
+		try:
+			fb = request.POST["newFB"]
+		except:
+			fb = result['FB']
+		try:
+			insta = request.POST["newINSTA"]
+		except:
+			insta = result['Insta']
+		try:
+			twiiter =request.POST["newTWITTER"]
+		except:
+			twiiter = result['Twitter']
+		try:
+			tok =request.POST["newTOK"]
+		except:
+			tok = result['Tok']
+		try:
+			school=request.POST["newSCHOOL"]
+		except:
+			school = result['School']
+		try:
+			college=request.POST["newCOLLEGE"]
+		except:
+			college = result['College']
+		try:
+			higher=request.POST["newHIGHER"]
+		except:
+			higher = result['Higher']
+		errormsg = []
+		if(email=="" or name=="" or mob=="" or fb=="" or insta=="" or twiiter=="" or tok =="" or school=="" or college=="" or higher==""):
+			errormsg.append("Field entry cannot be blank.")
+		elif('@' not in email):
+			errormsg.append("Invalid Email.")
+			email = ""
+		if(len(mob)!=10 or mob.isnumeric()==False):
+			errormsg.append("Invalid Mobile Number.")
+			mob = ""
+		else:
+			mobchk = firebase.get('/mobile',mob)
+			if(mobchk is not None and mobchk['username'] == username):
+				pass
+			elif(mobchk is None):
+				pass
+			else:
+				errormsg.append("This mobile number is in use. Please choose another one.")
+		if(len(errormsg)>0):
+			return render(request,'settings.html',{"warning":errormsg,'Name':name,'Mobile':mob,'Email':email,"school":school,"college":college,"higher":higher,"fb":fb,"insta":insta,"twiiter":insta,"tok":tok})
+		else:
+			firebase.delete("/users",username)
+			firebase.delete("/mobile",mob)
+			result = firebase.put('/users',username,{'Name':name,'Password':result['Password'],'Email':email,'Mobile':mob,'Birtdate':result['Birtdate'],"Gender":result['Gender'],"DP":result['DP'],"Cover":result['Cover'],"School":school,"College":college,"Higher":higher,"FB":fb,"Insta":insta,"Twitter":twiiter,"Tok":tok})
+			mobres =	firebase.put('/mobile',mob,{"username":username})
+			if(result):
+				return redirect('profile')
+			else:
+					errormsg =['Some Unknown Error Happened. Please Try again later.']
+					return render(request,'signup.html',{'warning':errormsg})
+
+
