@@ -226,7 +226,7 @@ def forgotpass(request):
 			if(fmob==result["Mobile"]):
 				hash_pass = hash_password(fpas);
 				firebase.delete("/users",fuser)
-				res = firebase.put('/users',fuser,{'Name':result['Name'],'Password':hash_pass,'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],"Gender":result['Gender'],"DP":result['DP'],"Cover":result['Cover']})
+				firebase.put('/users',fuser,{'Name':result['Name'],"Password":hash_pass,'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":result["DP"],"Cover":result['Cover']})
 				return render(request,'login.html',{'info':'Password changed successfully. Now you can login.'})
 			else:
 				errormsg = ['Mobile Number did not match. Try Again!!']
@@ -338,6 +338,7 @@ def detupt(request):
 	if request.method == "POST":
 		username = request.session['username']
 		result = firebase.get("/users",username)
+		password = result['Password']
 		try:
 			name = request.POST["newNAME"]
 		except:
@@ -349,10 +350,7 @@ def detupt(request):
 		try:
 			mob = request.POST["newMOBILE"]
 		except:
-			mob = str(result['Mobile'])
-
-		password = result['Password']
-
+			mob = str(result['Mobile'])	
 		try:
 			fb = request.POST["newFB"]
 		except:
@@ -384,7 +382,7 @@ def detupt(request):
 		errormsg = []
 		if(email=="" or name=="" or mob=="" or fb=="" or insta=="" or twiiter=="" or tok =="" or school=="" or college=="" or higher==""):
 			errormsg.append("Field entry cannot be blank.")
-		elif('@' not in email):
+		if('@' not in email):
 			errormsg.append("Invalid Email.")
 			email = ""
 		if(len(mob)!=10 or mob.isnumeric()==False):
@@ -410,5 +408,43 @@ def detupt(request):
 			else:
 					errormsg =['Some Unknown Error Happened. Please Try again later.']
 					return render(request,'signup.html',{'warning':errormsg})
+	else:
+		return redirect('settings')
 
 
+def changepass(request):
+	if request.method =="GET":
+		password = request.GET['curpassword']
+		newpass = request.GET['newpassword']
+		conpass = request.GET['conpassword']
+		username = request.session['username']
+		result = firebase.get("/users",username)
+		errormsg = []
+		if(password=="" or newpass=="" or conpass==""):
+			errormsg.append("Please fill all the fields.")
+		elif(len(newpass)<8):
+			errormsg.append("New password should be 8 character long.")
+		else:
+			# hash_pass = hash_password(password);
+			hash_newpass = hash_password(newpass);
+			# hash_conpass = hash_password(conpass);
+			if(verify_password(result['Password'],password)):
+				if(verify_password(hash_newpass,conpass)):
+					firebase.delete("/users",username)
+					firebase.put("/users",username,{'Password':hash_newpass,'Name':result['Name'],'Mobile':result['Mobile'],'Email':result['Email'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],'DP':result['DP'],'Cover':result['Cover']})
+					return HttpResponse('Password changed successfully.')
+				else:
+					errormsg.append('Confirm password does not match.')
+			else:
+				print("currne")
+				errormsg.append('Current password does not match.')
+				
+		if(len(errormsg)>0):
+			return HttpResponse(errormsg)
+	else:
+		redirect('settings')
+			# return 	render(request,'settings.html',{"warning":errormsg,'Name':result['Name'],'Mobile':result['Mobile'] ,'Email':result['Email'],"school":result['School'],"college":result['College'],"higher":result['Higher'],"fb":result['FB'],"insta":result['Insta'],"twiiter":result['Twitter'],"tok":result['Tok']})
+
+def delacc(request):
+	if request.method == "POST":
+		pass

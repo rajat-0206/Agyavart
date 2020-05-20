@@ -21,11 +21,13 @@ urlpatterns = [
     path('imgcng',views.imgcng,name="DP change"),
     path('covercng',views.covercng,name="cover change"),
     path('setting.html',views.setting,name='setting'),
+    path('setting',views.setting,name='setting'),
     path('profile.html',views.profile,name='profile'),
     path('profile',views.profile,name='profile'),
     path('logout.html',views.logout,name="logout"),
     path('newmsg',views.newmsg,name = "newmsg"),
-    path('detupt',views.detupt,name="Details")
+    path('detupt',views.detupt,name="Details"),
+    path('changepass/',views.changepass,name="password")
 
 
 
