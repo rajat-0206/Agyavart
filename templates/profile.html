@@ -10,6 +10,7 @@
 <link rel="icon" href="{% static 'images/rmailLogoConcept.svg' %}">
 <meta content=’width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0′ name=’viewport’ />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -96,7 +97,6 @@
 {% block sidenav %}
 <div id="sidenav" class="bar">
 <div class="navhead">
-<div id="cross">&times;</div>
 <a href="profile.html" class="active">PROFILE</a>
 <a href="msg.html">MESSAGE</a>
 <a href="setting.html">SETTINGS</a>
@@ -141,20 +141,20 @@
 <table class="table table-borderless">
   <tbody>
     <tr>
-      <td >Name</td>
+      <td ><i class="fa fa-user-circle-o" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Name</strong></td>
       <td>{{ Name }}</td>
     </tr>
     <tr>
-      <td>Email</td>
+      <td><i class="fa fa-envelope" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Email</strong></td>
       <td>{{ Email }}</td>
     </tr>
     <tr>
 
-      <td>Date of Birth</td>
+      <td><i class="fa fa-id-card-o" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Date of Birth</strong></td>
       <td>{{ DOB }}</td>
     </tr>
     <tr>
-      <td>Gender</td>
+      <td><i class="fa fa-group" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Gender</strong></td>
       <td>{{ Gender }}</td>
     </tr>
   </tbody>
@@ -167,15 +167,15 @@
 <table class="table table-borderless">
   <tbody>
     <tr>
-      <td >School</td>
+      <td ><i class="fa fa-pencil" style="font-size:20px"></i>&nbsp;&nbsp;<strong>School</strong></td>
       <td>{{school }}</td>
     </tr>
     <tr>
-      <td>College</td>
+      <td><i class="fa fa-graduation-cap" style="font-size:20px"></i>&nbsp;&nbsp;<strong>College</strong></td>
       <td>{{college }}</td>
     </tr>
         <tr>
-      <td>Higher Education</td>
+      <td><i class="fa fa-institution" style="font-size:20px;"></i>&nbsp;&nbsp;<strong>Higher Education</strong></td>
       <td>{{higher }}</td>
     </tr>
   </tbody>
@@ -188,19 +188,19 @@
 <table class="table table-borderless">
   <tbody>
     <tr>
-      <td >Facebook</td>
+      <td ><i class="fa fa-facebook-official" style="font-size:20px;color:rgb(59,89,152);"></i><strong>&nbsp;&nbsp;Facebook</strong> </td>
       <td><a href="https://www.facebook.com/{{fb}}">https://www.facebook.com/{{fb}}</a></td>
     </tr>
     <tr>
-      <td>Instagram</td>
+      <td><i class="fa fa-instagram" style="font-size:20px;color:#3f729b;"></i>&nbsp;&nbsp;<strong>Instagram</strong></td>
       <td><a href=" https://www.instagram.com/{{insta}}"> https://www.instagram.com/{{insta}}</a></td>
     </tr>
         <tr>
-      <td>Twitter</td>
+      <td><i class="fa fa-twitter" style="font-size:20px;color:#38A1F3;"></i><strong>&nbsp;&nbsp;Twitter</strong></td>
       <td><a href="https://www.twitter.com/{{twitter}}">https://www.twitter.com/{{twitter}}</td>
     </tr>
         <tr>
-      <td>Tik Tok</td>
+      <td><strong>Tik Tok</strong></td>
       <td>@{{tok}}</td>
     </tr>
   </tbody>

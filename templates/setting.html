@@ -91,13 +91,9 @@ h2{
 {% block content %}
 <div id="error" style="display: none; margin-top:100px;"> 
 <div class="alert alert-danger alert-dismissible fade show" >
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong><h2>Error</h2></strong>
-          <ol>
-          {% for i in warning %}
-          <li>{{i}}</li>
-          {% endfor %}
-    </ol>
+          <a href="#" class="close" id="close" onclick="gayaalert()">&times;</a>
+          <strong><h2 id ="errormsg"></h2></strong>
+
   </div>
 </div>
 
@@ -221,17 +217,19 @@ h2{
 <div id="About" class="tabcontent">
   <div class="container center_div">
   <div class="content_center">
-<form method="POST" action="">
-  {% csrf_token %}
   <h5>
     <div class="form-group col-md-8">
       
     <div class="form-group col-md-8">
       <label>Change Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Enter the Password" name="password" required>
+      <input type="password" class="form-control" id="curpassword" placeholder="Enter current Password" name="curpassword" required>
+      <br>
+      <input type="password" class="form-control" id="newpassword" placeholder="Enter new Password" name="newpassword" required>
+      <br>
+      <input type="password" class="form-control" id="conpassword" placeholder="Confirm new Password" name="conpassword" required>
     </div>
 
-  <center><button type="submit" class="btn btn-outline-dark" style="width: 25%;">CHANGE</button></center>
+  <center><button type="" class="btn btn-outline-dark" style="width: 25%;" onclick="changepass()">CHANGE PASSWORD</button></center>
 <center><h2 style="font-family: cursive; color: black;">OR</h2></center>
 
  
@@ -247,6 +245,41 @@ h2{
 
 
 <script type="text/javascript">
+
+function gayaalert(){
+  document.getElementById("error").style.display="none";
+}
+
+function rajat(val){
+  alert(val);
+  document.getElementById("error").style.display = "block";
+  document.getElementById("errormsg").innerHTML = val;
+  document.getElementById('curpassword').value ="";
+  document.getElementById('newpassword').value = "";
+  document.getElementById('conpassword').value = "";
+
+}
+
+function changepass () {
+  
+  curpass = document.getElementById('curpassword').value;
+  newpass = document.getElementById('newpassword').value;
+  conpass = document.getElementById('conpassword').value;
+
+  var url = "/changepass?curpassword="+curpass+"&newpassword="+newpass+"&conpassword="+conpass;
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+             rajat(this.responseText);
+
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();  
+}
+
 document.getElementById("defaultOpen").click();
 function openNav() {
   document.getElementById("sidenav").classList.toggle("change")
