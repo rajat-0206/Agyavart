@@ -191,7 +191,7 @@ hr {
 <div id="error" style="display: none; margin-top:100px;"> 
 <div class="alert alert-danger alert-dismissible fade show" >
           <a href="#" class="close" id="close" onclick="gayaalert()">&times;</a>
-          <strong><h2 id ="errormsg"></h2></strong>
+          <strong><h4 id ="errormsg"></h4></strong>
 
   </div>
 </div>
@@ -227,7 +227,7 @@ hr {
     </div>
     </div>
 
-  <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; ">UPDATE</button></center>
+  <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; " onclick="this.disabled=true">UPDATE</button></center>
 
 </h5>
 </form>
@@ -253,7 +253,7 @@ hr {
       <label>Highest Qualification</label>
       <input type="text" class="form-control" id="school" value="{{higher}}" placeholder="Enter the Highest Qualification" name="newHIGHER" required>
     </div>
-  <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; ">UPDATE</button></center>
+  <center><button type="submit" class="btn btn-outline-dark" style="width: 31%;" onclick="this.disabled=true">UPDATE</button></center>
 
 </h5>
 </form>
@@ -304,7 +304,7 @@ hr {
   </div>
     <input type="text" class="form-control" id="tictok_id" value="{{tok}}" placeholder="Enter the Id" name="newTOK" required>
   </div>
-  <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; ">UPDATE</button></center>
+  <center><button type="submit" class="btn btn-outline-dark" style="width: 31%; " onclick="this.disabled=true">UPDATE</button></center>
 
 </h5>
 </form>
@@ -328,14 +328,14 @@ hr {
       <input type="password" class="form-control" id="conpassword" placeholder="Confirm new Password" name="conpassword" required>
     </div>
 
-  <center><button type="" class="btn btn-outline-dark" style="width: 25%;" onclick="changepass()">CHANGE PASSWORD</button></center>
+  <center><button type="" class="btn btn-outline-dark" id = "cngpass" style="width: 25%;" onclick="changepass()" >CHANGE PASSWORD</button></center>
 <center><h2 style="font-family: cursive; color: black;">OR</h2></center>
 
  
   
     <!-- <button type="button" class="btn btn-danger" style="  position : absolute; width:100%; left: 50%;">Delete My Account</button> -->
     <!-- <center><button type="" class="btn btn-danger" style="width: 25%; margin-top: 5px;">Delete My Account</button></center> -->
-    <center><button onclick="document.getElementById('id01').style.display='block'" type="" class="btn btn-danger" style="width: 25%; margin-top: 5px;">DELETE</button></center>
+    <center><button onclick="document.getElementById('id01').style.display='block'" type="" class="btn btn-danger" style="width: 25%; margin-top: 5px;">DELETE MY ACCOUNT</button></center>
 
   <div id="id01" class="modal">
     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -343,10 +343,15 @@ hr {
       <div class="container">
         <h1>Delete Account</h1>
         <p>Are you sure you want to delete your account?</p>
-
+        <center>
+         <div class="form-group col-md-8" >
+      <label>Enter Password to confirm</label>
+      <input type="password" class="form-control" id="delpassword" placeholder="Enter Password" name="delpassword" required>
+    </div>
+  </center>
         <div class="clearfix">
-          <button type="button" class="cancelbtn">Cancel</button>
-          <button type="button" class="deletebtn">Delete</button>
+          <button type="button" class="cancelbtn" onclick="document.getElementById('id01').style.display='none'" class="close">Cancel</button>
+          <button type="button" class="deletebtn" onclick="delacc()">Delete my account</button>
         </div>
       </div>
     </form>
@@ -361,18 +366,40 @@ hr {
 
 <script type="text/javascript">
 
+function delacc() {
+
+  delpass = document.getElementById('delpassword').value;
+  var url = "delpass="+delpass+"&csrfmiddlewaretoken="+"{{csrf_token}}";
+  document.getElementById('delpassword').value = "";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+            document.getElementById("error").style.display = "block";
+            document.getElementById("errormsg").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("POST","delacc/", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send(url);
+  document.getElementById('id01').style.display='none';
+}
+
+
+
 function gayaalert(){
   document.getElementById("error").style.display="none";
 }
 
 function rajat(val){
   alert(val);
+  var target = document.getElementById('cngpass');
   document.getElementById("error").style.display = "block";
   document.getElementById("errormsg").innerHTML = val;
   document.getElementById('curpassword').value ="";
   document.getElementById('newpassword').value = "";
   document.getElementById('conpassword').value = "";
-
+  target.disabled = true;
 }
 
 function changepass () {
@@ -394,6 +421,9 @@ function changepass () {
   xhttp.open("GET", url, true);
   xhttp.send();  
 }
+
+
+
 
 document.getElementById("defaultOpen").click();
 function openNav() {

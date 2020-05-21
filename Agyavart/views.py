@@ -85,11 +85,8 @@ def banao(request):
 	name = request.POST["NAME"]
 	email = request.POST["EMAIL"]
 	mob = request.POST["MOBILE"]
-	day = request.POST["birthday_day"]
-	month = request.POST["birthday_month"]
-	year = request.POST["birthday_year"]
 	gender = request.POST["GENDER"]
-	bday = str(day)+'/'+str(month)+'/'+str(year)
+	bday = request.POST["DOB"]
 	dp = "/media/images/user.png"
 	cover = "/media/images/cover.jpeg"
 	fb = "UA"
@@ -110,6 +107,14 @@ def banao(request):
 	elif(username.isalnum()==False):
 		errormsg.append("Invalid Username.")
 		username = ""
+
+	naam = name.split(" ")
+	for i in naam:
+		if(i.isalpha()==False):
+			name =""
+			errormsg.append("Invalid Name")
+			break
+
 	if(password==""):
 		errormsg.append("Password cannot be empty.")
 	elif(len(password)<8):
@@ -127,8 +132,6 @@ def banao(request):
 		mobchk = firebase.get('/mobile',mob)
 		if(mobchk):
 			errormsg.append("This mobile number is in use. Please choose another one.")
-	if(day=="0" or month=="0" or year=="0"):
-		errormsg.append("Please provide correct birthdate.")
 	if(gender=="Gender"):
 		errormsg.append("Please select a Gender.")
 	if(len(errormsg)>0):
@@ -222,8 +225,9 @@ def forgotpass(request):
 		return render(request,'login.html',{"warning":errormsg,"title":"Forgot Password"})
 	else:
 		result = firebase.get('/users',fuser)
+		print(fmob,result['Mobile'],type(fmob),type(result['Mobile']),fmob==result["Mobile"])
 		if(result):
-			if(fmob==result["Mobile"]):
+			if(fmob==str(result["Mobile"])):
 				hash_pass = hash_password(fpas);
 				firebase.delete("/users",fuser)
 				firebase.put('/users',fuser,{'Name':result['Name'],"Password":hash_pass,'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":result["DP"],"Cover":result['Cover']})
@@ -447,4 +451,17 @@ def changepass(request):
 
 def delacc(request):
 	if request.method == "POST":
-		pass
+		password = request.POST['delpass']
+		username = request.session['username']
+		result = firebase.get("/users",username)
+		if(verify_password(result['Password'],password)):
+			firebase.delete("/users",username)
+			firebase.delete("/mobile",result["Mobile"])
+			request.session['is_logged'] = False;
+			request.session['username'] = "";
+			return render(request,"login.html",{'warning':"Your account has been successfully deleted","title":"Delete Account"})
+
+		else:
+			return HttpResponse("Password don't match.!! Account deletion failed.")
+	else:
+		redirect('settings')

@@ -27,7 +27,9 @@ urlpatterns = [
     path('logout.html',views.logout,name="logout"),
     path('newmsg',views.newmsg,name = "newmsg"),
     path('detupt',views.detupt,name="Details"),
-    path('changepass/',views.changepass,name="password")
+    path('changepass/',views.changepass,name="password"),
+    path('delacc/',views.delacc,name="account")
+
 
 
 
