@@ -13,6 +13,8 @@ urlpatterns = [
     path('login.html',views.login,name='login'),
     path('signup',views.register,name='register'),
     path('signup.html',views.register,name='register'),
+    path('message.html',views.message,name="message"),
+    path('message',views.message,name="message"),
     path('register',views.banao,name="create_user"),
     path('auth',views.login,name="auth"),
     path('fpass',views.forgotpass,name="password"),
@@ -28,7 +30,8 @@ urlpatterns = [
     path('newmsg',views.newmsg,name = "newmsg"),
     path('detupt',views.detupt,name="Details"),
     path('changepass/',views.changepass,name="password"),
-    path('delacc/',views.delacc,name="account")
+    path('delacc/',views.delacc,name="account"),
+    path('viewsent/',views.viewsent,name="account"),
 
 
 

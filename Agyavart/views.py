@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from datetime import datetime
+from .models import sentmessage
 
 import hashlib, binascii, os
 
@@ -80,6 +81,7 @@ def profile(request):
 		return redirect('login')
 
 def banao(request):
+	print("imhere")
 	username = request.POST["USERNAME"]
 	password = request.POST["password"]
 	name = request.POST["NAME"]
@@ -331,9 +333,9 @@ def newmsg(request):
 			else:
 			    another.append(sen)
 			firebase.put('/recieved',recipient,another)
-			return render(request,'welcome.html')
+			return redirect('message')
 		else:
-			return redirect('profile')
+			return redirect('message')
 	else:
 		return redirect('login')
 
@@ -465,3 +467,31 @@ def delacc(request):
 			return HttpResponse("Password don't match.!! Account deletion failed.")
 	else:
 		redirect('settings')
+
+
+def message(request):
+	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+		username = request.session['username']
+		result = firebase.get('/sentmessage',username)
+		data = []
+		for i in range((len(result)-1),-1,-1):
+			name = 'obj'+str(i)
+			name = sentmessage()
+			name.recipient = result[i]['recipient']
+			name.message = result[i]['message']
+			name.time = result[i]['time']
+			data.append(name)
+		print(data)
+		return render(request,'msg.html',{'data':data})
+	else:
+		return render(request,'rmail.html')
+
+def viewsent(request):
+	if request.method == "POST":
+		user = request.POST['user']
+		msg = request.POST['msg']
+		time = request.POST['time']
+		print(user,msg,time)
+		return render(request,"viewsent.html",{"user":user,"msg":msg,"time":time})
+	else:
+		redirect('message')

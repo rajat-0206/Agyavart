@@ -1,9 +1,6 @@
 	 
-.maincontent {margin-left: 250px ;
-	margin-top:80px;
+.maincontent {
 	padding:0px;
-	overflow-y: visible;
-	overflow-x:hidden;
 }
 
 
@@ -21,9 +18,7 @@ li{ width:100%;
 
 li:hover { background-color: #194BBE; }
 
-.online  { float: right;
-		margin-right:80px; 
-			color:green;}
+
 
  .maincontent img { height:60px;
  			width:60px;
@@ -90,23 +85,7 @@ h4 { position: fixed;
 	a:hover { color:black; }
 
 
- #chat { margin:0px;
- 		padding:0px;
- 		position:fixed;
- 		right:60px;
- 		z-index: 2;
- 		display: none;
- 		overflow-x: hidden;
-overflow-y: auto;
- 		width:325px;
- 		background-color: #333;
- 		height:50%;
- 		width:20%;
- 		bottom: 0px;
- 		white-space: nowrap;
- 		float: right;
- 		
-  }
+ 
 
   ol { margin:0px;
   		padding:0px;

@@ -67,6 +67,8 @@ img {
   max-width: 100%;
 }
 
+
+
 /*-- end reset --*/
 body {
   background: gray;
@@ -124,6 +126,11 @@ input[type="text"], input[type="email"], input[type="password"], input[type="dat
   background-repeat: no-repeat;
   color: #fff;
   font-family: 'Roboto', sans-serif;
+}
+
+#inputGender {
+width: 94.5%; 
+height: 40px;
 }
 
 input.email, input.text.w3lpass {

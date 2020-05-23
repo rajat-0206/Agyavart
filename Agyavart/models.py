@@ -5,4 +5,9 @@ from django.db import models
 class Rmail(models.Model):
 	pic = models.ImageField(upload_to = "images")
 
+class sentmessage:
+	recipient: str
+	message: str
+	time : str
+
 
