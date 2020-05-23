@@ -9,5 +9,11 @@ class sentmessage:
 	recipient: str
 	message: str
 	time : str
+	name: str
+	photo : str
 
+class recievedmessage:
+	message: str
+	time : str
+	photo : str
 

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from datetime import datetime
-from .models import sentmessage
+from .models import sentmessage,recievedmessage
 
 import hashlib, binascii, os
 
@@ -333,9 +333,9 @@ def newmsg(request):
 			else:
 			    another.append(sen)
 			firebase.put('/recieved',recipient,another)
-			return redirect('message')
+			return redirect('message.html')
 		else:
-			return redirect('message')
+			return redirect('message.html')
 	else:
 		return redirect('login')
 
@@ -469,29 +469,71 @@ def delacc(request):
 		redirect('settings')
 
 
+def recieve(request):
+	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+		username = request.session['username']
+		result = firebase.get('/recieved',username)
+		if(result is not None):
+			data = []
+			for i in range((len(result)-1),-1,-1):
+				name = 'obj'+str(i)
+				name = recievedmessage()
+				name.message = result[i]['message']
+				name.time = result[i]['time']
+				name.photo = "/media/images/user.png"
+				print(name.photo)
+				data.append(name)
+			return render(request,'recieve.html',{'data':data})
+		else:
+			return render(request,'recieve.html',{'warning':"No message sent yet."})
+	else:
+		return render(request,'rmail.html')
+
+
 def message(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
 		username = request.session['username']
 		result = firebase.get('/sentmessage',username)
-		data = []
-		for i in range((len(result)-1),-1,-1):
-			name = 'obj'+str(i)
-			name = sentmessage()
-			name.recipient = result[i]['recipient']
-			name.message = result[i]['message']
-			name.time = result[i]['time']
-			data.append(name)
-		print(data)
-		return render(request,'msg.html',{'data':data})
+		if(result is not None):
+			data = []
+			for i in range((len(result)-1),-1,-1):
+				name = 'obj'+str(i)
+				name = sentmessage()
+				name.recipient = result[i]['recipient']
+				name.message = result[i]['message']
+				name.time = result[i]['time']
+				getnaam = result[i]['recipient']+'/'+"Name"
+				name.name = firebase.get("/users",getnaam)
+				if(name.name is None):
+					name.name = "Agyavart User"
+				print(name.name)
+				getphotu = result[i]['recipient']+'/'+"DP"
+				name.photo = firebase.get("/users",getphotu)
+				if(name.photo is None):
+					name.photo = "/media/images/user.png"
+				print(name.photo)
+				data.append(name)
+			return render(request,'msg.html',{'data':data})
+		else:
+			return render(request,'msg.html',{'warning':"No message recieved Yet"})
+		
 	else:
 		return render(request,'rmail.html')
 
 def viewsent(request):
 	if request.method == "POST":
-		user = request.POST['user']
+		try:
+			user = request.POST['user']
+		except:
+			user = None;
 		msg = request.POST['msg']
 		time = request.POST['time']
+		try:
+			name = request.POST['name']
+		except:
+			name = None;
+		photo = request.POST['photo']
 		print(user,msg,time)
-		return render(request,"viewsent.html",{"user":user,"msg":msg,"time":time})
+		return render(request,"viewsent.html",{"user":user,"msg":msg,"time":time,"name":name,"photo":photo})
 	else:
 		redirect('message')

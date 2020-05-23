@@ -14,13 +14,20 @@
 
 <div class="containermsg" style="margin:0px auto; width:90%;height: 100%;">
 <nav class="navbar navbar-light bg-light">
-  <a class="navbar-brand" href="#">{{user}}</a>
+   <a class="navbar-brand" href="#">
+    <img src="{{photo}}" width="30" height="30" class="d-inline-block align-top" alt="">
+    {% if name is None %}Someone {%else %}{{name}} {% endif %}
+  </a>
 </nav>
 <form style="margin-top: 10px;">
+  {% if name is None %} 
+  &nbsp;
+  {% else %} 
   <div class="form-group">
     <label for="exampleFormControlInput1">Username</label>
     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" disabled value="{{user}}">
   </div> 
+  {%endif %}
   <div class="form-group">
     <label for="exampleFormControlInput1">Time</label>
     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" disabled value="{{time}}">
