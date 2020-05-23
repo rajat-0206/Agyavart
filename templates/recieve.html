@@ -16,8 +16,8 @@
 <div id="sidenav" class="bar">
 <div class="navhead">
 <a href="profile.html">PROFILE</a>
-<a href="message.html" class="active">SENT MESSAGE</a>
-<a href="recieve.html" >RECIEVED MESSAGE</a>
+<a href="message.html" >SENT MESSAGE</a>
+<a href="recieve.html" class="active">RECIEVED MESSAGE</a>
 <a href="setting.html">SETTINGS</a>
 <a href="#" class="spcl">SEARCH</a>
 <a href="logout.html" class="spcl">LOGOUT</a>
@@ -39,12 +39,13 @@
 </nav>
 <ul>
 {% if warning %}
+
 <h2 style="margin:0px auto"> No message yet </h2>
 {% else %}
 {% for i in data %}
-<li onclick="showmessage('{{i.name}}','{{i.photo}}','{{i.recipient}}','{{i.message}}','{{i.time}}')">
+<li onclick="showmessage('{{i.photo}}','{{i.message}}','{{i.time}}')">
 <a><img src="{{ i.photo }}">
-<h3><strong>{{ i.name }}</strong></h3>
+<h3><strong>Someone</strong></h3>
 <article style="margin-bottom: 20px;"><strong style="color: #333">Message:&nbsp;&nbsp;</strong>{{ i.message }}</article>
 </a>
 </li>
@@ -60,16 +61,15 @@
 </div>
 <script>
 
-function showmessage(name,photo,username,message,time)
+function showmessage(photo,message,time)
 {
-	var user = username;
-	var msg = message;
-	var timestamp = time;
-  var url = "user="+user+"&msg="+msg+"&time="+timestamp+"&name="+name+"&photo="+photo+"&csrfmiddlewaretoken="+"{{csrf_token}}";
+  var msg = message;
+  var timestamp = time;
+  var url = "msg="+msg+"&time="+timestamp+"&photo="+photo+"&csrfmiddlewaretoken="+"{{csrf_token}}";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-    			document.getElementById("responce").innerHTML = this.responseText;
+          document.getElementById("responce").innerHTML = this.responseText;
     }
   };
   xhttp.open("POST","viewsent/", true);
