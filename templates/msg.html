@@ -1,0 +1,81 @@
+{% extends 'profile.html' %}
+
+{% load static %}
+
+  {% block title %}
+
+  <head>
+  <title>Message</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/message.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  {% endblock %}
+
+
+ <!--side Navbar -->
+{% block sidenav %}
+<div id="sidenav" class="bar">
+<div class="navhead">
+<a href="profile.html">PROFILE</a>
+<a href="message.html" class="active">MESSAGE</a>
+<a href="setting.html">SETTINGS</a>
+<a href="#" class="spcl">SEARCH</a>
+<a href="logout.html" class="spcl">LOGOUT</a>
+</div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="maincontent">
+<div class ="leftpane"> 
+
+<nav class="navbar navbar-light bg-light" style="margin-top:0px; padding: 10px;height:50px; width: 100%;">
+<a href="message.html"><i class="fa fa-rotate-left" style="font-size:36px;color:#333;"></i></a>
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav>
+<ul>
+{% if data is not None %}
+{% for i in data %}
+<li onclick="showmessage('{{i.recipient}}','{{i.message}}','{{i.time}}')">
+<a><img src="{{ DP }}">
+<h3><strong>{{ i.recipient }}</strong></h3>
+<article style="margin-bottom: 20px;"><strong style="color: #333">Message:&nbsp;&nbsp;</strong>{{ i.message }}</article>
+</a>
+</li>
+{% endfor %}
+
+{% else %}
+<h3> No message yet </h3>
+
+{% endif %}
+</ul>
+</div>
+<div class = "rightpane" id="responce">
+  <b>
+ <h2 class="display-3 " style="color: #EC7063 ;">Click on any message to view it</h2></b></
+</div>
+</div>
+<script>
+
+function showmessage(username,message,time)
+{
+	var user = username;
+	var msg = message;
+	var timestamp = time;
+  var url = "user="+user+"&msg="+msg+"&time="+timestamp+"&csrfmiddlewaretoken="+"{{csrf_token}}";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    			document.getElementById("responce").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("POST","viewsent/", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send(url);
+}
+</script>
+
+{%endblock %}

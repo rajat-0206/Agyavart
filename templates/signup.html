@@ -7,304 +7,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{% static 'styles/register.css' %}">
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<link href="{% static '//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i' %}" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="{% static 'styles/signup.css' %}">
-<style type="text/css">
-  
-a {
-  text-decoration: none;
-}
+<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
 
-.txt-rt {
-  text-align: right;
-}
-
-/* text align right */
-.txt-lt {
-  text-align: left;
-}
-
-/* text align left */
-.txt-center {
-  text-align: center;
-}
-
-/* text align center */
-.float-rt {
-  float: right;
-}
-
-/* float right */
-.float-lt {
-  float: left;
-}
-
-/* float left */
-.clear {
-  clear: both;
-}
-
-/* clear float */
-.pos-relative {
-  position: relative;
-}
-
-/* Position Relative */
-.pos-absolute {
-  position: absolute;
-}
-
-/* Position Absolute */
-.vertical-base {
-  vertical-align: baseline;
-}
-
-/* vertical align baseline */
-.vertical-top {
-  vertical-align: top;
-}
-
-/* vertical align top */
-nav.vertical ul li {
-  display: block;
-}
-
-/* vertical menu */
-nav.horizontal ul li {
-  display: inline-block;
-}
-
-/* horizontal menu */
-img {
-  max-width: 100%;
-}
-
-/*-- end reset --*/
-body {
-  background: gray;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #A8A8A8,  #696969);
-  background: -moz-linear-gradient(to top, #A8A8A8, #696969);
-  background: -o-linear-gradient(to top, #A8A8A8, #696969);
-  background: linear-gradient(to top, #A8A8A8, #696969);
-  background-size: cover;
-  background-attachment: fixed;
-  font-family: 'Roboto', sans-serif;
-}
-
-h1 {
-  font-size: 3em;
-  text-align: center;
-  color: #fff;
-  font-weight: 100;
-  text-transform: capitalize;
-  letter-spacing: 4px;
-  font-family: 'Roboto', sans-serif;
-}
-
-/*-- main --*/
-.main-w3layouts {
-  padding: 3em 0 1em;
-}
-
-.main-agileinfo {
-  width: 35%;
-  margin: 3em auto;
-  background: rgba(0, 0, 0, 0.5);
-  background-size: cover;
-}
-
-.agileits-top {
-  padding: 3em;
-}
-
-input[type="text"], input[type="email"], input[type="password"], input[type="date"] {
-  font-size: 0.9em;
-  color: #fff;
-  font-weight: 100;
-  width: 94.5%;
-  display: block;
-  border: none;
-  padding: 0.8em;
-  border: solid 1px rgba(255, 255, 255, 0.7);
-  -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #fff 4%);
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #fff 4%);
-  background-position: -800px 0;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-family: 'Roboto', sans-serif;
-}
-
-input.email, input.text.w3lpass {
-  margin: 2em 0;
-}
-
-.text:focus, .text:valid {
-  box-shadow: none;
-  outline: none;
-  background-position: 0 0;
-}
-
-.text:focus::-webkit-input-placeholder, .text:valid::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 1);
-  font-size: .9em;
-  -webkit-transform: translateY(-30px);
-  -moz-transform: translateY(-30px);
-  -o-transform: translateY(-30px);
-  -ms-transform: translateY(-30px);
-  transform: translateY(-30px);
-  visibility: visible !important;
-}
-
-::-webkit-input-placeholder {
-  color: #fff;
-  font-weight: 100;
-}
-
-:-moz-placeholder {
-  /* Firefox 18- */
-  color: #fff;
-}
-
-::-moz-placeholder {
-  /* Firefox 19+ */
-  color: #fff;
-}
-
-:-ms-input-placeholder {
-  color: #fff;
-}
-
-input[type="submit"] {
-  font-size: .9em;
-  color: #fff;
-  background: #76b852;
-  outline: none;
-  border: 1px solid #76b852;
-  cursor: pointer;
-  padding: 0.9em;
-  -webkit-appearance: none;
-  width: 100%;
-  margin: 2em 0;
-  letter-spacing: 4px;
-}
-
-input[type="submit"]:hover {
-  -webkit-transition: .5s all;
-  -moz-transition: .5s all;
-  -o-transition: .5s all;
-  -ms-transition: .5s all;
-  transition: .5s all;
-  background: #8DC26F;
-}
-
-.agileits-top p {
-  font-size: 1em;
-  color: #fff;
-  text-align: center;
-  letter-spacing: 1px;
-  font-weight: 300;
-}
-
-.agileits-top p a {
-  color: #fff;
-  -webkit-transition: .5s all;
-  -moz-transition: .5s all;
-  transition: .5s all;
-  font-weight: 400;
-}
-
-.agileits-top p a:hover {
-  color: #76b852;
-}
-
-.wthree-text label {
-  font-size: 0.9em;
-  color: #fff;
-  font-weight: 200;
-  cursor: pointer;
-  position: relative;
-}
-
-@keyframes rippling {
-  50% {
-    border-left-color: #fff;
-  }
-
-  100% {
-    border-bottom-color: #fff;
-    border-left-color: #fff;
-  }
-}
-
-/*-- responsive-design --*/
-@media(max-width:1440px) {
-  input[type="text"], input[type="email"], input[type="password"], input[type="date"] {
-    width: 94%;
-  }
-}
-
-@media(max-width:1366px) {
-  h1 {
-    font-size: 2.6em;
-  }
-
-  .agileits-top {
-    padding: 2.5em;
-  }
-
-  .main-agileinfo {
-    margin: 2em auto;
-  }
-
-  .main-agileinfo {
-    width: 36%;
-  }
-}
-
-@media(max-width:1280px) {
-  .main-agileinfo {
-    width: 40%;
-  }
-}
-
-@media(max-width:1080px) {
-  .main-agileinfo {
-    width: 46%;
-  }
-}
-
-@media(max-width:1024px) {
-  .main-agileinfo {
-    width: 49%;
-  }
-}
-
-@media(max-width:991px) {
-  h1 {
-    font-size: 2.4em;
-  }
-
-  .main-w3layouts {
-    padding: 2em 0 1em;
-  }
-}
-
-@media(max-width:900px) {
-  .main-agileinfo {
-    width: 58%;
-  }
-
-  input[type="text"], input[type="email"], input[type="password"], input[type="date"] {
-    width: 93%;
-  }
-}
-
-</style>
 </head>
 {% endblock %}
 
@@ -326,31 +32,33 @@ input[type="submit"]:hover {
   <h1>SIGN UP</h1>
     <div class="main-agileinfo">
       <div class="agileits-top">
-        <form method="POST" action="register">
+        <form method="POST" action="register" onsubmit="checkform()">
         {% csrf_token %}
-            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Username must be 4 character long">
+            <a href="#" data-toggle="tooltip" data-placement="top" title="Username must be 4 character long">
             <input type="text" class="text text-light" id="inputUserame4" placeholder="Username" value="{{USERNAME}}" name="USERNAME" required><br>
             </a>
-            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Password must be 8 character long">
+            <a href="#" data-toggle="tooltip" data-placement="top" title="Password must be 8 character long">
             <input type="password" class="text text-light" id="inputPassword4" placeholder="Password" name="password" required><br>
             </a>
+            <a href="#" data-toggle="tooltip" data-placement="top" title="Name must contains alphabets only">
             <input type="text" class="text text-light" id="inputName" value="{{NAME}}" placeholder="Name" name="NAME" required><br>
+          </a>
             <input type="email" class="text text-light" id="inputEmail4" value="{{EMAIL}}" placeholder="Email" name="EMAIL" required><br>
-            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Phone number should be 10 digit only">
+            <a href="#" data-toggle="tooltip" data-placement="top" title="Phone number should be 10 digit only">
             <input type="text" class="text text-light" id="inputMobile" value ="{{MOBILE}}" placeholder="Phone Number" name="MOBILE" required><br>
             </a>
           <div>
-        	 <select type="text" class="text text-light bg-dark" id="inputGender" name="GENDER" value="{{GENDER}}">
+        	 <select type="text" class="text text-light bg-dark" id="inputGender" name="GENDER" value="{{GENDER}}" required>
            		<option class="text" value="Gender">Choose Gender</option>
               <option value="MALE">Male</option>
               <option value="FEMALE">Female</option>
               <option value="OTHERS">Others</option>
             </select>
           </div>
-             <br> <input type="date" name="DOB" class ="text" required><br>
+             <br> <input type="date" name="DOB" id="inputDOB" class ="text" required><br>
             
 
-        <center><button type="submit" class="btn btn-outline-dark text-light" id="signupbutton" value="SIGNUP" style="width: 70%; border-color: white;" onclick="disable('signupbutton')">Sign Up</button></center>
+        <center><button type="submit" class="btn btn-outline-dark text-light" id="signupbutton" value="SIGNUP" style="width: 70%; border-color: white;">Sign Up</button></center>
         </form>
         </div>
         </div>
@@ -359,13 +67,19 @@ input[type="submit"]:hover {
 
 
 <script type="text/javascript">
-
-  function disable(id) {
-
-    var target = document.getElementById(id);
-    id.disabled =true;
+function checkform()
+{
+  if(document.getElementById("inputUserame4").value=="" ||document.getElementById("inputPassword4").value=="" ||document.getElementById("inputName").value=="" ||document.getElementById("inputEmail4").value=="" ||document.getElementById("inputMobile").value=="" ||document.getElementById("inputDOB").value=="" || document.getElementById("inputGender").value=="Gender")
+  {
+      var g;
+      
   }
 
+  else{    document.getElementById("signupbutton").disabled =true;
+    
+  }
+}
+ 
   
   $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();   

@@ -1,72 +1,74 @@
 	 
-.maincontent {margin-left: 250px ;
-	margin-top:80px;
+.maincontent {
 	padding:0px;
-	overflow-y: visible;
-	overflow-x:hidden;
+	margin-top:70px;
+	height: 100%;
+	width: 100%;
 }
 
 
-ul {margin:0;
+.leftpane {
+	width: 50%;
+	height: 100%;
+	margin:0px ;
+	padding: 0px;
+	float: left;
+	display: inline-block;
+	border: 3px solid #333;
+}
+
+.rightpane {
+	width: 50%;
+	height: 100%;
+	margin:0px;
+	float: right;
+	display: inline-block;
+	padding: 0px;
+	border: 3px solid #333;
+}
+
+.leftpane ul {margin:0;
 padding:0;
 list-style: none;
 }
 
-li{ width:100%;
+.leftpane li{ width:100%;
 	height:80px;
 	border: 0 10px 10px 0;
 	border-bottom: 1px solid white;
 	overflow: hidden;
 	background-color: #416fba;}
 
-li:hover { background-color: #194BBE; }
+.leftpane li:hover { background-color: #194BBE; 
+		cursor: pointer;}
 
-.online  { float: right;
-		margin-right:80px; 
-			color:green;}
 
- .maincontent img { height:60px;
+
+ .leftpane img { height:60px;
  			width:60px;
  			margin:10px 0 10px 10px;
  			border-radius: 50px; }
 
- .maincontent h3 {margin-left:80px;
+ .leftpane h3 {margin-left:80px;
 margin-top:-60px;
 font-size:20px;
  		white-space: nowrap;}
 
- .maincontent article {display:block;
+ .leftpane article {display:block;
  				margin:0;
  				overflow: hidden;
  	text-overflow: ellipsis;
  				color:#d3d3d3;
- 				margin-top: -20px;
  				margin-left:90px;
- 				
+ 				padding-bottom: 20px;
  			}
 
 
- .maincontent nav { margin:0px;
- 					padding:0px; 
- 					position: relative;
- 					white-space: nowrap;
- 					margin-top:-60px;
- 					margin-right: 10px;
- 					font-size: 70px;
- 					color:white;
- 					cursor: pointer;
- 				}
-
- .maincontent nav:hover { color:#11D3F2;
- 					font-size: 69px; }
 
 
- .maincontent li:last-child {border-bottom: none;}
+ .leftpane li:last-child {border-bottom: none;}
 
-ol li a { color:black;
-		cursor: pointer; }
 
-ol li a:hover { color:white; }
 
 h4 { position: fixed;
 	margin:0px;
@@ -90,23 +92,7 @@ h4 { position: fixed;
 	a:hover { color:black; }
 
 
- #chat { margin:0px;
- 		padding:0px;
- 		position:fixed;
- 		right:60px;
- 		z-index: 2;
- 		display: none;
- 		overflow-x: hidden;
-overflow-y: auto;
- 		width:325px;
- 		background-color: #333;
- 		height:50%;
- 		width:20%;
- 		bottom: 0px;
- 		white-space: nowrap;
- 		float: right;
- 		
-  }
+ 
 
   ol { margin:0px;
   		padding:0px;
@@ -144,11 +130,11 @@ ol li:hover {background-color: red;}
 
 @media screen and (max-width:424px)
 {
-	.maincontent { margin:0px; 
+	.leftpane { margin:0px; 
 	margin-top:80px;
 		}
 
-.maincontent article { z-index: -1; }
+.leftpane article { z-index: -1; }
 
 #chat { display: none; }
 
