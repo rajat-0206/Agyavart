@@ -107,27 +107,6 @@ button:hover {
   color: black;
 }
 
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: #474e5d;
-  padding-top: 50px;
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
 
 /* Style the horizontal ruler */
 hr {
@@ -181,7 +160,6 @@ hr {
 <a href="message.html">SENT MESSAGE</a>
 <a href="recieve.html" >RECIEVED MESSAGE</a>
 <a href="setting.html" class="active">SETTINGS</a>
-<a href="#" class="spcl">SEARCH</a>
 <a href="logout.html" class="spcl">LOGOUT</a>
 </div>
 </div>
@@ -352,7 +330,7 @@ hr {
   </center>
         <div class="clearfix">
           <button type="button" class="cancelbtn" onclick="document.getElementById('id01').style.display='none'" class="close">Cancel</button>
-          <button type="button" class="deletebtn" onclick="delacc()">Delete my account</button>
+          <button type="button" class="deletebtn" id="deletebtn" onclick="delacc()">Delete my account</button>
         </div>
       </div>
     </form>
@@ -370,20 +348,38 @@ hr {
 function delacc() {
 
   delpass = document.getElementById('delpassword').value;
+  delpass = delpass.trim();
+  if(delpass=="")
+  { document.getElementById('id01').style.display='none';
+    document.getElementById("error").style.display = "block";
+    document.getElementById("errormsg").innerHTML = "Please enter password for acount deletion";
+  }
+  else
+  {
   var url = "delpass="+delpass+"&csrfmiddlewaretoken="+"{{csrf_token}}";
   document.getElementById('delpassword').value = "";
+  document.getElementById('deletebtn').disabled = true;
+  document.getElementById('deletebtn').innerHTML = "Please Wait...";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-
-            document.getElementById("error").style.display = "block";
+            if(this.responseText=="done")
+            { 
+              window.location.replace("login.html");
+            }
+            else
+            {   document.getElementById('deletebtn').innerHTML = "Delete my account";
+                document.getElementById('deletebtn').disabled = false;
+              document.getElementById('id01').style.display='none';
+              document.getElementById("error").style.display = "block";
             document.getElementById("errormsg").innerHTML = this.responseText;
+          }
     }
   };
   xhttp.open("POST","delacc/", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(url);
-  document.getElementById('id01').style.display='none';
+  }
 }
 
 
@@ -393,24 +389,39 @@ function gayaalert(){
 }
 
 function rajat(val){
-  alert(val);
   var target = document.getElementById('cngpass');
   document.getElementById("error").style.display = "block";
   document.getElementById("errormsg").innerHTML = val;
   document.getElementById('curpassword').value ="";
   document.getElementById('newpassword').value = "";
   document.getElementById('conpassword').value = "";
-  target.disabled = true;
+  target.disabled = false;
 }
 
 function changepass () {
-  
+  var target = document.getElementById('cngpass');
   curpass = document.getElementById('curpassword').value;
   newpass = document.getElementById('newpassword').value;
   conpass = document.getElementById('conpassword').value;
+  curpass = curpass.trim();
+  newpass = newpass.trim();
+  conpass = conpass.trim();
+  if(curpass=="" || newpass=="" || conpass=="")
+  {
+      document.getElementById("error").style.display = "block";
+      document.getElementById("errormsg").innerHTML = "Please fill all the fields";
+
+  }
+  else if(newpass!=conpass)
+  {
+      document.getElementById("error").style.display = "block";
+      document.getElementById("errormsg").innerHTML = "Confirm password not matched."
+  }
+  else
+  {
 
   var url = "/changepass?curpassword="+curpass+"&newpassword="+newpass+"&conpassword="+conpass;
-
+  target.disabled = true;
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -421,6 +432,7 @@ function changepass () {
   };
   xhttp.open("GET", url, true);
   xhttp.send();  
+}
 }
 
 

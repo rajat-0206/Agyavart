@@ -3,7 +3,6 @@
 {%block temp %}
 <head>
   <title>Login</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/mail.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -38,7 +37,7 @@
       <form action="auth" method = "post">
         {% csrf_token %}
       <label class="input-label" for="email">Your username.</label>
-      <input class="edit-text-box" type="text" id="email" name="username" required>
+      <input class="edit-text-box" type="text" id="email" name="username" value = "{{username}}" required>
       <br /><br /><br />
       <label class="input-label" for="pass">Secret passphrase.</label>
       <input class="edit-text-box" type="password" id="pass" name ="password" required>
