@@ -1,0 +1,54 @@
+{%extends 'profile.html' %}
+{% load static %}
+{% block temp %}
+<head>
+  <title>Settings</title>
+  <link rel="stylesheet" href="/static/styles/fmt.css">
+<link rel="stylesheet" href="/static/styles/main_setup.css">
+<link rel="stylesheet" href="/static/styles/side_nav.css">
+  {%endblock%}
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/mail.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+
+<!--side Navbar -->
+{% block sidenav %}
+<div id="sidenav" class="bar">
+<div class="navhead">
+<div id="cross">&times;</div>
+<a href="profile.html" >PROFILE</a>
+<a href="msg.html">MESSAGE</a>
+<a href="settings.html" class="active">SETTINGS</a>
+<a href="#" class="spcl">SEARCH</a>
+<a href="logout.html" class="spcl">LOGOUT</a>
+</div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<center>
+ <div class="tite" style="margin-top: 80px;">
+  <b>
+ <h2 class="display-3 " style="color: cyan ;">Settings</h2></b></div>
+ </center>
+  <div class="fmt-col m6 loginbox">
+    <div class="work-box">
+      <div class="fmt-row">
+        <div class="fmt-col m5">
+          <a href="update.html" class="fmt-left button-block" style="margin-bottom: 30px; padding: 0px; margin-left: 100px; width: 150%; text-align: center;">GENERAL SETTINGS</a>
+        </div>
+      </div>
+       <div class="fmt-row">
+        <div class="fmt-col m5">
+          <a href="passupdate.html" class="fmt-left button-block" style="margin-bottom: 30px; padding: 0px; margin-left: 100px; width: 150%; text-align: center;">SECURITY SETTINGS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+        
+
+          {% endblock %}
