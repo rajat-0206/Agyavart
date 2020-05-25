@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+o!69rlly#54tqli5jo$z8)irb^po5rqpx&^!w7!#s7umz0*@)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['rajathandsom.pythonanywhere.com']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Agyavart',
 ]
 
 MIDDLEWARE = [
@@ -123,5 +124,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
     ]
 
-STATIC_ROOT = os.path.join(BASE_DIR,'assets')
+STATIC_ROOT = '/home/rajathandsom/Django-Project/statics'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

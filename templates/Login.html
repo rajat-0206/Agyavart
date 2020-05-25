@@ -1,64 +1,171 @@
+{%extends 'rmail.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
+{%block temp %}
 <head>
-<title>
-LOGIN
-</title>
-<link rel="stylesheet" type="text/css" href="{% static 'styles/mail.css' %}">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/mail.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
-<link rel="icon" href="download.png">
-<meta content=’width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0′ name=’viewport’ />
-<meta name=”viewport” content=”width=device-width” />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
 </head>
-<body >
-<header>
-<a href="rmail.html" class="title">RMAIL</a>
-<a href="signup.html" class="logon">CREATE AN ACCOUNT</a>
- <h2>LOGIN</h2>
-</header>
-<center>
- <div class="tite">
- <h2>LOGIN</h2></div>
- </center>
-   <div class="container">
-   
-       <form>
-      
-          <div class="form-input">
-             <input type="text" name="username" placeholder="Username" autofocus>
-             </div>
-               <div class="rajat">
+{%endblock %}
 
-          
-          <div class="form-input">
-             <input type="password" name="password" class="naved" placeholder="Password">
-             </div>
-
-             </div>
-           <a href="home.html" class="loa">
-          <input type="submit" name="submit" value="LOGIN" class="btn-login"></a>
-              <p><a href="#" class="forget">FORGOT PASSWORD?</a></p>
-        
-             </form>
-             
-             </div>
-
-            <a href="signup.html" class="logon1">CREATE AN ACCOUNT</a>
-<div class="space">
-<footer>
-<div class="foot-bar">
-<a href="http://www.google.com">GOOGLE</a>&nbsp&nbsp
-<a href="http://www.youtube.com">YOU TUBE</a>&nbsp&nbsp
-<a href="http://www.facebook.com">FACEBOOK</a>&nbsp&nbsp
-<nav class="right">
-<a href="http://www.instagram.com">INSTAGRAM</a>&nbsp&nbsp
-<a href="http://www.twitter.com">TWITTER</a>&nbsp&nbsp
-<a href="http://www.w3school.com">LEARN</a>&nbsp&nbsp
-</nav>
-<br><H7>©RAJAT.INC 2017</H7>
-</footer>
+{% block content %}
+<div class="alert alert-info" id="modalinfo" style="display: none; margin-top: 100px;">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Info!</strong> {{info }}
 </div>
-</body>
-</html>
+<div id="error" style="display: none; margin-top:100px;">
+<div class="alert alert-danger alert-dismissible fade show" >
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong><h2>{{ title}}</h2></strong>
+          <ol>
+          {% for i in warning %}
+          <li>{{i}}</li>
+          {% endfor %}
+
+</div>
+</div>
+<center>
+ <div class="tite" style="margin-top: 80px;">
+  <b>
+ <h2 class="display-3 " style="color: #EC7063 ;">LOGIN</h2></b></div>
+ </center>
+  <div class="fmt-col m6 loginbox">
+    <div class="work-box">
+      <form action="auth" method = "post">
+        {% csrf_token %}
+      <label class="input-label" for="email">Your username.</label>
+      <input class="edit-text-box" type="text" id="email" name="username" required>
+      <br /><br /><br />
+      <label class="input-label" for="pass">Secret passphrase.</label>
+      <input class="edit-text-box" type="password" id="pass" name ="password" required>
+      <br /><br /><br />
+      <div class="fmt-row">
+        <div class="fmt-col m5">
+          <button type="submit" class="fmt-left button-block" style="background-color: #14bb4c;">Let's go</button>
+
+        </div>
+        <div class="fmt-col m7">
+          <a href="#" data-toggle="modal" data-target="#myModal" style="margin-top:12px" class="fmt-right button-tab">Any problem?</a>
+        </div>
+      </div>
+      <br />
+    </div>
+  </form>
+  </div>
+</div>
+
+<!-- Forgot password section -->
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Help Dialogue</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- tab group start -->
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'fpassword')">Forgot Password</button>
+  <button class="tablinks" onclick="openCity(event, 'funame')">Forgot Username</button>
+</div>
+
+<div id="fpassword" class="tabcontent">
+  <form method="post" action="fpass">
+  {% csrf_token %}
+  <div class="form-group">
+    <input type="text" class="form-control" name="fuser" placeholder="Username" required>
+  </div>
+   <div class="form-group">
+    <input type="text" class="form-control" name="fmob" placeholder="Mobile number" required>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" name="newpwd" placeholder="New Password" required>
+  </div>
+  <button type="submit" class="btn btn-block btn-primary">Submit</button>
+</form>
+</div>
+
+<div id="funame" class="tabcontent">
+  <form method="post" action="fuser">
+    {% csrf_token %}
+   <div class="form-group">
+    <input type="text" class="form-control" name="mobile" placeholder="Mobile number" required>
+  </div>
+  <button type="submit" class="btn btn-block btn-success">Submit</button>
+</div>
+</form>
+</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+
+<!--Java script section -->
+<script type="text/javascript">
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+
+error = document.getElementById("error");
+
+ifo = document.getElementById('modalinfo');
+ifo.style.display = 'none';
+
+{% if info %}
+ifo.style.display = 'block';
+{% endif %}
+
+
+  {% if warning %}
+  error.style.display ='block';
+  {% endif %}
+
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+
+//ajax script
+/*
+function forgotpassword(){
+    var fmob1=document.getElementById('fmob').value;
+    var fuser1=document.getElementById('fuser').value;
+    var fnpass1=document.getElementById('newpwd').value;
+    var xhttp1 = new XMLHttpRequest();
+    xhttp1.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("modalinfo").style.display = 'block';
+        }
+    };
+
+    xhttp1.open("POST", "fpass", true);
+    xhttp1.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp1.send(`fmob1=${fmob1}&fuser1=${fuser1}&fpass1=${fnpass1}`);
+}
+*/
+</script>
+
+
+
+
+{% endblock %}
