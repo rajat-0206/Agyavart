@@ -175,7 +175,7 @@ def login(request):
 			errormsg.append("Password should be atleast 8 character long.")
 
 		if(len(errormsg)>0):
-			return render(request,'login.html',{"warning":errormsg,"title":"Login Error"})
+			return render(request,'login.html',{"warning":errormsg,"title":"Login Error","username":username})
 		else:
 			result=firebase.get("/users",username)
 			if(result):
@@ -186,7 +186,7 @@ def login(request):
 			    	return redirect('profile')
 			    else:
 			    	errormsg.append("Wrong Password.")
-			    	return render(request,'login.html',{'warning':errormsg,"title":"Login Error"})
+			    	return render(request,'login.html',{'warning':errormsg,"title":"Login Error","username":username})
 			else:
 				errormsg.append("Username not in our records!! Please Signup.")
 				return render(request,'login.html',{'warning':errormsg,"title":"Login Error"})
@@ -459,15 +459,61 @@ def delacc(request):
 		if(verify_password(result['Password'],password)):
 			firebase.delete("/users",username)
 			firebase.delete("/mobile",result["Mobile"])
+			firebase.delete("/sentmessage",username)
+			firebase.delete("/recieved",username)
 			request.session['is_logged'] = False;
 			request.session['username'] = "";
-			return render(request,"login.html",{'warning':"Your account has been successfully deleted","title":"Delete Account"})
-
+			return HttpResponse("done")
 		else:
 			return HttpResponse("Password don't match.!! Account deletion failed.")
 	else:
 		redirect('settings')
 
+
+### Message section 
+
+def newmsg(request):
+	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+		if request.method == "POST":
+			username = request.session['username']
+			recipient = request.POST['recipient']
+			valid = firebase.get("users/",recipient)
+			print(valid)
+			if(valid is not None):
+				msg = request.POST['message']
+				now = datetime.now()
+				dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+				timestamp = dt_string
+				sender = username
+
+				#for sender side message 
+
+				data = firebase.get('/sentmessage',sender)
+				res = {'message': msg,'recipient':recipient,'time':timestamp}
+				if(data is None):
+				    data =[]
+				    data.append(res)
+				else:
+				    data.append(res)
+				firebase.put('/sentmessage',sender,data)
+
+				#for reciever side message
+				sen = {'message': msg,'time': timestamp}
+				another = firebase.get('/recieved',recipient)
+				if(another is None):
+				    another = []
+				    another.append(sen)
+				else:
+				    another.append(sen)
+				firebase.put('/recieved',recipient,another)
+				return HttpResponse("Message sent successfull.")
+			else:
+
+				return HttpResponse("Recipient not valid.")
+		else:
+			return redirect('message')
+	else:
+		return redirect('login')
 
 def recieve(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
@@ -481,7 +527,6 @@ def recieve(request):
 				name.message = result[i]['message']
 				name.time = result[i]['time']
 				name.photo = "/media/images/user.png"
-				print(name.photo)
 				data.append(name)
 			return render(request,'recieve.html',{'data':data})
 		else:
@@ -511,7 +556,6 @@ def message(request):
 				name.photo = firebase.get("/users",getphotu)
 				if(name.photo is None):
 					name.photo = "/media/images/user.png"
-				print(name.photo)
 				data.append(name)
 			return render(request,'msg.html',{'data':data})
 		else:
@@ -533,7 +577,6 @@ def viewsent(request):
 		except:
 			name = None;
 		photo = request.POST['photo']
-		print(user,msg,time)
 		return render(request,"viewsent.html",{"user":user,"msg":msg,"time":time,"name":name,"photo":photo})
 	else:
 		redirect('message')

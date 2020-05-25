@@ -290,7 +290,7 @@ input[type="submit"]:hover {
 
 @media(max-width:900px) {
   .main-agileinfo {
-    width: 58%;
+    width: 80%;
   }
 
   input[type="text"], input[type="email"], input[type="password"], input[type="date"] {
