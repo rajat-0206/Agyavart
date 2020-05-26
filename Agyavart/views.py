@@ -477,8 +477,9 @@ def newmsg(request):
 		if request.method == "POST":
 			username = request.session['username']
 			recipient = request.POST['recipient']
+			if(recipient==username):
+				return HttpResponse("You cannot send message to yourself.")
 			valid = firebase.get("users/",recipient)
-			print(valid)
 			if(valid is not None):
 				msg = request.POST['message']
 				now = datetime.now()
@@ -508,7 +509,6 @@ def newmsg(request):
 				firebase.put('/recieved',recipient,another)
 				return HttpResponse("Message sent successfull.")
 			else:
-
 				return HttpResponse("Recipient not valid.")
 		else:
 			return redirect('message')
