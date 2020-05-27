@@ -256,8 +256,7 @@ def forgotpass(request):
 			return render(request,'login.html',{"warning":errormsg,"title":"Forgot Password"})
 		else:
 			result = firebase.get('/users',fuser)
-			print(fmob,result['Mobile'],type(fmob),type(result['Mobile']),fmob==result["Mobile"])
-			if(result):
+			if(result is not None):
 				if(fmob==str(result["Mobile"])):
 					hash_pass = hash_password(fpas);
 					firebase.delete("/users",fuser)
@@ -304,7 +303,7 @@ def handle_uploaded_file(f):
 def imgcng(request):
 	if request.method == "POST":
 		changedp = request.FILES['dp']
-		usernaam = request.POST["username"]
+		usernaam = request.session['username']
 		print(changedp.name)
 		result = firebase.get("/users",usernaam)
 		if(result["DP"]=="/media/images/user.png"):
@@ -327,7 +326,7 @@ def imgcng(request):
 def covercng(request):
 	if request.method == "POST":
 		changecover = request.FILES['cover']
-		usernaam = request.POST["username"]
+		usernaam = request.session['username']
 		result = firebase.get("/users",usernaam)
 		if(result["Cover"]=="/media/images/cover.jpeg"):
 			changecover.name = usernaam+"cover1"+".jpg"
