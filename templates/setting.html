@@ -345,6 +345,10 @@ hr {
 
 <script type="text/javascript">
 
+{% if warning %}
+  document.getElementById("error").style.display = "block";
+  document.getElementById("errormsg").innerHTML = '{{warning}}'; 
+{% endif %}
 function delacc() {
 
   delpass = document.getElementById('delpassword').value;
