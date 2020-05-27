@@ -43,7 +43,7 @@
 {% for i in data %}
 <li onclick="showmessage('{{i.name}}','{{i.photo}}','{{i.recipient}}','{{i.message}}','{{i.time}}')">
 <a><img src="{{ i.photo }}">
-<h3><strong>{{ i.name }}</strong></h3>
+<h3><strong><a href="/user/{{i.recipient}}">{{ i.name }}</a></strong></h3>
 <article style="margin-bottom: 20px;"><strong style="color: #333">Message:&nbsp;&nbsp;</strong>{{ i.message }}</article>
 </a>
 </li>

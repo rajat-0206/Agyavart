@@ -8,9 +8,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('',views.home,name='home'),
-    path('rmail.html',views.home,name='home'),
+    path('/rmail.html',views.home,name='home'),
     path('login',views.login,name='login'),
     path('login.html',views.login,name='login'),
+    path('about.html',views.about,name='about'),
     path('signup',views.register,name='register'),
     path('signup.html',views.register,name='register'),
     path('message.html',views.message,name="message"),
@@ -34,6 +35,7 @@ urlpatterns = [
     path('changepass/',views.changepass,name="password"),
     path('delacc/',views.delacc,name="account"),
     path('viewsent/',views.viewsent,name="account"),
+    path('user/<str:username>',views.user,name="account")
 
 
 
