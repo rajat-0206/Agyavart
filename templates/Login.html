@@ -6,8 +6,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
+<link rel="stylesheet" href="/static/styles/fmt.css">
+<link rel="stylesheet" href="/static/styles/main_setup.css">
+<meta name="theme-color" content="#498dcc">
 </head>
 {%endblock %}
 
@@ -16,44 +17,43 @@
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   <strong>Info!</strong> {{info }}
 </div>
-<div id="error" style="display: none; margin-top:100px;">
-<div class="alert alert-danger alert-dismissible fade show" >
+<div id="error" class="fmt-animate-bottom" style="display: none; margin-top:100px;padding:0 42px 0 42px">
+<div class="alert alert-danger alert-dismissible fade show" style="padding:22px">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong><h2>{{ title}}</h2></strong>
+          <strong><h1 class="fmt-center" style="font-size:36px ; color:#b85b5b">{{ title}}</h1></strong>
+          <br/>
           <ol>
           {% for i in warning %}
-          <li>{{i}}</li>
+          <li style="font-size:28px;color:#b85b5b">{{i}}</li>
           {% endfor %}
 
 </div>
 </div>
 <center>
- <div class="tite" style="margin-top: 80px;">
-  <b>
- <h2 class="display-3 " style="color: #EC7063 ;">LOGIN</h2></b></div>
- </center>
-  <div class="fmt-col m6 loginbox">
-    <div class="work-box">
-      <form action="auth" method = "post">
-        {% csrf_token %}
-      <label class="input-label" for="email">Your username.</label>
-      <input class="edit-text-box" type="text" id="email" name="username" value = "{{username}}" required>
+ <div class="tite fmt-animate-top" style="margin-top: 80px;">
+   <p class="sub-catch-line">Welcome Back.</p>
+  </div>
+</center>
+<div class="fmt-col m6 loginbox">
+  <div class="work-box fmt-animate-bottom">
+    <form action="auth" method = "post">
+      {% csrf_token %}
+      <label class="input-label fmt-animate-left" for="email">Your username.</label>
+      <input class="edit-text-box fmt-animate-right" type="text" id="email" name="username" value = "{{username}}" required>
       <br /><br /><br />
-      <label class="input-label" for="pass">Secret passphrase.</label>
-      <input class="edit-text-box" type="password" id="pass" name ="password" required>
+      <label class="input-label fmt-animate-left" for="pass">Secret passphrase.</label>
+      <input class="edit-text-box fmt-animate-right" type="password" id="pass" name ="password" required>
       <br /><br /><br />
       <div class="fmt-row">
         <div class="fmt-col m5">
-          <button type="submit" class="fmt-left button-block" style="background-color: #14bb4c;">Let's go</button>
-
+          <button type="submit" class="fmt-left button-block-sec fmt-animate-left">Let's go</button>
         </div>
-        <div class="fmt-col m7">
+        <div class="fmt-col m7 fmt-animate-right">
           <a href="#" data-toggle="modal" data-target="#myModal" style="margin-top:12px" class="fmt-right button-tab">Any problem?</a>
         </div>
       </div>
       <br />
-    </div>
-  </form>
+    </form>
   </div>
 </div>
 
