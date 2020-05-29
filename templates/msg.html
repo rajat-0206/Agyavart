@@ -6,7 +6,7 @@
 
   <head>
   <title>Message</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/message.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/mesage.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   {% endblock %}
 
@@ -19,7 +19,6 @@
 <a href="message.html" class="active">SENT MESSAGE</a>
 <a href="recieve.html" >RECIEVED MESSAGE</a>
 <a href="setting.html">SETTINGS</a>
-<a href="#" class="spcl">SEARCH</a>
 <a href="logout.html" class="spcl">LOGOUT</a>
 </div>
 </div>
@@ -28,13 +27,13 @@
 
 {% block content %}
 <div class="maincontent">
-<div class ="leftpane"> 
+<div class ="leftpane" id="leftpane"> 
 
-<nav class="navbar navbar-light bg-light" style="margin-top:0px; padding: 10px;height:50px; width: 100%;">
+<nav class="navbar navbar-light bg-light" style="margin-top:0px; padding: 10px;height:80px; width: 100%;">
 <a href="message.html"><i class="fa fa-rotate-left" style="font-size:36px;color:#333;"></i></a>
   <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search(available soon)" style="width: 150px;margin-right: 5px" disabled>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
   </form>
 </nav>
 <ul>
@@ -61,7 +60,13 @@
 <script>
 
 function showmessage(name,photo,username,message,time)
-{
+{ if(screen.width<=991)
+  { left = document.getElementById("leftpane");
+    right = document.getElementById("responce");
+    left.style.display = "none";
+    right.style.display = "block";
+  }
+
 	var user = username;
 	var msg = message;
 	var timestamp = time;
@@ -76,6 +81,16 @@ function showmessage(name,photo,username,message,time)
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(url);
 }
+
+ function hiderightpane(){
+
+    left = document.getElementById("leftpane");
+    right = document.getElementById("responce");
+    left.style.display = "block";
+    right.style.display = "none";
+  
+}
+
 </script>
 
 {%endblock %}

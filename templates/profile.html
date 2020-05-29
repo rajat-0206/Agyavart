@@ -16,7 +16,6 @@
 
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="{% static '/styles/profile.css' %}">
 <link rel="stylesheet" href="/static/styles/fmt.css">
@@ -28,7 +27,6 @@
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
 	<img src="{% static 'images/graphic.png' %}" class ="imag" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 10px; cursor: pointer;" onclick="openNav()">
-   <a class="navbar-brand" href="rmail.html" style="font-size: 30px;">
    <a class="navbar-brand" href="rmail.html" style="font-size: 30px;">
     <img src="{% static 'images/rmailLogoConcept.svg' %}" width="25" class="align-top" alt="Rmail Logo">
     gyavart
@@ -48,12 +46,12 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="nav nav-pills" >
     <li class="nav-item">
-      <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"><button class="btn btn-secondary hide" data-toggle="modal" data-target="#messageModal">Send new message </button> </a>
+      <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"><button class="btn btn-secondary hide" data-toggle="modal" data-target="#messageModal" onclick="yoyo()" >Send new message </button> </a>
     </li>
   </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <input class="form-control mr-sm-2" type="search" placeholder="Search(available soon)" disabled>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
     </form>
   </div>
 </nav>
@@ -61,22 +59,26 @@
 
 <!-- msg modal -->
 
-<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="messageModal" style="display: none;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog .modal-dialog-centered" role="document">
-    <form method="post" action="newmsg" enctype="multipart/form-data">
-      {% csrf_token %}
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">New message</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true" onclick="revyoyo()">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+        <div id="dabba" style="display: none; z-index: 10;"> 
+      <div class="alert alert-danger alert-dismissible fade show" >
+          <a href="#" class="close" id="close" onclick="gayaalertmsg()">&times;</a>
+          <strong><h4 id ="dabbaerrormsg"></h4></strong> 
+        </div>
+      </div>
         <form>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient" name="recipient">
+            <input type="text" class="form-control" id="recipient" name="recipient" value="">
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Message:</label>
@@ -85,11 +87,10 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Send message</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="revyoyo()">Close</button>
+        <button type="submit" class="btn btn-primary" onclick="bhejnahai()">Send message</button>
       </div>
     </div>
-  </form>
   </div>
 </div>
 
@@ -101,7 +102,6 @@
 <a href="message.html" >SENT MESSAGE</a>
 <a href="recieve.html" >RECIEVED MESSAGE</a>
 <a href="setting.html">SETTINGS</a>
-<a href="#" class="spcl">SEARCH</a>
 <a href="logout.html" class="spcl">LOGOUT</a>
 </div>
 </div>
@@ -263,7 +263,9 @@
     </div>
   </div>
 </div>
-<script>
+<script type="text/javascript">
+
+
 $('#exampleModal').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
 })
@@ -287,7 +289,65 @@ function openPage(pageName,elmnt,color) {
 </script>
 
 {% endblock %}
+
 <script type="text/javascript">
+  function yoyo()
+  {
+document.getElementById("messageModal").style.display="block";
+
+}
+
+function revyoyo()
+{
+  document.getElementById("messageModal").style.display="none";
+  document.getElementById("recipient").value = "";
+  document.getElementById("message-text").innerText = "";
+  gayaalertmsg();
+
+}
+
+function gayaalertmsg(){
+  document.getElementById("dabba").style.display="none";
+  
+}
+
+function bhejnahai() {
+  flag =1;
+  kisko = document.getElementById('recipient').value;
+  kisko = kisko.trim();
+  sandhesa = document.getElementById('message-text').value;
+  sandhesa = sandhesa.trim();
+  if(kisko =="")
+  {
+   document.getElementById("dabba").style.display = "block";
+   document.getElementById("dabbaerrormsg").innerHTML = "Please Fill a recipient"; 
+   flag =0;
+  }
+  if(sandhesa=="")
+  {
+    document.getElementById("dabba").style.display = "block";
+   document.getElementById("dabbaerrormsg").innerHTML = "Please input some text to send"; 
+   flag = 0;
+  }
+
+  if(flag==1)
+  {
+  var url = "recipient="+kisko+"&message="+sandhesa+"&csrfmiddlewaretoken="+"{{csrf_token}}";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+    document.getElementById("dabba").style.display = "block";
+    document.getElementById("dabbaerrormsg").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("POST","newmsg/", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send(url);
+}
+  
+}
+
 document.getElementById("defaultOpen").click();
 function openNav() {
   document.getElementById("sidenav").classList.toggle("change")
