@@ -66,7 +66,6 @@ a:focus{
 .button-tab{
     background-color: #71189400;
     color:black;
-    
     border-radius:4px;
     margin:0px 8px 0px 4px;
     font-size: 22px;
@@ -87,6 +86,52 @@ a:focus{
     font-size: 20px;
     box-shadow:0 0 0 0 #00000000;
 }
+.button-chip{
+    outline: none;
+    border-radius: 96px;
+    border-width: 0px;
+    font-weight: normal;
+    color:white;
+    font-size: 22px;
+    padding: 8px 22px 8px 22px;
+    background-color: #4c069c;
+    transition: 0.5s ease;
+}
+.button-chip:hover{
+    padding: 8px 42px 8px 42px;
+    background-color: #6206ca;
+    box-shadow:0 8px 16px 0 #00000033,0 6px 20px 0 #00000030;
+}
+.button-chip:focus{
+    padding: 8px 22px 8px 22px;
+    background-color: #4c069c49;
+    box-shadow:0 0 0 0 #00000000;
+}
+.button-normal-body{
+    outline: none;
+    border-radius: 6px;
+    border-width: 0px;
+    font-weight: normal;
+    color:white;
+    font-size: 22px;
+    padding: 8px 22px 8px 22px;
+    background-color: #4c069c;
+    transition: 0.5s ease;
+}
+.button-normal-body:hover{
+    font-size: 24px;
+    background-color: #5e0abe;
+    box-shadow:0 8px 16px 0 #00000033,0 6px 20px 0 #00000030;
+}
+.button-normal-body:focus{
+    font-size: 20px;
+    background-color: #4c069c88;
+    box-shadow:0 0 0 0 #00000000;
+}
+.normal-body-text{
+    font-size: 22px;
+    color:black;
+}
 .small-btn{
     background-color: #c2a3e6a4;
     border-radius: 8px;
@@ -98,6 +143,10 @@ a:focus{
 }
 .sub-catch-line{
     font-size: 62px;
+    color:#ffffff
+}
+.normal-text{
+    font-size: 32px;
     color:#ffffff
 }
 .work-box{
@@ -118,15 +167,28 @@ a:focus{
     outline: none;
     border: #e1e1fd solid 2px;
     padding: 8px 16px 8px 16px;
-    transition: 0.5s ease;
+    transition: 0.2s ease;
 }
 .edit-text-box:focus{
-    border: #27da71 solid 4px;
+    border-bottom: #27da71 solid 4px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    box-shadow:0 8px 16px 0 #00000033,0 6px 54px 0 #00000030;
 }
 .input-label{
     color: white;
     font-size: 22px;
 }
+
+.generic-tooltip{
+    border-radius: 12px;
+    border-width: 0px;
+    color:blue
+}
+
 /* width */
 ::-webkit-scrollbar {
     border-radius: 22px;
