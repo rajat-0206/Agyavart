@@ -11,6 +11,7 @@ urlpatterns = [
     path('rmail.html',views.home,name='home'),
     path('login',views.login,name='login'),
     path('login.html',views.login,name='login'),
+    path('about.html',views.about,name='about'),
     path('signup',views.register,name='register'),
     path('signup.html',views.register,name='register'),
     path('message.html',views.message,name="message"),
@@ -29,11 +30,12 @@ urlpatterns = [
     path('profile.html',views.profile,name='profile'),
     path('profile',views.profile,name='profile'),
     path('logout.html',views.logout,name="logout"),
-    path('newmsg',views.newmsg,name = "newmsg"),
+    path('newmsg/',views.newmsg,name = "newmsg"),
     path('detupt',views.detupt,name="Details"),
     path('changepass/',views.changepass,name="password"),
     path('delacc/',views.delacc,name="account"),
     path('viewsent/',views.viewsent,name="account"),
+    path('user/<str:username>',views.user,name="account")
 
 
 

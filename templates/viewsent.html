@@ -10,11 +10,24 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </head>
+
+<style type="text/css">
+  #forchota {
+    display: none;
+  }
+  @media screen and (max-width:991px)
+  {
+  #forchota {
+    display: block;
+  }
+}
+</style>
 <body>
 
-<div class="containermsg" style="margin:0px auto; width:90%;height: 100%;">
+<div class="containermsg" style="margin:0px auto;width:90%;height: 100%;">
 <nav class="navbar navbar-light bg-light">
-   <a class="navbar-brand" href="#">
+   <a class="navbar-brand" href="user/{{user}}">
+     <i class="fa fa-arrow-circle-left" id="forchota" style="font-size:36px;margin-top:0px;margin-left: 0px;margin-right:10px; float: left;" onclick="hiderightpane()"></i>
     <img src="{{photo}}" width="30" height="30" class="d-inline-block align-top" alt="">
     {% if name is None %}Someone {%else %}{{name}} {% endif %}
   </a>
@@ -37,7 +50,11 @@
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled>{{msg}}</textarea>
   </div>
 </form>
-
 </div>
+
+<script type="text/javascript">
+
+ 
+</script>
 </body>
 </html>
