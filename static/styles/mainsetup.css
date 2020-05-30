@@ -8,16 +8,20 @@ html{
     left:0;
     right:0;
 }
+
 a{
     text-decoration: none;
 }
+
 a:hover{
     text-decoration: none;
     color:white;
 }
+
 a:focus{
     text-decoration: none;
 }
+
 .button-block{
     outline: none;
     border-radius: 6px;
