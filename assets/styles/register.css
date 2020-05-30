@@ -85,7 +85,7 @@ body {
 h1 {
   font-size: 3em;
   text-align: center;
-  color: #fff;
+  color: black;
   font-weight: 100;
   text-transform: capitalize;
   letter-spacing: 4px;
@@ -135,6 +135,17 @@ height: 40px;
 
 input.email, input.text.w3lpass {
   margin: 2em 0;
+}
+
+select#inputGender.text {
+    background-color: rgba(0,0,0,.075);
+    color:rgba(255,255,255,0.5);
+    font-weight: 100;
+
+}
+
+#inputDOB{
+  color:rgba(255,255,255,0.5);
 }
 
 .text:focus, .text:valid {
@@ -290,7 +301,7 @@ input[type="submit"]:hover {
 
 @media(max-width:900px) {
   .main-agileinfo {
-    width: 58%;
+    width: 80%;
   }
 
   input[type="text"], input[type="email"], input[type="password"], input[type="date"] {
