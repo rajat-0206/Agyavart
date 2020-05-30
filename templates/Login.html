@@ -2,13 +2,18 @@
 {% load static %}
 {%block temp %}
 <head>
-  <title>Login</title>
-<link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
+  <title>Login | Agyavart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="theme-color" content="#498dcc">
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/fmt.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/mainsetup.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
 {%endblock %}
 
 {% block content %}
@@ -16,96 +21,98 @@
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   <strong>Info!</strong> {{info }}
 </div>
-<div id="error" style="display: none; margin-top:100px;">
-<div class="alert alert-danger alert-dismissible fade show" >
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong><h2>{{ title}}</h2></strong>
-          <ol>
-          {% for i in warning %}
-          <li>{{i}}</li>
-          {% endfor %}
 
+<div id="error" class="fmt-animate-bottom" style="display: none; margin-top:100px;padding:0 42px 0 42px">
+  <div class="alert alert-danger alert-dismissible fade show" style="padding:22px">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong><h1 class="fmt-center" style="font-size:36px ; color:#b85b5b">{{ title}}</h1></strong>
+    <br/>
+    <ol>
+      {% for i in warning %}
+      <li style="font-size:28px;color:#b85b5b">{{i}}</li>
+      {% endfor %}
+    </ol>
+  </div>
 </div>
-</div>
+
 <center>
- <div class="tite" style="margin-top: 80px;">
-  <b>
- <h2 class="display-3 " style="color: #EC7063 ;">LOGIN</h2></b></div>
- </center>
-  <div class="fmt-col m6 loginbox">
-    <div class="work-box">
-      <form action="auth" method = "post">
-        {% csrf_token %}
-      <label class="input-label" for="email">Your username.</label>
-      <input class="edit-text-box" type="text" id="email" name="username" value = "{{username}}" required>
+  <div class="fmt-animate-top" style="margin-top: 80px;">
+   <p class="sub-catch-line">Welcome Back.</p>
+  </div>
+</center>
+
+<div class="fmt-col m6 loginbox" style="margin-bottom:80px">
+  <div class="work-box fmt-animate-bottom">
+    <form action="auth" method = "post">
+      {% csrf_token %}
+      <label class="input-label fmt-animate-left" for="email">Your username.</label>
+      <input class="edit-text-box fmt-animate-right" type="text" id="email" name="username" value = "{{username}}" required>
       <br /><br /><br />
-      <label class="input-label" for="pass">Secret passphrase.</label>
-      <input class="edit-text-box" type="password" id="pass" name ="password" required>
+      <label class="input-label fmt-animate-left" for="pass">Secret passphrase.</label>
+      <input class="edit-text-box fmt-animate-right" type="password" id="pass" name ="password" required>
       <br /><br /><br />
       <div class="fmt-row">
         <div class="fmt-col m5">
-          <button type="submit" class="fmt-left button-block" style="background-color: #14bb4c;">Let's go</button>
-
+          <button type="submit" class="fmt-left button-block-sec fmt-animate-left">Let's go</button>
         </div>
-        <div class="fmt-col m7">
+        <div class="fmt-col m7 fmt-animate-right">
           <a href="#" data-toggle="modal" data-target="#myModal" style="margin-top:12px" class="fmt-right button-tab">Any problem?</a>
         </div>
       </div>
       <br />
-    </div>
-  </form>
+    </form>
+  </div>
+  <br/>
+  <div class="fmt-center">
+    <span class="normal-body-text fmt-animate-left">You new here?&#160;</span>
+    <a href="signup.html"><span class="button-normal-body fmt-animate-right">Join us</span></a>
   </div>
 </div>
 
 <!-- Forgot password section -->
 <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Help Dialogue</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">    
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">What's the matter?</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- tab group start -->
+        <div class="tab">
+          <button class="tablinks" onclick="openCity(event, 'fpassword')">Password Problem</button>
+          <button class="tablinks" onclick="openCity(event, 'funame')">Forgot Username</button>
         </div>
-        <div class="modal-body">
-          <!-- tab group start -->
-<div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'fpassword')">Forgot Password</button>
-  <button class="tablinks" onclick="openCity(event, 'funame')">Forgot Username</button>
-</div>
-
-<div id="fpassword" class="tabcontent">
-  <form method="post" action="fpass">
-  {% csrf_token %}
-  <div class="form-group">
-    <input type="text" class="form-control" name="fuser" placeholder="Username" required>
-  </div>
-   <div class="form-group">
-    <input type="text" class="form-control" name="fmob" placeholder="Mobile number" required>
-  </div>
-  <div class="form-group">
-    <input type="password" class="form-control" name="newpwd" placeholder="New Password" required>
-  </div>
-  <button type="submit" class="btn btn-block btn-primary">Submit</button>
-</form>
-</div>
-
-<div id="funame" class="tabcontent">
-  <form method="post" action="fuser">
-    {% csrf_token %}
-   <div class="form-group">
-    <input type="text" class="form-control" name="mobile" placeholder="Mobile number" required>
-  </div>
-  <button type="submit" class="btn btn-block btn-success">Submit</button>
-</div>
-</form>
-</div>
+        <div id="fpassword" class="tabcontent">
+          <form method="post" action="fpass">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" class="form-control" name="fuser" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="fmob" placeholder="Mobile number" required>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" name="newpwd" placeholder="New Password" required>
+            </div>
+            <button type="submit" class="btn btn-block btn-primary">Submit</button>
+          </form>
+        </div>
+        <div id="funame" class="tabcontent">
+          <form method="post" action="fuser">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" class="form-control" name="mobile" placeholder="Mobile number" required>
+            </div>
+            <button type="submit" class="btn btn-block btn-success">Submit</button>
+          </form>
         </div>
       </div>
-      
     </div>
   </div>
+</div>
 
 
 
