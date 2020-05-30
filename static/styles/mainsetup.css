@@ -8,15 +8,35 @@ html{
     left:0;
     right:0;
 }
+
 a{
     text-decoration: none;
 }
+
 a:hover{
     text-decoration: none;
     color:white;
 }
+
 a:focus{
     text-decoration: none;
+}
+.menu-bar{
+    background:transparent;
+    border-radius: 12px;
+    transition: 0.3s ease;
+    padding-top:4px;
+    padding-bottom:4px
+}
+.menu-button{
+    border-radius:12px;
+    background:transparent;
+    box-shadow:0 8px 16px 0 #00000033,0 6px 20px 0 #00000030;
+    transition: 0.3s ease
+}
+.menu-button:focus{
+    background:#adadff;
+    box-shadow:0 0 0 0 #00000000;
 }
 .button-block{
     outline: none;
