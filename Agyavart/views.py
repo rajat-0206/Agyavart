@@ -302,7 +302,10 @@ def handle_uploaded_file(f):
 
 def imgcng(request):
 	if request.method == "POST":
-		changedp = request.FILES['dp']
+		try:
+			changedp = request.FILES['dp']
+		except:
+			return redirect('profile')
 		usernaam = request.session['username']
 		print(changedp.name)
 		result = firebase.get("/users",usernaam)
@@ -325,7 +328,10 @@ def imgcng(request):
 
 def covercng(request):
 	if request.method == "POST":
-		changecover = request.FILES['cover']
+		try:
+			changecover = request.FILES['cover']
+		except:
+			return redirect('profile')
 		usernaam = request.session['username']
 		result = firebase.get("/users",usernaam)
 		if(result["Cover"]=="/media/images/cover.jpeg"):

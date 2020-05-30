@@ -215,7 +215,7 @@
 
 
 <!-- modal for dp change -->
-<div class="modal fade" tabindex="-1" id ="exampleModal" role="dialog">
+<div class="modal fade" tabindex="-1" id ="exampleModal" role="dialog" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -229,8 +229,7 @@
           {% csrf_token %}
   		<div class="form-group">
     <label for="exampleFormControlFile1">Choose Profile Picture</label>
-    <input type="tezt" name="username" value="{{username}}" style="display: none;">
-    <input type="file" class="form-control-file" name ="dp" id="exampleFormControlFile1">
+    <input type="file" class="form-control-file" name ="dp" id="exampleFormControlFile">
  		 </div>
  		 <button type="submit" class="btn btn-primary">Save changes</button>
  		</form>
@@ -255,7 +254,7 @@
       <div class="form-group">
     <label for="exampleFormControlFile1">Choose Cover Picture</label>
     <input type="tezt" name="username" value="{{username}}" style="display: none;">
-    <input type="file" class="form-control-file" name ="cover" id="exampleFormControlFile1">
+    <input type="file" class="form-control-file" name ="cover" id="exampleFormControlFile">
      </div>
      <button type="submit" class="btn btn-primary">Save changes</button>
     </form>
@@ -291,6 +290,7 @@ function openPage(pageName,elmnt,color) {
 {% endblock %}
 
 <script type="text/javascript">
+
   function yoyo()
   {
 document.getElementById("messageModal").style.display="block";
@@ -301,7 +301,7 @@ function revyoyo()
 {
   document.getElementById("messageModal").style.display="none";
   document.getElementById("recipient").value = "";
-  document.getElementById("message-text").innerText = "";
+  document.getElementById("message-text").value = "";
   gayaalertmsg();
 
 }

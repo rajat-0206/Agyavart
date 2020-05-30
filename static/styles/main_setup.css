@@ -182,13 +182,6 @@ a:focus{
     color: white;
     font-size: 22px;
 }
-
-.generic-tooltip{
-    border-radius: 12px;
-    border-width: 0px;
-    color:blue
-}
-
 /* width */
 ::-webkit-scrollbar {
     border-radius: 22px;
