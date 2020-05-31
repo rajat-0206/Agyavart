@@ -30,6 +30,12 @@ firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/'
 
 #Hasing Functions
 
+def manifest(request):
+	return render(request,'manifest.json')
+
+def sw(request):
+	return render(request,"serviceworker.js")	
+
 def temp(request):
 	return render(request,'signup1.html')
 
