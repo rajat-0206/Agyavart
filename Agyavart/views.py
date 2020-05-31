@@ -202,7 +202,7 @@ def login(request):
 			errormsg.append("Password should be atleast 8 character long.")
 
 		if(len(errormsg)>0):
-			return render(request,'login.html',{"warning":errormsg,"title":"Login Error","username":username})
+			return render(request,'Login.html',{"warning":errormsg,"title":"Login Error","username":username})
 		else:
 			result=firebase.get("/users",username)
 			if(result):
@@ -213,10 +213,10 @@ def login(request):
 			    	return redirect('profile')
 			    else:
 			    	errormsg.append("Wrong Password.")
-			    	return render(request,'login.html',{'warning':errormsg,"title":"Login Error","username":username})
+			    	return render(request,'Login.html',{'warning':errormsg,"title":"Login Error","username":username})
 			else:
 				errormsg.append("Username not in our records!! Please Signup.")
-				return render(request,'login.html',{'warning':errormsg,"title":"Login Error"})
+				return render(request,'Login.html',{'warning':errormsg,"title":"Login Error"})
 	else:
 		if(request.session.has_key('is_logged') and request.session['is_logged']==True):
 			print("yes")
@@ -253,7 +253,7 @@ def forgotpass(request):
 		if(len(fmob)!=10 or fmob.isnumeric()==False):
 			errormsg.append("Invalid Mobile Number.")
 		if(len(errormsg)>0):
-			return render(request,'login.html',{"warning":errormsg,"title":"Forgot Password"})
+			return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Password"})
 		else:
 			result = firebase.get('/users',fuser)
 			if(result is not None):
@@ -261,13 +261,13 @@ def forgotpass(request):
 					hash_pass = hash_password(fpas);
 					firebase.delete("/users",fuser)
 					firebase.put('/users',fuser,{'Name':result['Name'],"Password":hash_pass,'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":result["DP"],"Cover":result['Cover']})
-					return render(request,'login.html',{'info':'Password changed successfully. Now you can login.'})
+					return render(request,'Login.html',{'info':'Password changed successfully. Now you can login.'})
 				else:
 					errormsg = ['Mobile Number did not match. Try Again!!']
-					return render(request,'login.html',{"warning":errormsg,"title":"Forgot Password"})
+					return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Password"})
 			else:
 				errormsg = ['Invalid Username. Please try again!!']
-				return render(request,'login.html',{"warning":errormsg,"title":"Forgot Password"})
+				return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Password"})
 	else:
 		redirect('login')
 	
@@ -277,16 +277,16 @@ def forgotusername(request):
 		gmob = request.POST["mobile"]
 		if(len(gmob)!=10 or gmob.isnumeric()==False):
 			errormsg = ['Invalid Mobile Number.']
-			return render(request,'login.html',{"warning":errormsg,"title":"Forgot Username"})
+			return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Username"})
 		else:
 
 			result = firebase.get("/mobile",gmob)
 			if(result):
 				msg = 'Your username is ' + result['username']+'. You can use it to login.'
-				return render(request,'login.html',{'info':msg,'title':'Forgot Username'})
+				return render(request,'Login.html',{'info':msg,'title':'Forgot Username'})
 			else:
 				errormsg = ['No username associated with this number.']
-				return render(request,'login.html',{"warning":errormsg,"title":"Forgot Username"})
+				return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Username"})
 	else:
 		redirect('login')
 
@@ -312,8 +312,6 @@ def imgcng(request):
 		if(result["DP"]=="/media/images/user.png"):
 			changedp.name = usernaam+"1"+".jpg"
 		else:
-			user = Rmail(pic = result["DP"])
-			user.delete()
 			i = int(result["DP"][-5])
 			changedp.name = usernaam+str(i+1)+".jpg"
 		print(changedp.name)
