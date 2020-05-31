@@ -15,55 +15,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="{% static '/styles/fmt.css' %}">
+<link rel="stylesheet" href="{% static '/styles/mainsetup.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="{% static '/styles/profile.css' %}">
-<link rel="stylesheet" href="/static/styles/fmt.css">
-<link rel="stylesheet" href="/static/styles/mainsetup.css">
-<link rel="stylesheet" href="/static/styles/side_nav.css">
 <style type="text/css">
   /* Set height of body and the document to 100% to enable "full page tabs" */
 body, html {
-  height: 70%;
-  margin-top:50px;
-  font-family: Arial;
-  color: blue;
+  font-family: 'Jost', sans-serif;
+    background-image: url("/static/images/hero_bg_1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position-x: 25%;
+    background-position-y: 50%;
+    color:white
 }
-
 label{
-  color: black;
-}
-
-/* Style tab links */
-.tablink {
-  background-color: #555;
   color: white;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  height: 70px;
-  padding: 14px 16px;
-  font-size: 17px;
-  width: 25%;
+  font-size:26px
 }
 
-.tablink:hover {
-  background-color: #777;
-}
-
-/* Style the tab content (and add height:100% for full page content) */
-.tabcontent {
-  color: white;
-  display: none;
-  padding: 100px 20px;
-  height: 100%;
-}
 h2{
   text-align: center;
+  color:white
 }
 * {box-sizing: border-box}
 .cancelbtn , .deletebtn{
@@ -176,15 +155,16 @@ hr {
 </div>
 
 
-<div>
-<center><h2>USER SETTINGS</h2></center>
+<div class="sub-catch-line fmt-center" style="position: relative; top:80px">
+Settings
 </div>
-<button class="tablink" onclick="openPage('Home', this, 'black')" id="defaultOpen">Update basic info</button>
-<button class="tablink" onclick="openPage('News', this, 'black')" >Update Education Qualifications</button>
-<button class="tablink" onclick="openPage('Contact', this, 'black')">Update Contact Details</button>
-<button class="tablink" onclick="openPage('About', this, 'black')">Security Settings</button>
-
-<div id="Home" class="tabcontent">
+<div class="fmt-bottom" style="z-index: 3;">
+  <button class="tablink" onclick="openPage('Home', this, 'black')" id="defaultOpen">Update personal info</button>
+  <button class="tablink" onclick="openPage('News', this, 'black')" >Update Education info</button>
+  <button class="tablink" onclick="openPage('Contact', this, 'black')">Update Contact details</button>
+  <button class="tablink" onclick="openPage('About', this, 'black')">Update Security Settings</button>
+  </div>
+<div id="Home" class="fmt-bottom tabcontent" style="padding-bottom: 96px;">
   <div class="tite" >
 </div>
 <div class="container center_div">
@@ -213,8 +193,7 @@ hr {
 </div>
 </div>
 </div>
-
-<div id="News" class="tabcontent">
+<div id="News" class="tabcontent fmt-bottom " style="padding-bottom: 96px;">
   <div class="container center_div">
   <div class="content_center">
 <form method="POST" action="detupt">
@@ -241,7 +220,7 @@ hr {
 </div>
 </div>
 
-<div id="Contact" class="tabcontent">
+<div id="Contact" class="tabcontent fmt-bottom ">
   <div class="container center_div">
   <div class="content_center">
 <form method="POST" action="detupt">
@@ -292,7 +271,7 @@ hr {
 </div>
 </div>
 
-<div id="About" class="tabcontent">
+<div id="About" class="tabcontent fmt-bottom" style="padding-bottom: 96px;">
   <div class="container center_div">
   <div class="content_center">
   <h5>
@@ -309,13 +288,12 @@ hr {
 
   <center><button type="" class="btn btn-outline-dark" id = "cngpass" style="width: 25%;" onclick="changepass()" >CHANGE PASSWORD</button></center>
 <center><h2 style="font-family: cursive; color: black;">OR</h2></center>
-
  
   
     <!-- <button type="button" class="btn btn-danger" style="  position : absolute; width:100%; left: 50%;">Delete My Account</button> -->
     <!-- <center><button type="" class="btn btn-danger" style="width: 25%; margin-top: 5px;">Delete My Account</button></center> -->
     <center><button onclick="document.getElementById('id01').style.display='block'" type="" class="btn btn-danger" style="width: 25%; margin-top: 5px;">DELETE MY ACCOUNT</button></center>
-
+  
   <div id="id01" class="modal">
     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
     <form class="modal-content" action="">
