@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* The side navigation menu */
 .sidenav {
     height: 100%; 
@@ -68,4 +69,76 @@
     transition: margin-left .8s;
   }
   
+=======
+/* The side navigation menu */
+.sidenav {
+    height: 100%; 
+    width: 0; 
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #00112b;
+    overflow-x: hidden;
+    padding-top: 0px;
+    padding-bottom: 50px; 
+    transition: 0.5s;
+  }
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  .item{
+    background-color: transparent;
+    color: white;
+    
+  }
+  .nav-group{
+    color:white;
+    opacity: 0.2;
+  }
+  .selected-item{
+    border-top-left-radius: 22px;
+    border-bottom-left-radius: 22px;
+    background-color: #2196f3;
+    color: white;
+    transition: 1s ease;
+  }
+  .selected-item:hover{
+    border-width: 12px;
+    font-size: 18px;
+  }
+  img{
+   transition: 0.5s ease;
+  }
+.closebtn{
+  border-radius: 22px;
+    background-color: #2196f3;
+    color: white;
+    padding-left: 12px; 
+    transition: 0.5s ease;
+}
+.closebtn:hover{
+  background-color: #042b66;
+}
+
+  .item:hover{
+    transition: 0.2s;
+    background-color: #d7e4ee;
+    border-top-left-radius: 22px;
+    border-bottom-left-radius: 22px;
+    font-weight: bold;
+    font-size: 30px;
+    color: black;
+  }
+  /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+  #main_frame {
+    transition: margin-left .8s;
+  }
+  
+>>>>>>> origin/second
   

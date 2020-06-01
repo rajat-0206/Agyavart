@@ -1,0 +1,157 @@
+	 
+.maincontent {margin-left: 250px ;
+	margin-top:80px;
+	padding:0px;
+	overflow-y: visible;
+	overflow-x:hidden;
+}
+
+
+ul {margin:0;
+padding:0;
+list-style: none;
+}
+
+li{ width:100%;
+	height:80px;
+	border: 0 10px 10px 0;
+	border-bottom: 1px solid white;
+	overflow: hidden;
+	background-color: #416fba;}
+
+li:hover { background-color: #194BBE; }
+
+.online  { float: right;
+		margin-right:80px; 
+			color:green;}
+
+ .maincontent img { height:60px;
+ 			width:60px;
+ 			margin:10px 0 10px 10px;
+ 			border-radius: 50px; }
+
+ .maincontent h3 {margin-left:80px;
+margin-top:-60px;
+font-size:20px;
+ 		white-space: nowrap;}
+
+ .maincontent article {display:block;
+ 				margin:0;
+ 				overflow: hidden;
+ 	text-overflow: ellipsis;
+ 				color:#d3d3d3;
+ 				margin-top: -20px;
+ 				margin-left:90px;
+ 				
+ 			}
+
+
+ .maincontent nav { margin:0px;
+ 					padding:0px; 
+ 					position: relative;
+ 					white-space: nowrap;
+ 					margin-top:-60px;
+ 					margin-right: 10px;
+ 					font-size: 70px;
+ 					color:white;
+ 					cursor: pointer;
+ 				}
+
+ .maincontent nav:hover { color:#11D3F2;
+ 					font-size: 69px; }
+
+
+ .maincontent li:last-child {border-bottom: none;}
+
+ol li a { color:black;
+		cursor: pointer; }
+
+ol li a:hover { color:white; }
+
+h4 { position: fixed;
+	margin:0px;
+	background-color: green;
+		bottom: 0px;
+		right:60px;
+		color:white;
+		z-index:3;
+		font-size: 20px;
+ 		font-family: arial;
+ 		line-height: 40px;
+		display:  block;
+		width:20%;
+		text-align: center;
+		float: right; 
+		cursor: pointer;
+	height: 40px;}
+
+	a{ color:black; }
+
+	a:hover { color:black; }
+
+
+ #chat { margin:0px;
+ 		padding:0px;
+ 		position:fixed;
+ 		right:60px;
+ 		z-index: 2;
+ 		display: none;
+ 		overflow-x: hidden;
+overflow-y: auto;
+ 		width:325px;
+ 		background-color: #333;
+ 		height:50%;
+ 		width:20%;
+ 		bottom: 0px;
+ 		white-space: nowrap;
+ 		float: right;
+ 		
+  }
+
+  ol { margin:0px;
+  		padding:0px;
+  		display: block;
+
+ }
+
+ol li:hover {background-color: red;}
+
+ ol li { margin: 0px;
+ 		min-width: 316px;
+ 				font-family: arial;
+ 		height:50px;
+ 	line-height: 50px;
+ 	background-color: red;
+ 	padding-left: 10px;
+ 		 }
+
+
+
+
+ #h	 { 
+ 		margin:0px;
+ 		width: 100%;
+ 		height: 40px;
+ 		cursor: pointer;
+ 		color:white;
+ 		font-family: arial;
+ 		line-height: 40px;
+ 		z-index: 1;
+ 		display: block;
+ 		background-color: green;
+ 		font-size: 20px; }
+
+
+@media screen and (max-width:424px)
+{
+	.maincontent { margin:0px; 
+	margin-top:80px;
+		}
+
+.maincontent article { z-index: -1; }
+
+#chat { display: none; }
+
+#g {display: none;}
+
+}
