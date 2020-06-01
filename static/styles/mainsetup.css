@@ -11,16 +11,13 @@ html{
 
 a{
     text-decoration: none;
+    transition:-0.3s ease
 }
-
 a:hover{
     text-decoration: none;
-    color:white;
+    color:white
 }
 
-a:focus{
-    text-decoration: none;
-}
 .menu-bar{
     background:transparent;
     border-radius: 12px;
@@ -28,12 +25,46 @@ a:focus{
     padding-top:4px;
     padding-bottom:4px
 }
+.menu-bar:hover{
+    background: #4949ff54;
+    box-shadow:0 8px 16px 0 #00000033,0 6px 20px 0 #00000030;
+}
+.menu-bar:focus{
+    background: #4949ff54;
+    box-shadow:0 8px 16px 0 #00000033,0 6px 20px 0 #00000030;
+}
+.profile-menu-bar{
+    background:transparent;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    display: flex;
+    width:100%;
+    transition: 0.3s ease;
+}
+.profile-menu-bar:hover{
+    background: #f5f5f5cb;
+    box-shadow:0 8px 16px 0 #00000033,0 6px 10px 0 #00000030;
+}
+.profile-menu-bar:focus{
+    background: #f5f5f5ff;
+    box-shadow:0 8px 16px 0 #00000033,0 6px 10px 0 #00000030;
+}
+.side-pill{
+    background: #0a996986;
+    color:white;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.side-pill:hover{
+    background: #0a9969;
+}
 .menu-button{
     border-radius:12px;
     background:transparent;
     box-shadow:0 8px 16px 0 #00000033,0 6px 20px 0 #00000030;
     transition: 0.3s ease
 }
+
 .menu-button:focus{
     background:#adadff;
     box-shadow:0 0 0 0 #00000000;
@@ -46,16 +77,14 @@ a:focus{
     color:white;
     font-size: 24px;
     padding: 18px 36px 18px 36px;
-    background-color: #4c069c;
+    background-color: #5d00c7;
     transition: 0.5s ease;
 }
 .button-block:hover{
     outline: none;
     font-size: 28px;
-    color:white;
 }
 .button-block:focus{
-    outline:none;
     background-color: #7f22e9a4;
     font-size: 26px;
 }
@@ -114,12 +143,12 @@ a:focus{
     color:white;
     font-size: 22px;
     padding: 8px 22px 8px 22px;
-    background-color: #4c069c;
+    background-color: #5d00c7;
     transition: 0.5s ease;
 }
 .button-chip:hover{
     padding: 8px 42px 8px 42px;
-    background-color: #6206ca;
+    background-color: #5a00c0;
     box-shadow:0 8px 16px 0 #00000033,0 6px 20px 0 #00000030;
 }
 .button-chip:focus{
@@ -167,7 +196,11 @@ a:focus{
 }
 .normal-text{
     font-size: 32px;
-    color:#ffffff
+    color:black
+}
+.normal-text-sub{
+    font-size: 24px;
+    color:white
 }
 .work-box{
     margin-top: 28px;

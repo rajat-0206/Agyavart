@@ -8,8 +8,7 @@
   {% endblock %}
 	<!-- CSS only -->
 <link rel="icon" href="{% static 'images/rmailLogoConcept.svg' %}">
-<meta content=’width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0′ name=’viewport’ />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -20,17 +19,35 @@
 <link rel="stylesheet" type="text/css" href="{% static '/styles/profile.css' %}">
 <link rel="stylesheet" href="{% static '/styles/fmt.css' %}">
 <link rel="stylesheet" href="{% static '/styles/mainsetup.css' %}">
-<link rel="stylesheet" href="{% static '/styles/side_nav.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
+<style>
+  a{
+	text-decoration: none;
+	color:white;
+    transition:0.3s ease
+}
+
+a:hover{
+    text-decoration: none;
+    color:#2196f3;
+}
+
+a:focus{
+    text-decoration: none;
+    color:#2195f38c;
+}
+
+</style>
 </head>
-<body>
+<body style="font-family: Jost, sans-serif;">
 <!--top nav bar -->
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+<nav class="navbar fixed-top navbar-expand-lg navbar-light profile-menu-bar">
 	<img src="{% static 'images/graphic.png' %}" class ="imag" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 10px; cursor: pointer;" onclick="openNav()">
-   <a class="navbar-brand" href="rmail.html" style="font-size: 30px;">
+   <a class="button-chip navbar-brand" href="rmail.html" style="font-size: 22px;color:white">
     <img src="{% static 'images/rmailLogoConcept.svg' %}" width="25" class="align-top" alt="Rmail Logo">
-    gyavart
-  </a>
+      gyavart
+    </a>
   
   <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
@@ -45,10 +62,10 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="nav nav-pills" >
-    <li class="nav-item">
-      <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"><button class="btn btn-secondary hide" data-toggle="modal" data-target="#messageModal" onclick="yoyo()" >Send new message </button> </a>
-    </li>
-  </ul>
+      <li class="nav-item">
+        <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"><button class="btn btn-secondary hide" data-toggle="modal" data-target="#messageModal" onclick="yoyo()" >Send new message </button> </a>
+      </li>
+    </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search(available soon)" disabled>
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
@@ -111,9 +128,8 @@
 <div class="cover">
 	<div class ="blck">
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#coverModal">
-  		Change Cover Image
-		</button>
-</form>
+  		Edit Cover
+	</button>
 	</div>
 	<img src="{{curl}}" width="100%" height ="250px" alt="">
 </div>
@@ -123,60 +139,48 @@
     <div class="overlay" data-toggle="modal" data-target="#exampleModal">Change</div>
 	</div>
 	<div class="name">
-		<h1>{{Name }}</h1>
-    <h3>@{{ username}}</h3>
+		<h1 style="font-size: 64px;font-family: Jost,sans-serif;">{{Name }}</h1>
+    <h3 style="font-size: 26px;font-family: Jost,sans-serif;">@{{ username}}</h3>
 	</div>
 </div>
 
 	<div class="secondname">
-		<h1>{{Name }}</h1>
-    <h3>@{{ username}}</h3>	</div>
+		<h1 style="font-size: 46px;font-family: Jost,sans-serif;">{{Name }}</h1>
+    <h3 style="font-size: 22px;font-family: Jost,sans-serif;">@{{ username}}</h3>	</div>
 
-
-<button class="tablink" onclick="openPage('Home', this, '#5DADE2 ')" id="defaultOpen">Basic Details</button>
-<button class="tablink" onclick="openPage('News', this, '#5DADE2 ')">Educational Details</button>
-<button class="tablink" onclick="openPage('Contact', this, '#5DADE2 ')">Contact Details</button>
-<button class="tablink" onclick="openPage('About', this, '#5DADE2 ')">Feature Photos</button>
-<div id="Home" class="tabcontent">
-	<center>
-<table class="table table-borderless">
+<div id="Home" class="tabcontent fmt-animate-bottom">
+<table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-user-circle-o" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Name</strong></td>
-      <td>{{ Name }}</td>
+      <td><i class="fa fa-envelope" ></i>&nbsp;&nbsp;Email</td>
+      <td><a href="mailto:{{ Email }}">{{ Email }}</a></td>
     </tr>
     <tr>
-      <td><i class="fa fa-envelope" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Email</strong></td>
-      <td>{{ Email }}</td>
-    </tr>
-    <tr>
-
-      <td><i class="fa fa-id-card-o" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Date of Birth</strong></td>
+      <td><i class="fa fa-id-card-o" ></i>&nbsp;&nbsp;Birthday</td>
       <td>{{ DOB }}</td>
     </tr>
     <tr>
-      <td><i class="fa fa-group" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Gender</strong></td>
+      <td><i class="fa fa-group" ></i>&nbsp;&nbsp;Gender</td>
       <td>{{ Gender }}</td>
     </tr>
   </tbody>
 </table>
-</center>
 </div>
 
-<div id="News" class="tabcontent">
+<div id="News" class="tabcontent fmt-animate-bottom ">
 	<center>
-<table class="table table-borderless">
+<table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-pencil" style="font-size:20px"></i>&nbsp;&nbsp;<strong>School</strong></td>
+      <td ><i class="fa fa-pencil" ></i>&nbsp;&nbsp;School</td>
       <td>{{school }}</td>
     </tr>
     <tr>
-      <td><i class="fa fa-graduation-cap" style="font-size:20px"></i>&nbsp;&nbsp;<strong>College</strong></td>
+      <td><i class="fa fa-graduation-cap" ></i>&nbsp;&nbsp;College</td>
       <td>{{college }}</td>
     </tr>
         <tr>
-      <td><i class="fa fa-institution" style="font-size:20px;"></i>&nbsp;&nbsp;<strong>Higher Education</strong></td>
+      <td><i class="fa fa-institution" ></i>&nbsp;&nbsp;Higher Education</td>
       <td>{{higher }}</td>
     </tr>
   </tbody>
@@ -184,33 +188,38 @@
 </center>
 </div>
 
-<div id="Contact" class="tabcontent">
+<div id="Contact" class="tabcontent fmt-animate-bottom " >
 	<center>
-<table class="table table-borderless">
+<table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-facebook-official" style="font-size:20px;color:rgb(59,89,152);"></i><strong>&nbsp;&nbsp;Facebook</strong> </td>
-      <td><a href="https://www.facebook.com/{{fb}}">https://www.facebook.com/{{fb}}</a></td>
+      <td ><i class="fa fa-facebook-official"></i> </td>
+      <td><a href="https://www.facebook.com/{{fb}}">@{{fb}}</a></td>
     </tr>
     <tr>
-      <td><i class="fa fa-instagram" style="font-size:20px;color:#3f729b;"></i>&nbsp;&nbsp;<strong>Instagram</strong></td>
-      <td><a href=" https://www.instagram.com/{{insta}}"> https://www.instagram.com/{{insta}}</a></td>
+      <td><i class="fa fa-instagram" style="font-size:28px;color:#3f729b;"></i></td>
+      <td><a href="https://www.instagram.com/{{insta}}">@{{insta}}</a></td>
     </tr>
         <tr>
-      <td><i class="fa fa-twitter" style="font-size:20px;color:#38A1F3;"></i><strong>&nbsp;&nbsp;Twitter</strong></td>
-      <td><a href="https://www.twitter.com/{{twitter}}">https://www.twitter.com/{{twitter}}</td>
+      <td><i class="fa fa-twitter" style="font-size:28px;color:#38A1F3;"></i></td>
+      <td><a href="https://www.twitter.com/{{twitter}}">@{{twitter}}</td>
     </tr>
         <tr>
-      <td><strong>Tik Tok</strong></td>
+      <td>Tik Tok</td>
       <td>@{{tok}}</td>
     </tr>
   </tbody>
 </table>
 </center></div>
-
-<div id="About" class="tabcontent">
+<div id="About" class="tabcontent fmt-bottom fmt-animate-bottom ">
   <h3>About</h3>
   <p>Who we are and what we do.</p>
+</div>
+<div class="fmt-bottom fmt-shadow" style="z-index: 3;">
+<button class="tablink"  onclick="openPage('Home', this, '#7236aa ')" id="defaultOpen">Personal Detail</button>
+<button class="tablink" style="outline: none;" onclick="openPage('News', this, '#7236aa ')">Ed-Alma Mater</button>
+<button class="tablink" style="outline: none;" onclick="openPage('Contact', this, '#7236aa ')">Get connected</button>
+<button class="tablink" style="outline: none;" onclick="openPage('About', this, '#7236aa ')">Feature Photos</button>
 </div>
 
 
