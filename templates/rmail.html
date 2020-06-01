@@ -8,12 +8,11 @@ Agyavart
 </title>
 {% endblock %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#498dcc">
-<link rel="manifest" href="manifest.json">
 	<!-- CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static '/styles/fmt.css' %}">
-<link rel="stylesheet" href="{% static '/styles/mainsetup.css' %}">
+<link rel="stylesheet" href="/static/styles/fmt.css">
+<link rel="stylesheet" href="/static/styles/main_setup.css">
+<link rel="stylesheet" href="/static/styles/side_nav.css">
 <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -22,28 +21,27 @@ Agyavart
 <link rel="icon" href="{% static 'images/rmailLogoConcept.svg' %}">
 
 </head>
-<style type="text/css">
+<style>
   body{
     font-family: 'Jost', sans-serif;
-    background-image: url("/static/images/hero_bg_1.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: url("/static/images/rmail.jpg");
     background-attachment: fixed;
     background-position-x: 25%;
     background-position-y: 50%;
   }
+
+
 </style>
 <body>
-<nav class="navbar fixed-top navbar-expand-lg ">
-  <a class="button-chip navbar-brand" href="rmail.html">
+<nav class="navbar fixed-top navbar-expand-lg 	">
+  <a class="navbar-brand" href="rmail.html" style="font-size: 30px;">
     <img src="{% static 'images/rmailLogoConcept.svg' %}" width="25" class="align-top" alt="Rmail Logo">
     gyavart
   </a>
-
-  <button class="navbar-toggler menu-button" type="button" style="outline:none" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <img src="/static/images/menuActionIcon.svg" width="40"/>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon button-tab"></span>
   </button>
-  <div class="collapse navbar-collapse fmt-animate-top menu-bar" id="navbarNav">
+  <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item button-tab">
         <a class="nav-link" href="login.html" style="font-size: 20px;">
@@ -57,40 +55,37 @@ Agyavart
       <li class="nav-item button-tab">
         <a class="nav-link" href="about.html" style="font-size: 20px;">About</a>
       </li>
-    </ul>
   </div>
 </nav>
 {% block content %}
 
 <div class="fmt-row"  style="padding: 104px 48px 0px 48px; background-size: 100%;">
-  <div class="fmt-col m5 fmt-left fmt-animate-left">
-    <div class="catch-line" style="color:#f8f8f8">
-    
+  <div class="fmt-col m5 fmt-left">
+    <div class="catch-line" style="color:black">
       Building a world of anonymity,<br/>
       yet closer together.
-  
     </div>
-    <div style="margin-top: 76px;" class="fmt-animate-bottom">
+    <div style="margin-top: 76px;">
       <a href="signup.html" class="button-block">Get Started</a>
     </div>
   </div>
-  <div class="fmt-col m6 fmt-right fmt-animate-right" style="margin-top: 38px;">
+  <div class="fmt-col m6 fmt-right">
     <div class="work-box">
       <form action="auth" method = "post">
         {% csrf_token %}
-      <label class="input-label fmt-animate-top" for="email">Your username.</label>
-      <input class="edit-text-box fmt-animate-right" type="text" id="email" name="username" required>
+      <label class="input-label" for="email">Your username.</label>
+      <input class="edit-text-box" type="text" id="email" name="username" required>
       <br /><br /><br />
-      <label class="input-label fmt-animate-top" for="pass">Secret passphrase.</label>
-      <input class="edit-text-box fmt-animate-right" type="password" id="pass" name ="password" required>
+      <label class="input-label" for="pass">Secret passphrase.</label>
+      <input class="edit-text-box" type="password" id="pass" name ="password" required>
       <br /><br /><br />
       <div class="fmt-row">
         <div class="fmt-col m5">
-          <button type="submit" class="fmt-left button-block-sec fmt-animate-bottom">Let's go</button>
+          <button type="submit" class="fmt-left button-block" style="background-color: #14bb4c;">Let's go</button>
 
         </div>
-        <div class="fmt-col m7 fmt-animate-bottom">
-          <a href="login.html" style="margin-top:12px" class="fmt-right button-tab">Problem?</a>
+        <div class="fmt-col m7">
+          <a href="login.html" style="margin-top:12px" class="fmt-right button-tab">Any problem?</a>
         </div>
       </div>
       <br />
@@ -98,25 +93,6 @@ Agyavart
   </form>
   </div>
 </div>
-</div>
 {% endblock %}
-<script type="text/javascript">
-  window.addEventListener('load', function() {
-    registerSW();
-  });
-
-
-  async function registerSW()
-  {
-    if ('serviceWorker' in navigator) {
-      try {
-      await navigator.serviceWorker.register("{%static 'scripts/serviceworker.js' %}"); 
-      console.log("Service Worker register.")
-      } catch (e) {
-        console.log('ServiceWorker registration failed: ', e);
-      }
-    } 
-  }
-</script>
 </body>
 </html>
