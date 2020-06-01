@@ -35,7 +35,9 @@ urlpatterns = [
     path('changepass/',views.changepass,name="password"),
     path('delacc/',views.delacc,name="account"),
     path('viewsent/',views.viewsent,name="account"),
-    path('user/<str:username>',views.user,name="account")
+    path('user/<str:username>',views.user,name="account"),
+    path('manifest.json',views.manifest,name="manifest"),
+
 
 
 
