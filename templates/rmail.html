@@ -1,5 +1,5 @@
 {%load static %}
-{% load pwa %}
+{%load pwa %} 
 <!doctype html>
 <html>
 {%block temp %}
@@ -8,7 +8,17 @@
 Agyavart
 </title>
 {% endblock %}
-{% progressive_web_app_meta %}
+  <script>
+var myVar;
+function myFunction() {
+  document.getElementById("loaderbackground").style.display = "block";
+}
+
+function showPage() {
+  document.getElementById("loaderbackground").style.display = "none";
+}
+</script>
+{% progressive_web_app_meta %}   
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
 <meta name="theme-color" content="#498dcc">
 	<!-- CSS only -->
@@ -33,8 +43,147 @@ Agyavart
     background-position-x: 25%;
     background-position-y: 50%;
   }
+  /* Center the loader */
+ 
+/* Center the loader */
+#loaderbackground {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top:0px;
+  left: 0px;
+  z-index: 1789;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.dot {
+  position: absolute;
+  left: 45%;
+  top: 50%;
+  z-index: 1789;
+  width: 20px;
+  height: 20px;
+  margin: -75px 0 0 -75px;
+  border-radius: 100%;
+  color: #456;
+  background-color:#456; 
+
+}
+
+#loadertext {
+  position:relative;
+  top:51%;
+}
+
+#loader21{
+    margin-left: 0px;
+    color: #E74C3C;
+  background-color:#E74C3C;
+    -webkit-animation: jump1 1s linear infinite;
+  animation: jump1 1s linear infinite;
+}
+#loader22{
+  margin-left: 25px;
+      color: #3498DB;
+  background-color:#3498DB;
+    -webkit-animation: jump2 1s linear infinite;
+  animation: jump2 1s linear infinite;
+}
+#loader23{
+  margin-left: 50px;
+    color: #2ECC71;
+    background-color:#2ECC71;
+    -webkit-animation: jump3 1s linear infinite;
+  animation: jump3 1s linear infinite;
+}
+#loader24{
+  margin-left: 75px;
+    color: #F1C40F;
+  background-color:#F1C40F;
+    -webkit-animation: jump4 1s linear infinite;
+  animation: jump4 1s linear infinite;
+}
+
+@-webkit-keyframes jump1 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,-30px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@-webkit-keyframes jump2 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,-30px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@-webkit-keyframes jump3 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,-30px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@-webkit-keyframes jump4 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,-30px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+@keyframes jump1 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,-30px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@keyframes jump2 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,-30px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@keyframes jump3 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,-30px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@keyframes jump4 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,-30px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
 </style>
 <body>
+  <div id="loaderbackground" style="display: none;">
+<div id ="loader21" class="dot"></div>
+<div id ="loader22" class="dot"></div>
+<div id ="loader23" class="dot"></div>
+<div id ="loader24" class="dot"></div>
+<div id="loadertext" class="sub-catch-line fmt-center">Please Wait</div>
+</div>
 <nav class="navbar fixed-top navbar-expand-lg ">
   <a class="button-chip navbar-brand" href="rmail.html">
     <img src="{% static 'images/rmailLogoConcept.svg' %}" width="25" class="align-top" alt="Rmail Logo">
@@ -77,7 +226,7 @@ Agyavart
   </div>
   <div class="fmt-col m6 fmt-right fmt-animate-right" style="margin-top: 38px;">
     <div class="work-box">
-      <form action="auth" method = "post">
+      <form action="auth" method = "post" onsubmit="myFunction()">
         {% csrf_token %}
       <label class="input-label fmt-animate-top" for="email">Your username.</label>
       <input class="edit-text-box fmt-animate-right" type="text" id="email" name="username" required>

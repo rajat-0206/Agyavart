@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from datetime import datetime
-from .models import sentmessage,recievedmessage
+from .models import sentmessage,recievedmessage,users
 
 import hashlib, binascii, os
 
@@ -34,6 +34,20 @@ def manifest(request):
 def temp(request):
 	return render(request,'signup1.html')
 
+def about(request):
+	return render("404.html")
+
+def alluser(request):
+	result = firebase.get("/users",None)
+	data =[]
+	for i in result:
+		obj = users()
+		obj.username = i
+		obj.name = result[i]['Name']
+		obj.photo = result[i]['DP']
+		data.append(obj)
+	return render(request,'alluser.html',{'data':data})
+
 def hash_password(password):
     """Hash a password for storing."""
     salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
@@ -56,10 +70,10 @@ def verify_password(stored_password, provided_password):
 # Create your views here.
 
 def home(request):
-	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
-		return redirect('profile')
-	else:
-		return render(request,'rmail.html')
+		if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+			return redirect('profile')
+		else:
+			return render(request,'rmail.html')
 
 def about(request):
 	return render(request,'about.html')

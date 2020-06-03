@@ -21,3 +21,8 @@ class recievedmessage:
 	time : str
 	photo : str
 
+class users:
+	photo: str
+	name: str
+	username: str
+

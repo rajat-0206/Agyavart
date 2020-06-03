@@ -15,11 +15,12 @@
 {% block sidenav %}
 <div id="sidenav" class="bar">
 <div class="navhead">
-<a href="profile.html">PROFILE</a>
-<a href="message.html" >SENT MESSAGE</a>
-<a href="recieve.html" class="active">RECIEVED MESSAGE</a>
-<a href="setting.html">SETTINGS</a>
-<a href="logout.html" class="spcl">LOGOUT</a>
+<a href="profile.html" onclick="myFunction()">PROFILE</a>
+<a href="message.html" onclick="myFunction()" >SENT MESSAGE</a>
+<a href="recieve.html" class="active" onclick="myFunction()">RECIEVED MESSAGE</a>
+<a href ="alluser.html" onclick="myFunction()" >VIEW ALL USERS</a>
+<a href="setting.html" onclick="myFunction()">SETTINGS</a>
+<a href="logout.html" class="spcl" onclick="myFunction()">LOGOUT</a>
 </div>
 </div>
 {% endblock %}

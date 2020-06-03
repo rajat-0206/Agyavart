@@ -37,6 +37,8 @@ urlpatterns = [
     path('viewsent/',views.viewsent,name="account"),
     path('user/<str:username>',views.user,name="account"),
     path('manifest.json',views.manifest,name="manifest"),
+    path('alluser.html',views.alluser,name="alluser"),
+    path('alluser',views.alluser,name="alluser"),
 
 
 

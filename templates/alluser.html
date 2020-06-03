@@ -1,0 +1,40 @@
+{% extends 'profile.html' %}
+{%load static %}
+<head>
+{% block title %}
+<title>
+All Users</title>
+<link rel="stylesheet" type="text/css" href="{% static 'styles/alluser.css' %}">
+{% endblock %}
+
+
+{% block sidenav %}
+<div id="sidenav" class="bar">
+<div class="navhead">
+<a href="profile.html"  onclick="myFunction()">PROFILE</a>
+<a href="message.html" onclick="myFunction()">SENT MESSAGE</a>
+<a href="recieve.html" onclick="myFunction()">RECIEVED MESSAGE</a>
+<a href ="alluser.html" class="active" onclick="myFunction()" >VIEW ALL USERS</a>
+<a href="setting.html" onclick="myFunction()">SETTINGS</a>
+<a href="logout.html" class="spcl" onclick="myFunction()">LOGOUT</a>
+</div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="maincontent">
+  {% for i in data %}
+
+  <div class="column">
+    <a class="card" href="user/{{i.username}}" onclick="myFunction()">
+      <img src="{{i.photo}}" alt="{{i.name}}">
+        <span class="heading">{{i.name}}</span>
+        <span class="heading1">@{{i.username}}</span>
+
+    </a>
+  </div>
+  {%endfor %}
+  
+
+{% endblock %}

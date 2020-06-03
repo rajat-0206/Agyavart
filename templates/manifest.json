@@ -1,6 +1,6 @@
 {
   "short_name": "Agyavart",
-  "name": "Agyavart App",
+  "name": "Agyavart",
   "icons": [
     {
       "src": "static/images/rmailLogoConcept.png",
@@ -13,7 +13,7 @@
       "sizes": "192x192"
     }
   ],
-  "start_url": "http://127.0.0.1:8000/",
+  "start_url": "http://127.0.0.1:8000",
   "scope": ".",
   "background_color": "#3367D6",
   "display": "standalone",
