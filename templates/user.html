@@ -7,6 +7,16 @@
 	<title>{{title }}</title>
   {% endblock %}
 	<!-- CSS only -->
+  <script>
+var myVar;
+function myFunction() {
+  document.getElementById("loaderbackground").style.display = "block";
+}
+
+function showPage() {
+  document.getElementById("loaderbackground").style.display = "none";
+}
+</script>
 <link rel="icon" href="{% static 'images/rmailLogoConcept.svg' %}">
 <meta content=’width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0′ name=’viewport’ />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,16 +28,157 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="{% static '/styles/profile.css' %}">
-<link rel="stylesheet" href="/static/styles/fmt.css">
-<link rel="stylesheet" href="/static/styles/main_setup.css">
+<link rel="stylesheet" href="{% static 'styles/fmt.css' %}">
+<link rel="stylesheet" href="{% static 'styles/mainsetup.css' %}">
 <link rel="stylesheet" href="/static/styles/side_nav.css">
 </head>
+<style type="text/css">
+
+/* Center the loader */
+#loaderbackground {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top:0px;
+  left: 0px;
+  z-index: 1789;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.dot {
+  position: absolute;
+  left: 45%;
+  top: 50%;
+  z-index: 1789;
+  width: 20px;
+  height: 20px;
+  margin: -75px 0 0 -75px;
+  border-radius: 100%;
+  color: #456;
+  background-color:#456; 
+
+}
+
+#loadertext {
+  position:relative;
+  top:51%;
+}
+
+#loader21{
+    margin-left: 0px;
+    color: #E74C3C;
+  background-color:#E74C3C;
+    -webkit-animation: jump1 1s linear infinite;
+  animation: jump1 1s linear infinite;
+}
+#loader22{
+  margin-left: 25px;
+      color: #3498DB;
+  background-color:#3498DB;
+    -webkit-animation: jump2 1s linear infinite;
+  animation: jump2 1s linear infinite;
+}
+#loader23{
+  margin-left: 50px;
+    color: #2ECC71;
+    background-color:#2ECC71;
+    -webkit-animation: jump3 1s linear infinite;
+  animation: jump3 1s linear infinite;
+}
+#loader24{
+  margin-left: 75px;
+    color: #F1C40F;
+  background-color:#F1C40F;
+    -webkit-animation: jump4 1s linear infinite;
+  animation: jump4 1s linear infinite;
+}
+
+@-webkit-keyframes jump1 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,-30px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@-webkit-keyframes jump2 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,-30px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@-webkit-keyframes jump3 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,-30px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@-webkit-keyframes jump4 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,-30px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+@keyframes jump1 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,-30px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@keyframes jump2 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,-30px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@keyframes jump3 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,-30px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@keyframes jump4 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,-30px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+
+</style>
 <body>
 <!--top nav bar -->
-
+<body style="font-family: Jost, sans-serif;">
+<div id="loaderbackground" style="display: none;">
+<div id ="loader21" class="dot"></div>
+<div id ="loader22" class="dot"></div>
+<div id ="loader23" class="dot"></div>
+<div id ="loader24" class="dot"></div>
+<div id="loadertext" class="sub-catch-line fmt-center">Please Wait</div>
+</div>
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
 	<img src="{% static 'images/graphic.png' %}" class ="imag" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 10px; cursor: pointer;" onclick="openNav()">
-   <a class="navbar-brand" href="rmail.html" style="font-size: 30px;">
+   <a class="navbar-brand" href="/rmail.html" style="font-size: 30px;">
     <img src="{% static 'images/rmailLogoConcept.svg' %}" width="25" class="align-top" alt="Rmail Logo">
     gyavart
   </a>
@@ -90,8 +241,12 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="revyoyo()">Close</button>
-        <button type="submit" class="btn btn-primary" onclick="bhejnahai()">Send message</button>
-      </div>
+        <button type="submit" class="btn btn-primary" id="msgsubmit" onclick="bhejnahai()">Send message</button>
+        <button class="btn btn-primary" type="button" id="msgloader" disabled style="display: none;">
+         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Please wait...
+      </button>
+    </div>
     </div>
   </div>
 </div>
@@ -102,11 +257,12 @@
 <div id="sidenav" class="bar">
 <div class="navhead">
 {% if is_loged %}
-<a href="/profile.html">PROFILE</a>
-<a href="/message.html" >SENT MESSAGE</a>
-<a href="/recieve.html" >RECIEVED MESSAGE</a>
-<a href="/setting.html">SETTINGS</a>
-<a href="/logout.html" class="spcl">LOGOUT</a>
+<a href="/profile.html" onclick="myFunction()">PROFILE</a>
+<a href="/message.html" onclick="myFunction()">SENT MESSAGE</a>
+<a href="/recieve.html" onclick="myFunction()">RECIEVED MESSAGE</a>
+<a href ="/alluser.html" onclick="myFunction()" >VIEW ALL USERS</a>
+<a href="/setting.html" onclick="myFunction()">SETTINGS</a>
+<a href="/logout.html" class="spcl" onclick="myFunction()">LOGOUT</a>
 {% else %}
 <a href="/rmail.html">HOME</a>
 <a href="/login.html">LOGIN</a>
@@ -311,12 +467,20 @@ function bhejnahai() {
 
   if(flag==1)
   {
+    document.getElementById("msgloader").style.display = "block";
+    document.getElementById("msgsubmit").style.display = "none";
+    document.getElementById('message-text').disabled = true;
+    document.getElementById('recipient').disabled = true;
   var url = "recipient="+kisko+"&message="+sandhesa+"&csrfmiddlewaretoken="+"{{csrf_token}}";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 
     document.getElementById("dabba").style.display = "block";
+    document.getElementById("msgloader").style.display = "none";
+    document.getElementById("msgsubmit").style.display = "block";
+    document.getElementById('message-text').disabled = false;
+    document.getElementById('recipient').disabled = false;
     document.getElementById("dabbaerrormsg").innerHTML = this.responseText;
     }
   };

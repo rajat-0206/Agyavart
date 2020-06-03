@@ -43,7 +43,7 @@
 
 <div class="fmt-col m6 loginbox" style="margin-bottom:80px">
   <div class="work-box fmt-animate-bottom">
-    <form action="auth" method = "post">
+    <form action="auth" method = "post" onsubmit="myFunction()">
       {% csrf_token %}
       <label class="input-label fmt-animate-left" for="email">Your username.</label>
       <input class="edit-text-box fmt-animate-right" type="text" id="email" name="username" value = "{{username}}" required>
@@ -86,7 +86,7 @@
           <button class="tablinks" onclick="openCity(event, 'funame')">Forgot Username</button>
         </div>
         <div id="fpassword" class="tabcontent">
-          <form method="post" action="fpass">
+          <form method="post" action="fpass" onsubmit="myFunction()">
             {% csrf_token %}
             <div class="form-group">
               <input type="text" class="form-control" name="fuser" placeholder="Username" required>
@@ -101,7 +101,7 @@
           </form>
         </div>
         <div id="funame" class="tabcontent">
-          <form method="post" action="fuser">
+          <form method="post" action="fuser" onsubmit="myFunction()">
             {% csrf_token %}
             <div class="form-group">
               <input type="text" class="form-control" name="mobile" placeholder="Mobile number" required>
