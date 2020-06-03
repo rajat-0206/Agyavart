@@ -18,8 +18,7 @@ function showPage() {
 }
 </script>
 <link rel="icon" href="{% static 'images/rmailLogoConcept.svg' %}">
-<meta content=’width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0′ name=’viewport’ />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -31,9 +30,25 @@ function showPage() {
 <link rel="stylesheet" href="{% static 'styles/fmt.css' %}">
 <link rel="stylesheet" href="{% static 'styles/mainsetup.css' %}">
 <link rel="stylesheet" href="/static/styles/side_nav.css">
+<link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
 </head>
 <style type="text/css">
 
+a{
+	text-decoration: none;
+	color:white;
+    transition:0.3s ease
+}
+
+a:hover{
+    text-decoration: none;
+    color:#2196f3;
+}
+
+a:focus{
+    text-decoration: none;
+    color:#2195f38c;
+}
 /* Center the loader */
 #loaderbackground {
   width: 100%;
@@ -176,9 +191,10 @@ function showPage() {
 <div id ="loader24" class="dot"></div>
 <div id="loadertext" class="sub-catch-line fmt-center">Please Wait</div>
 </div>
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-light profile-menu-bar">
 	<img src="{% static 'images/graphic.png' %}" class ="imag" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 10px; cursor: pointer;" onclick="openNav()">
-   <a class="navbar-brand" href="/rmail.html" style="font-size: 30px;">
+  <a class="button-chip navbar-brand" href="/rmail.html" style="font-size: 22px;color:white">
     <img src="{% static 'images/rmailLogoConcept.svg' %}" width="25" class="align-top" alt="Rmail Logo">
     gyavart
   </a>
@@ -310,29 +326,27 @@ function showPage() {
     {% endif %}	</div>
 
 
-<button class="tablink" onclick="openPage('Home', this, '#5DADE2 ')" id="defaultOpen">Basic Details</button>
-<button class="tablink" onclick="openPage('News', this, '#5DADE2 ')">Educational Details</button>
-<button class="tablink" onclick="openPage('Contact', this, '#5DADE2 ')">Contact Details</button>
-<button class="tablink" onclick="openPage('About', this, '#5DADE2 ')">Feature Photos</button>
-<div id="Home" class="tabcontent">
+  <div class="fmt-bottom fmt-shadow" style="z-index: 3;">
+    <button class="tablink" style="outline: none;" onclick="openPage('Home', this, '#7236aa ')" id="defaultOpen"><i class="fa fa-user"></i></button>
+    <button class="tablink" style="outline: none;" onclick="openPage('News', this, '#7236aa ')"><i class="fa fa-book"></i></button>
+    <button class="tablink" style="outline: none;" onclick="openPage('Contact', this, '#7236aa ')"><i class="fa fa-link"></i></button>
+    <button class="tablink" style="outline: none;" onclick="openPage('About', this, '#7236aa ')"><i class="fa fa-picture-o"></i></button>
+  </div>
+<div id="Home" class="tabcontent fmt-animate-bottom">
 	<center>
-<table class="table table-borderless">
+<table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-user-circle-o" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Name</strong></td>
-      <td>{{ Name }}</td>
-    </tr>
-    <tr>
-      <td><i class="fa fa-envelope" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Email</strong></td>
-      <td>{{ Email }}</td>
+      <td><i class="fa fa-envelope" style="font-size:20px"></i>&nbsp;&nbsp;Email</td>
+      <td><a href="mailto:{{ Email }}">{{ Email }}</a></td>
     </tr>
     <tr>
 
-      <td><i class="fa fa-id-card-o" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Date of Birth</strong></td>
+      <td><i class="fa fa-id-card-o" style="font-size:20px"></i>&nbsp;&nbsp;Birthday</td>
       <td>{{ DOB }}</td>
     </tr>
     <tr>
-      <td><i class="fa fa-group" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Gender</strong></td>
+      <td><i class="fa fa-group" style="font-size:20px"></i>&nbsp;&nbsp;Gender</td>
       <td>{{ Gender }}</td>
     </tr>
   </tbody>
@@ -340,20 +354,20 @@ function showPage() {
 </center>
 </div>
 
-<div id="News" class="tabcontent">
+<div id="News" class="tabcontent fmt-animate-bottom">
 	<center>
-<table class="table table-borderless">
+<table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-pencil" style="font-size:20px"></i>&nbsp;&nbsp;<strong>School</strong></td>
+      <td ><i class="fa fa-pencil" style="font-size:20px"></i>&nbsp;&nbsp;School</td>
       <td>{{school }}</td>
     </tr>
     <tr>
-      <td><i class="fa fa-graduation-cap" style="font-size:20px"></i>&nbsp;&nbsp;<strong>College</strong></td>
+      <td><i class="fa fa-graduation-cap" style="font-size:20px"></i>&nbsp;&nbsp;College</td>
       <td>{{college }}</td>
     </tr>
         <tr>
-      <td><i class="fa fa-institution" style="font-size:20px;"></i>&nbsp;&nbsp;<strong>Higher Education</strong></td>
+      <td><i class="fa fa-institution" style="font-size:20px;"></i>&nbsp;&nbsp;Higher Education</td>
       <td>{{higher }}</td>
     </tr>
   </tbody>
@@ -361,31 +375,31 @@ function showPage() {
 </center>
 </div>
 
-<div id="Contact" class="tabcontent">
+<div id="Contact" class="tabcontent fmt-animate-bottom">
 	<center>
-<table class="table table-borderless">
+<table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-facebook-official" style="font-size:20px;color:rgb(59,89,152);"></i><strong>&nbsp;&nbsp;Facebook</strong> </td>
+      <td ><i class="fa fa-facebook-official" style="font-size:20px;color:rgb(59,89,152);"></i>&nbsp;&nbsp;Facebook</td>
       <td><a href="https://www.facebook.com/{{fb}}">https://www.facebook.com/{{fb}}</a></td>
     </tr>
     <tr>
-      <td><i class="fa fa-instagram" style="font-size:20px;color:#3f729b;"></i>&nbsp;&nbsp;<strong>Instagram</strong></td>
+      <td><i class="fa fa-instagram" style="font-size:20px;color:#3f729b;"></i>&nbsp;&nbsp;Instagram</td>
       <td><a href=" https://www.instagram.com/{{insta}}"> https://www.instagram.com/{{insta}}</a></td>
     </tr>
         <tr>
-      <td><i class="fa fa-twitter" style="font-size:20px;color:#38A1F3;"></i><strong>&nbsp;&nbsp;Twitter</strong></td>
+      <td><i class="fa fa-twitter" style="font-size:20px;color:#38A1F3;"></i>&nbsp;&nbsp;Twitter</td>
       <td><a href="https://www.twitter.com/{{twitter}}">https://www.twitter.com/{{twitter}}</td>
     </tr>
         <tr>
-      <td><strong>Tik Tok</strong></td>
+      <td>Tik Tok</td>
       <td>@{{tok}}</td>
     </tr>
   </tbody>
 </table>
 </center></div>
 
-<div id="About" class="tabcontent">
+<div id="About" class="tabcontent fmt-animate-bottom">
   <h3>About</h3>
   <p>Who we are and what we do.</p>
 </div>
