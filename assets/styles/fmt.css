@@ -110,7 +110,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .fmt-dropdown-hover.fmt-mobile,.fmt-dropdown-hover.fmt-mobile .fmt-btn,.fmt-dropdown-hover.fmt-mobile .fmt-button,.fmt-dropdown-click.fmt-mobile,.fmt-dropdown-click.fmt-mobile .fmt-btn,.fmt-dropdown-click.fmt-mobile .fmt-button{width:100%}}
 @media (max-width:768px){.fmt-modal-content{width:500px}.fmt-modal{padding-top:50px}}
 @media (min-width:993px){.fmt-modal-content{width:900px}.fmt-hide-large{display:none!important}.fmt-sidebar.fmt-collapse{display:block!important}}
-@media (max-width:992px) and (min-width:601px){.fmt-hide-medium{display:none!important}}
+@media (max-width:992px) and (min-width:601px){.fmt-hide-medium{display:none!important} }
 @media (max-width:992px){.fmt-sidebar.fmt-collapse{display:none}.fmt-main{margin-left:0!important;margin-right:0!important}.fmt-auto{max-width:100%}}
 .fmt-top,.fmt-bottom{position:fixed;width:100%;z-index:1}.fmt-top{top:0}.fmt-bottom{bottom:0}
 .fmt-overlay{position:fixed;display:none;width:100%;height:100%;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:2}

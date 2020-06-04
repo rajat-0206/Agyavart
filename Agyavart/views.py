@@ -35,7 +35,11 @@ def temp(request):
 	return render(request,'signup1.html')
 
 def about(request):
-	return render("404.html")
+	return render(request,"about.html")
+
+def handle404(request,exception):
+	return render(request,"404.html")
+
 
 def alluser(request):
 	result = firebase.get("/users",None)

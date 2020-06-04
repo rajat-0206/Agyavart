@@ -23,5 +23,6 @@ urlpatterns = [
     path('', include('pwa.urls')),
 ]
 
+handler404 = 'Agyavart.views.handle404'
 
 
