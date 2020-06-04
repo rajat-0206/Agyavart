@@ -1,0 +1,45 @@
+{% load static %}
+ <!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/styles/fmt.css">
+    <link rel="stylesheet" href="/static/styles/main_setup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
+    <link rel="icon" href="{% static '/images/rmailLogoConcept.svg' %}">
+    <title>OFFLINE</title>
+    <style media="screen">
+      body{
+        background-color: #6f5cdb;
+        font-family: 'Jost', sans-serif;
+        background-image: url("/static/images/hero_bg_1.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position-x: 25%;
+        background-position-y: 50%;
+      }
+      #message { background: #8372e4; text-align: center; margin: 160px auto 16px; padding: 32px 24px 16px; border-radius: 3px; }
+      #message h3 { color: #888; font-weight: normal; font-size: 26px; margin: 16px 0 12px; }
+      #message h2 { color: #f3ffe3; font-weight: bold; font-size: 36px; margin: 0 0 8px; }
+      #message h1 { font-size: 24px; font-weight: 300; color: #75060699; margin: 0 0 16px;}
+      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 18px; }
+      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
+      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
+      @media (max-width: 600px) {
+        body, #message { margin-top: 0; box-shadow: none; }
+        body { border-top: 16px solid #ffa100; }
+      }
+    </style>
+  </head>
+  <body >
+    <div id="message">
+      <h2>You are Offline</h2>
+      <h1>Page cannot be displayed</h1>
+      <p>The service will resume when network is back you are connected back</p>
+    </div>
+  </body>
+</html>

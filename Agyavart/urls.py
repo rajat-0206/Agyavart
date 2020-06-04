@@ -40,6 +40,7 @@ urlpatterns = [
     path('manifest.json',views.manifest,name="manifest"),
     path('alluser.html',views.alluser,name="alluser"),
     path('alluser',views.alluser,name="alluser"),
+    path('offline.html',views.offline,name="offline"),
 
 
 

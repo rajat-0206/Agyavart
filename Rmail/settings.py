@@ -25,9 +25,9 @@ PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/scripts/', 'servicework
 SECRET_KEY = '+o!69rlly#54tqli5jo$z8)irb^po5rqpx&^!w7!#s7umz0*@)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition

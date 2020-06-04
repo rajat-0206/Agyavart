@@ -29,6 +29,9 @@ firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/'
 # auth = firebase.auth()
 
 #Hasing Functions
+
+def offline(request):
+	return render(request,"offline.html")
 def manifest(request):
 	return render(request,'manifest.json')
 def temp(request):
