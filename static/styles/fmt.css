@@ -1,28 +1,11 @@
 ﻿ /*based on and powered by w3.CSS 4.12 November 2018 by Jan Egil and Borge Refsnes */
-
-
-.loginbox{
-	transform: translate(50%);
-}
-
-@media screen and ( max-width:600px)
-{
-	.loginbox {
-		transform: translate(0%);
-	}
-}
-
-
-
-
-
 html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
 /* Extract from normalize.css by Nicolas Gallagher and Jonathan Neal git.io/normalize */
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
 article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}
 audio,canvas,progress,video{display:inline-block}progress{vertical-align:baseline}
 audio:not([controls]){display:none;height:0}[hidden],template{display:none}
-a{background-color-webkit-text-decoration-skip:objects}
+a{background-color:transparent;-webkit-text-decoration-skip:objects}
 a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}
 dfn{font-style:italic}mark{background:#ff0;color:#000}
 small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
@@ -141,11 +124,11 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .fmt-animate-fading{animation:fading 10s infinite}@keyframes fading{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
 .fmt-animate-fading-fast{animation:fading 2s infinite}@keyframes fading{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
 .fmt-animate-opacity{animation:opac 7s}@keyframes opac{from{opacity:0} to{opacity:1}}
-.fmt-animate-top{position:relative;animation:animatetop 0.7s}@keyframes animatetop{from{top:-300px;opacity:0} to{top:0;opacity:1}}
-.fmt-animate-left{position:relative;animation:animateleft 0.7s}@keyframes animateleft{from{left:-300px;opacity:0} to{left:0;opacity:1}}
-.fmt-animate-right{position:relative;animation:animateright 0.7s}@keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
-.fmt-animate-bottom{position:relative;animation:animatebottom 0.7s}@keyframes animatebottom{from{bottom:-300px;opacity:0} to{bottom:0;opacity:1}}
-.fmt-animate-zoom {animation:animatezoom 0.7s}@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}}
+.fmt-animate-top{position:relative;animation:animatetop 0.4s}@keyframes animatetop{from{top:-300px;opacity:0} to{top:0;opacity:1}}
+.fmt-animate-left{position:relative;animation:animateleft 0.4s}@keyframes animateleft{from{left:-300px;opacity:0} to{left:0;opacity:1}}
+.fmt-animate-right{position:relative;animation:animateright 0.4s}@keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
+.fmt-animate-bottom{position:relative;animation:animatebottom 0.4s}@keyframes animatebottom{from{bottom:-300px;opacity:0} to{bottom:0;opacity:1}}
+.fmt-animate-zoom {animation:animatezoom 0.4s}@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}}
 
 .fmt-animate-input{transition:width 0.4s ease-in-out}.fmt-animate-input:focus{width:100%!important}
 .fmt-opacity,.fmt-hover-opacity:hover{opacity:0.60}.fmt-opacity-off,.fmt-hover-opacity-off:hover{opacity:1}
