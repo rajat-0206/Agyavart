@@ -8,21 +8,22 @@
   <title>Message</title>
   <link rel="stylesheet" type="text/css" href="{% static 'styles/mesage.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
   {% endblock %}
 
 
  <!--side Navbar -->
 {% block sidenav %}
-<div id="sidenav" class="bar">
-<div class="navhead">
-<a href="profile.html" onclick="myFunction()">PROFILE</a>
-<a href="message.html" onclick="myFunction()" >SENT MESSAGE</a>
-<a href="recieve.html" class="active" onclick="myFunction()">RECIEVED MESSAGE</a>
-<a href ="alluser.html" onclick="myFunction()" >VIEW ALL USERS</a>
-<a href="setting.html" onclick="myFunction()">SETTINGS</a>
-<a href="logout.html" class="spcl" onclick="myFunction()">LOGOUT</a>
-</div>
-</div>
+<div id="sidenav" class="bar fmt-shadow" style="background-color: #0a14507e;">
+  <div class="navhead">
+  <a href="profile.html" class="button-chip" onclick="myFunction()">PROFILE</a>
+  <a href="message.html" class="button-chip" onclick="myFunction()">SENT MESSAGE</a>
+  <a href="recieve.html" class="active button-chip" onclick="myFunction()">RECIEVED MESSAGE</a>
+  <a href ="alluser.html" class="button-chip" onclick="myFunction()" >VIEW ALL USERS</a>
+  <a href="setting.html" class="button-chip" onclick="myFunction()">SETTINGS</a>
+  <a href="logout.html" class="spcl button-chip"  onclick="myFunction()">LOGOUT</a>
+  </div>
+  </div>
 {% endblock %}
 
 

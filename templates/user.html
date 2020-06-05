@@ -193,9 +193,9 @@ a:focus{
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-light profile-menu-bar">
 	<img src="{% static 'images/graphic.png' %}" class ="imag" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 10px; cursor: pointer;" onclick="openNav()">
-  <a class="button-chip navbar-brand" href="/rmail.html" style="font-size: 22px;color:white">
-    <img src="{% static 'images/rmailLogoConcept.svg' %}" width="25" class="align-top" alt="Rmail Logo">
-    gyavart
+  <a class="button-chip navbar-brand" href="/rmail.html" style="font-size: 22px;color:white;background-color: #0059ff;">
+    <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" class="align-top" alt="Agyavart Logo">
+    Agyavart
   </a>
   
   <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -269,19 +269,19 @@ a:focus{
 <!--side Navbar -->
 {% block sidenav %}
 
-<div id="sidenav" class="bar">
+<div id="sidenav" class="bar fmt-shadow" style="background-color: #0a14507e;">
 <div class="navhead">
 {% if is_loged %}
-<a href="/profile.html" onclick="myFunction()">PROFILE</a>
-<a href="/message.html" onclick="myFunction()">SENT MESSAGE</a>
-<a href="/recieve.html" onclick="myFunction()">RECIEVED MESSAGE</a>
-<a href ="/alluser.html" onclick="myFunction()" >VIEW ALL USERS</a>
-<a href="/setting.html" onclick="myFunction()">SETTINGS</a>
-<a href="/logout.html" class="spcl" onclick="myFunction()">LOGOUT</a>
+<a href="/profile.html" class="button-chip" onclick="myFunction()">PROFILE</a>
+  <a href="/message.html" class="button-chip" onclick="myFunction()">SENT MESSAGE</a>
+  <a href="/recieve.html" class="button-chip" onclick="myFunction()">RECIEVED MESSAGE</a>
+  <a href ="/alluser.html" class="active button-chip" onclick="myFunction()" >VIEW ALL USERS<br/>{{ username}}</a>
+  <a href="/setting.html" class="button-chip" onclick="myFunction()">SETTINGS</a>
+  <a href="/logout.html" class="spcl button-chip"  onclick="myFunction()">LOGOUT</a>
 {% else %}
-<a href="/rmail.html">HOME</a>
-<a href="/login.html">LOGIN</a>
-<a href="/signup.html" >SIGNUP</a>
+<a href="/rmail.html button-chip">HOME</a>
+<a href="/login.html button-chip">LOGIN</a>
+<a href="/signup.html button-chip" >SIGNUP</a>
 {% endif %}
 </div>
 </div>
