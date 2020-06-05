@@ -143,12 +143,12 @@ a:hover{
     color:white;
     font-size: 22px;
     padding: 8px 22px 8px 22px;
-    background-color: #5d00c7;
+    background-color: #0059ff;
     transition: 0.5s ease;
 }
 .button-chip:hover{
     padding: 8px 42px 8px 42px;
-    background-color: #5a00c0;
+    background-color: #0059ff;
     box-shadow:0 8px 16px 0 #00000033,0 6px 20px 0 #00000030;
 }
 .button-chip:focus{
