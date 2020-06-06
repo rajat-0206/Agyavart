@@ -5,17 +5,17 @@
     {
       "src": "static/images/rmailLogoConcept.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "756x756"
     },
     {
       "src": "static/images/rmailLogoConcept.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "756x756"
     }
   ],
   "start_url": "http://127.0.0.1:8000",
   "scope": ".",
   "background_color": "#3367D6",
   "display": "standalone",
-  "theme_color": "#498dcc "
+  "theme_color": "#3367D6"
 }
