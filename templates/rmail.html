@@ -44,6 +44,7 @@ function showPage() {
   <!-- Add Firebase products that you want to use -->
   <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+  <script src='https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js'></script>;
   <script type="text/javascript">
     var firebaseConfig = {
     apiKey: "AIzaSyBp17YUm4uju7nqT5syTdGIUc_mJ253PH0",
@@ -58,6 +59,30 @@ function showPage() {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
+  const messaging = firebase.messaging();
+  
+  function requestPermission() {
+    console.log('Requesting permission...');
+    // [START request_permission]
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+        // TODO(developer): Retrieve an Instance ID token for use with FCM.
+        // [START_EXCLUDE]
+        // In many cases once an app has been granted notification permission,
+        // it should update its UI reflecting this.
+        resetUI();
+        // [END_EXCLUDE]
+      } else {
+        console.log('Unable to get permission to notify.');
+      }
+    });
+
+window.onload() = function() {
+  requestPermission();
+}
+    // [END request_permission]
+  }
   </script>
 </head>
 <style>
