@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Agyavart',
     'pwa',
+    'channels',
+    'fcm_django',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Rmail.wsgi.application'
 
+ASGI_APPLICATION = 'Rmail.routing.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -84,6 +88,18 @@ DATABASES = {
     }
 }
 
+FCM_DJANGO_SETTINGS = {
+        "APP_VERBOSE_NAME": "[Agyavart]",
+         # default: _('FCM Django')
+        "FCM_SERVER_KEY": "AAAAM_4Bzso:APA91bGYvSTDx-zV8nj415vEopm9FMixAh3dg7OI2ecyjZ1FLBIqUOlmioAtZLwIN0DYLNk5GV98lN-aJ_E1qXkH6AL2ykoqNUZ0WBtUGYVAosUaw4cBA3kgzeZq6eb69sTbriDVgcNa",
+         # true if you want to have only one active device per registered user at a time
+         # default: False
+        "ONE_DEVICE_PER_USER": False,
+         # devices to which notifications cannot be sent,
+         # are deleted upon receiving error response from FCM
+         # default: False
+        "DELETE_INACTIVE_DEVICES": True,
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

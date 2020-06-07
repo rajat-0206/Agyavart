@@ -1,0 +1,1 @@
+from channels.consumer import AsyncConsumer
