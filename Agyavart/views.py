@@ -10,8 +10,16 @@ from .models import Rmail
 
 from django.contrib.sessions.models import Session
 
+from win10toast import ToastNotifier 
+
 from firebase import firebase
 firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/', None)
+
+
+
+# create an object to ToastNotifier class 
+ 
+
 
 # config = {
 # 	'apiKey': "AIzaSyBp17YUm4uju7nqT5syTdGIUc_mJ253PH0",
@@ -29,7 +37,7 @@ firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/'
 # auth = firebase.auth()
 
 #Hasing Functions
-
+	
 def offline(request):
 	return render(request,"offline.html")
 def manifest(request):
@@ -123,7 +131,6 @@ def user(request,username):
 				return render(request,'user.html',{'warning':"No such user found"})
 			else:
 				return render(request,'user.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
-
 
 def banao(request):
 	if request.method=="POST":
@@ -246,6 +253,7 @@ def login(request):
 			return redirect('profile')
 		else:
 			return render(request,'Login.html')
+
 
 def logout(request):
 	request.session['is_logged'] = False
@@ -522,9 +530,10 @@ def newmsg(request):
 				dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 				timestamp = dt_string
 				sender = username
-
+				n = ToastNotifier()
+				notibody = "Message sent to "+recipient
+				n.show_toast("Agyavart",notibody, duration = 20)
 				#for sender side message 
-
 				data = firebase.get('/sentmessage',sender)
 				res = {'message': msg,'recipient':recipient,'time':timestamp}
 				if(data is None):
@@ -543,6 +552,12 @@ def newmsg(request):
 				else:
 				    another.append(sen)
 				firebase.put('/recieved',recipient,another)
+				result = firebase.get("/NewMsg",recipient)
+				if(result is None):
+					data = 1
+				else:
+					data = result['New'] + 1
+				firebase.put("/NewMsg",recipient,{"New":data})
 				return HttpResponse("Message sent successfull.")
 			else:
 				return HttpResponse("Recipient not valid.")
@@ -616,3 +631,14 @@ def viewsent(request):
 		return render(request,"viewsent.html",{"user":user,"msg":msg,"time":time,"name":name,"photo":photo})
 	else:
 		redirect('message')
+
+def chkformsg(request):
+	if(request.session.has_key('is_logged') and request.session['is_logged']==True):	
+		user = request.session['username']
+		result = firebase.get("/NewMsg",user)
+		if(result is None or result['New']==0):
+			return HttpResponse("None")
+		else:
+			n = hr = ToastNotifier()
+			msg = "You have recieved "+result["New"]+" new message."
+			hr.show_toast("Agyavart",msg)

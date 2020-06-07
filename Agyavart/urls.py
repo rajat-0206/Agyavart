@@ -1,12 +1,15 @@
 from django.urls import path,include
 from . import views
 
-
+app_name = 'Agyavart'
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
+    path('firebase-messaging-sw.js', (TemplateView.as_view(template_name="firebase-messaging-sw.js", content_type='application/javascript', )), name='firebase-messaging-sw.js'),
+    path('sw.js', (TemplateView.as_view(template_name="sw.js", content_type='application/javascript', )), name='sw.js'),
     path('',views.home,name='home'),
     path('rmail.html',views.home,name='home'),
     path('login',views.login,name='login'),

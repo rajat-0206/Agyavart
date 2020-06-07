@@ -21,6 +21,7 @@ urlpatterns = [
     path('',include('Agyavart.urls')),
     path('admin/', admin.site.urls),
     path('', include('pwa.urls')),
+    
 ]
 
 handler404 = 'Agyavart.views.handle404'
