@@ -24,7 +24,7 @@ urlpatterns = [
     path('recieve',views.recieve,name="message"),
     path('register',views.banao,name="create_user"),
     path('auth',views.login,name="auth"),
-    path('fpass',views.forgotpass,name="password"),
+    path('fpass/',views.forgotpass,name="password"),
     path('fuser',views.forgotusername,name="username"),
     path("temp",views.temp,name ="temp"),
     path('imgcng',views.imgcng,name="DP change"),
@@ -44,6 +44,7 @@ urlpatterns = [
     path('alluser.html',views.alluser,name="alluser"),
     path('alluser',views.alluser,name="alluser"),
     path('offline.html',views.offline,name="offline"),
+    path('sendotp/',views.sendotp,name="otp"),
 
 
 
