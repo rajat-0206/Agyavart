@@ -1,27 +1,26 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
+
 from datetime import datetime
+
 from .models import sentmessage,recievedmessage,users
 
-import hashlib, binascii, os
+from django.core.mail import EmailMultiAlternatives,send_mail
 
-import random 
+import random
+
+import requests
+import json
+
+import hashlib, binascii, os
 
 from .models import Rmail
 
 from django.contrib.sessions.models import Session
 
-from django.core.mail import EmailMultiAlternatives,send_mail
-
 from firebase import firebase
 firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/', None)
-
-
-
-# create an object to ToastNotifier class 
- 
-
 
 # config = {
 # 	'apiKey': "AIzaSyBp17YUm4uju7nqT5syTdGIUc_mJ253PH0",
@@ -39,9 +38,9 @@ firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/'
 # auth = firebase.auth()
 
 #Hasing Functions
-	
 def offline(request):
-	return render(request,"offline.html")
+    return render(request,"offline.html")
+
 def manifest(request):
 	return render(request,'manifest.json')
 def temp(request):
@@ -51,9 +50,7 @@ def about(request):
 	return render(request,"about.html")
 
 def handle404(request,exception):
-	return render(request,"404.html")
-
-
+    return render(request,"404.html")
 def alluser(request):
 	result = firebase.get("/users",None)
 	data =[]
@@ -68,18 +65,18 @@ def alluser(request):
 def hash_password(password):
     """Hash a password for storing."""
     salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
-    pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), 
+    pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'),
                                 salt, 100000)
     pwdhash = binascii.hexlify(pwdhash)
     return (salt + pwdhash).decode('ascii')
- 
+
 def verify_password(stored_password, provided_password):
     """Verify a stored password against one provided by user"""
     salt = stored_password[:64]
     stored_password = stored_password[64:]
-    pwdhash = hashlib.pbkdf2_hmac('sha512', 
-                                  provided_password.encode('utf-8'), 
-                                  salt.encode('ascii'), 
+    pwdhash = hashlib.pbkdf2_hmac('sha512',
+                                  provided_password.encode('utf-8'),
+                                  salt.encode('ascii'),
                                   100000)
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == stored_password
@@ -113,7 +110,7 @@ def profile(request):
 		result = firebase.get('/users',username)
 		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
 	else:
-		return redirect('login')
+		return redirect('login.html')
 
 def user(request,username):
 		usernaam = username
@@ -133,6 +130,7 @@ def user(request,username):
 				return render(request,'user.html',{'warning':"No such user found"})
 			else:
 				return render(request,'user.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
+
 
 def banao(request):
 	if request.method=="POST":
@@ -256,7 +254,6 @@ def login(request):
 		else:
 			return render(request,'Login.html')
 
-
 def logout(request):
 	request.session['is_logged'] = False
 	request.session['username'] == None
@@ -320,7 +317,7 @@ def forgotpass(request):
 				return HttpResponse('OTP did not match. Try Again!!')
 	else:
 		redirect('login')
-	
+
 
 def forgotusername(request):
 	if request.method == "POST":
@@ -365,7 +362,7 @@ def imgcng(request):
 			i = int(result["DP"][-5])
 			changedp.name = usernaam+str(i+1)+".jpg"
 		print(changedp.name)
-		dpurl = "/media/images/"+changedp.name 
+		dpurl = "/media/images/"+changedp.name
 		user = Rmail(pic = changedp)
 		user.save()
 		firebase.delete("/users",usernaam)
@@ -373,6 +370,13 @@ def imgcng(request):
 		return redirect('profile')
 	else:
 		return redirect('profile')
+
+def deldp(request):
+		usernaam = request.session['username']
+		result = firebase.get("/users",usernaam)
+		newdp="/media/images/user.png"
+		firebase.put('/users',usernaam,{'Name':result['Name'],"Password":result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":newdp,"Cover":result['Cover']})
+		return redirect('/profile')
 
 def covercng(request):
 	if request.method == "POST":
@@ -387,7 +391,7 @@ def covercng(request):
 		else:
 			i = int(result["Cover"][-5])
 			changecover.name = usernaam+"cover"+str(i+1)+".jpg"
-		curl = "/media/images/"+changecover.name 
+		curl = "/media/images/"+changecover.name
 		user = Rmail(pic = changecover)
 		user.save()
 		firebase.delete("/users",usernaam)
@@ -395,7 +399,7 @@ def covercng(request):
 		return redirect('profile')
 	else:
 		return redirect('profile')
-	
+
 
 def detupt(request):
 	if request.method == "POST":
@@ -413,7 +417,7 @@ def detupt(request):
 		try:
 			mob = request.POST["newMOBILE"]
 		except:
-			mob = str(result['Mobile'])	
+			mob = str(result['Mobile'])
 		try:
 			fb = request.POST["newFB"]
 		except:
@@ -507,7 +511,7 @@ def changepass(request):
 			else:
 				print("currne")
 				errormsg.append('Current password does not match.')
-				
+
 		if(len(errormsg)>0):
 			return HttpResponse(errormsg)
 	else:
@@ -533,7 +537,7 @@ def delacc(request):
 		redirect('settings')
 
 
-### Message section 
+### Message section
 
 def newmsg(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
@@ -550,10 +554,9 @@ def newmsg(request):
 				dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 				timestamp = dt_string
 				sender = username
-				n = ToastNotifier()
-				notibody = "Message sent to "+recipient
-				n.show_toast("Agyavart",notibody, duration = 20)
-				#for sender side message 
+
+				#for sender side message
+
 				data = firebase.get('/sentmessage',sender)
 				res = {'message': msg,'recipient':recipient,'time':timestamp}
 				if(data is None):
@@ -572,12 +575,6 @@ def newmsg(request):
 				else:
 				    another.append(sen)
 				firebase.put('/recieved',recipient,another)
-				result = firebase.get("/NewMsg",recipient)
-				if(result is None):
-					data = 1
-				else:
-					data = result['New'] + 1
-				firebase.put("/NewMsg",recipient,{"New":data})
 				return HttpResponse("Message sent successfull.")
 			else:
 				return HttpResponse("Recipient not valid.")
@@ -631,7 +628,7 @@ def message(request):
 			return render(request,'msg.html',{'data':data})
 		else:
 			return render(request,'msg.html',{'warning':"No message recieved Yet"})
-		
+
 	else:
 		return render(request,'rmail.html')
 
@@ -651,14 +648,3 @@ def viewsent(request):
 		return render(request,"viewsent.html",{"user":user,"msg":msg,"time":time,"name":name,"photo":photo})
 	else:
 		redirect('message')
-
-def chkformsg(request):
-	if(request.session.has_key('is_logged') and request.session['is_logged']==True):	
-		user = request.session['username']
-		result = firebase.get("/NewMsg",user)
-		if(result is None or result['New']==0):
-			return HttpResponse("None")
-		else:
-			n = hr = ToastNotifier()
-			msg = "You have recieved "+result["New"]+" new message."
-			hr.show_toast("Agyavart",msg)
