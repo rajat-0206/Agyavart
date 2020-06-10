@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from datetime import datetime
 
 from .models import sentmessage,recievedmessage,users
+import os
 
 from django.core.mail import EmailMultiAlternatives,send_mail
 
@@ -85,7 +86,7 @@ def verify_password(stored_password, provided_password):
 
 def home(request):
 		if(request.session.has_key('is_logged') and request.session['is_logged']==True):
-			return redirect('profile')
+			return redirect('profile.html')
 		else:
 			return render(request,'rmail.html')
 
@@ -239,7 +240,7 @@ def login(request):
 			    if(verify_password(result['Password'],password)):
 			    	request.session['is_logged'] = True
 			    	request.session['username'] = username
-			    	return redirect('profile')
+			    	return redirect('profile.html')
 			    else:
 			    	errormsg.append("Wrong Password.")
 			    	return render(request,'Login.html',{'warning':errormsg,"title":"Login Error","username":username})
@@ -354,22 +355,24 @@ def imgcng(request):
 		except:
 			return redirect('profile')
 		usernaam = request.session['username']
-		print(changedp.name)
 		result = firebase.get("/users",usernaam)
 		if(result["DP"]=="/media/images/user.png"):
-			changedp.name = usernaam+"1"+".jpg"
+			changedp.name = usernaam+"dp"+".jpg"
 		else:
-			i = int(result["DP"][-5])
-			changedp.name = usernaam+str(i+1)+".jpg"
+			temp = "media/images/"+usernaam+"dp"+".jpg"
+			os.remove(temp)
+			changedp.name = usernaam+"dp"+".jpg"
+			# i = int(result["DP"][-5])
+			# changedp.name = usernaam+str(i+1)+".jpg"
 		print(changedp.name)
 		dpurl = "/media/images/"+changedp.name
 		user = Rmail(pic = changedp)
 		user.save()
 		firebase.delete("/users",usernaam)
 		firebase.put('/users',usernaam,{'Name':result['Name'],"Password":result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":dpurl,"Cover":result['Cover']})
-		return redirect('profile')
+		return redirect('profile.html')
 	else:
-		return redirect('profile')
+		return redirect('profile.html')
 
 def deldp(request):
 		usernaam = request.session['username']
