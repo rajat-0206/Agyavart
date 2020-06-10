@@ -1,0 +1,19 @@
+{% extends 'rmail.html' %}
+{% load static %}
+<html>
+    <head>
+        <script src="{% static 'scripts/web3.min.js"></script>
+        <script>
+            var web3=new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+
+            var contractreference = new web3.eth.Contract([],"0x0C022Ede3B1844ea789fb405152E5Fe3b234C2d6");
+            console.log(contractreference);
+        </script>
+        <title>
+            GST system
+        </title>
+        <body>
+            My first Project
+        </body>
+    </head>
+</html>
