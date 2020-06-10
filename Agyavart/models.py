@@ -10,10 +10,10 @@ from django.db import models
 
 class Rmail(models.Model):
 	pic = models.ImageField(upload_to = "images")
+	# def delete(self,*args,**kargs):
+	# 	self.pic.delete()
+	# 	super().delete(*args,**kargs)
 
-	def delete(self, *args, **kwargs):
-		self.pic.delete()
-		super().delete(*args, **kwargs) 
 
 class sentmessage:
 	recipient: str
