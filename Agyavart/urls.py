@@ -45,6 +45,8 @@ urlpatterns = [
     path('alluser',views.alluser,name="alluser"),
     path('offline.html',views.offline,name="offline"),
     path('sendotp/',views.sendotp,name="otp"),
+    path('deldp/',views.deldp,name="otp"),
+
 
 
 
