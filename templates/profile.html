@@ -287,15 +287,37 @@ a:focus{
 </div>
 <div class = "content">
 	<div class= "dp fmt-shadow">
-		<img src="{{durl}}" class="dpimg" >
-    <div class="overlay" data-toggle="modal" data-target="#exampleModal">Change</div>
+		<img src="{{durl}}" class="dpimg" alt="{{Name}}" data-toggle="modal" data-target=".bd-example-modal-sm">
+    <!-- <div class="overlay" data-toggle="modal" data-target="#exampleModal">Change</div> -->
 	</div>
 	<div class="name">
 		<h1 style="font-size: 64px;font-family: Jost,sans-serif;">{{Name }}</h1>
     <h3 style="font-size: 26px;font-family: Jost,sans-serif;">@{{ username}}</h3>
 	</div>
 </div>
+<center>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+<div id="menucontainer" class="modal-content">
+  <ul data-toggle="modal" data-target=".bd-example-modal-sm">
+    <li data-toggle="modal" data-target="#exampleModal" >Change Profile Picture</li>
+    <li id="myImg" data-toggle="modal" data-target=".rajat-modal">View Profile Picture</li>
+    <a href="deldp"><li onclick="myFunction()">Delete Profile Picture</li></a>
+  </ul>
+</div>
+</div>
+</div>
+</center>
+<div class="modal fade rajat-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+<div class="dpmodal" id="mydpModal">
+  <!-- The Close Button -->
 
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content" id="img01" src="{{durl}}" alt="{{Name}}" width="500px;" height="100%">
+</div>
+</div>
+</div>
 	<div class="secondname">
 		<h1 style="font-size: 46px;font-family: Jost,sans-serif;">{{Name }}</h1>
     <h3 style="font-size: 22px;font-family: Jost,sans-serif;">@{{ username}}</h3>	</div>
@@ -451,7 +473,6 @@ function openPage(pageName,elmnt,color) {
 {% endblock %}
 
 <script type="text/javascript">
-
 
   function yoyo()
   {
