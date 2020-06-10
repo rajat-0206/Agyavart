@@ -33,8 +33,91 @@ function showPage() {
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <link rel="icon" href="{% static '/images/rmailLogoConcept.svg' %}">
+  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
 
-</head>
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+  <script src='https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js'></script>;
+<script type="text/javascript">  
+
+    var firebaseConfig = {
+    apiKey: "AIzaSyBp17YUm4uju7nqT5syTdGIUc_mJ253PH0",
+    authDomain: "agyavart-27f8b.firebaseapp.com",
+    databaseURL: "https://agyavart-27f8b.firebaseio.com",
+    projectId: "agyavart-27f8b",
+    storageBucket: "agyavart-27f8b.appspot.com",
+    messagingSenderId: "223304863434",
+    appId: "1:223304863434:web:585b9e9ace6b42ad51ee33",
+    measurementId: "G-7KW9B9M084"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  const messaging = firebase.messaging();
+messaging.usePublicVapidKey("BLVRpuCoOigGCotWJDI-3uQNNHVn-HOGxh9TSB0zgRriUZFDiAlrDWxVsqrcHpUhva7Aj20KsbP1vzSV9QU2Cps");
+
+  function setTokenSentToServer(sent) {
+    window.localStorage.setItem('sentToServer', sent ? '1' : '0');
+  }
+
+   function sendTokenToServer(currentToken) {
+    if (!isTokenSentToServer()) {
+      console.log('Sending token to server...');
+      // TODO(developer): Send the current token to your server.
+      setTokenSentToServer(true);
+    } else {
+      console.log('Token already sent to server so won\'t send it again ' +
+          'unless it changes');
+    }
+
+  }
+
+ // messaging.usePublicVapidKey("BKagOny0KF_2pCJQ3m....moL0ewzQ8rZu");
+function register_token() {
+  messaging.getToken().then((currentToken) => {
+  if (currentToken) {
+    sendTokenToServer(currentToken);
+  } else {
+    // Show permission request.
+    console.log('No Instance ID token available. Request permission to generate one.');
+  }
+}).catch((err) => {
+  console.log('An error occurred while retrieving token. ', err);
+      setTokenSentToServer(false);
+  
+});
+}
+
+
+  
+ window.onload =  function requestPermission() {
+    console.log('Requesting permission...');
+    // [START request_permission]
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+        register_token();
+        // TODO(developer): Retrieve an Instance ID token for use with FCM.
+        // [START_EXCLUDE]
+        // In many cases once an app has been granted notification permission,
+        // it should update its UI reflecting this.
+        // [END_EXCLUDE]
+      } else {
+        console.log('Unable to get permission to notify.');
+      }
+    });
+
+
+    // [END request_permission]
+  }
+  </script>
 <style>
   body{
     font-family: 'Jost', sans-serif;
@@ -178,6 +261,7 @@ function showPage() {
 }
 
 </style>
+</head>
 <body>
   <div id="loaderbackground" style="display: none;">
 <div id ="loader21" class="dot"></div>
@@ -251,5 +335,17 @@ function showPage() {
   </div>
 </div>
 {% endblock %}
+<script type="application/javascript" src="https://sdki.truepush.com/sdk/v2.0.2/app.js" async></script>
+<script>
+var truepush = window.truepush || [];
+truepush.push(function(){
+    truepush.Init({
+        id: "5edd07e183846eac5e654c3e"
+        }, function(error){
+          if(error) console.error(error);
+        })
+    })
+  
+</script>
 </body>
 </html>

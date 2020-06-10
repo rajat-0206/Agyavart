@@ -1,12 +1,15 @@
 from django.urls import path,include
 from . import views
 
-
+app_name = 'Agyavart'
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
+    path('firebase-messaging-sw.js', (TemplateView.as_view(template_name="firebase-messaging-sw.js", content_type='application/javascript', )), name='firebase-messaging-sw.js'),
+    path('sw.js', (TemplateView.as_view(template_name="sw.js", content_type='application/javascript', )), name='sw.js'),
     path('',views.home,name='home'),
     path('rmail.html',views.home,name='home'),
     path('login',views.login,name='login'),
@@ -21,7 +24,7 @@ urlpatterns = [
     path('recieve',views.recieve,name="message"),
     path('register',views.banao,name="create_user"),
     path('auth',views.login,name="auth"),
-    path('fpass',views.forgotpass,name="password"),
+    path('fpass/',views.forgotpass,name="password"),
     path('fuser',views.forgotusername,name="username"),
     path("temp",views.temp,name ="temp"),
     path('imgcng',views.imgcng,name="DP change"),
@@ -41,11 +44,13 @@ urlpatterns = [
     path('alluser.html',views.alluser,name="alluser"),
     path('alluser',views.alluser,name="alluser"),
     path('offline.html',views.offline,name="offline"),
+    path('sendotp/',views.sendotp,name="otp"),
 
 
 
 
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
     

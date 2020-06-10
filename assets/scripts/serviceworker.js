@@ -1,3 +1,5 @@
+
+
 var CACHE_NAME = 'agyavart-cache-v1';
 var urlsToCache = [
   '/rmail.com',

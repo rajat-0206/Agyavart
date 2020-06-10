@@ -6,12 +6,22 @@ from .models import sentmessage,recievedmessage,users
 
 import hashlib, binascii, os
 
+import random 
+
 from .models import Rmail
 
 from django.contrib.sessions.models import Session
 
+from django.core.mail import EmailMultiAlternatives,send_mail
+
 from firebase import firebase
 firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/', None)
+
+
+
+# create an object to ToastNotifier class 
+ 
+
 
 # config = {
 # 	'apiKey': "AIzaSyBp17YUm4uju7nqT5syTdGIUc_mJ253PH0",
@@ -29,7 +39,7 @@ firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/'
 # auth = firebase.auth()
 
 #Hasing Functions
-
+	
 def offline(request):
 	return render(request,"offline.html")
 def manifest(request):
@@ -123,7 +133,6 @@ def user(request,username):
 				return render(request,'user.html',{'warning':"No such user found"})
 			else:
 				return render(request,'user.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
-
 
 def banao(request):
 	if request.method=="POST":
@@ -247,6 +256,7 @@ def login(request):
 		else:
 			return render(request,'Login.html')
 
+
 def logout(request):
 	request.session['is_logged'] = False
 	request.session['username'] == None
@@ -255,12 +265,32 @@ def logout(request):
 	return render(request,'Login.html')
 
 
+
+def sendotp(request):
+	if(request.method=="POST"):
+		print("got in otp")
+		username = request.POST['username']
+		result = firebase.get("/users",username)
+		if(result is None):
+			return HttpResponse('No account associated with this username')
+		else:
+			lis=[1,2,3,4,5,6,7,8,9,0,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+			code=str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))
+			htmlgen = '<p>Your OTP is <strong>'+code+'</strong></p>'
+			send_mail('OTP request for Agyavart Login','123456','noreply.jumblejuggle@gmail.com',[result['Email']],fail_silently=False,html_message=htmlgen)
+			firebase.put("/otp",username,{"current":code})
+			return HttpResponse("OTP sent on register Email")
+	else:
+		return redirect('login')
+
+
 def forgotpass(request):
 	if request.method == "POST":
-		fuser = request.POST["fuser"]
+		fuser = request.POST["username"]
 		fuser = fuser.lower()
-		fmob = request.POST["fmob"]
-		fpas = request.POST["newpwd"]
+		otp = request.POST["otp"]
+		fpas = request.POST["password"]
+		conpass = request.POST["conpass"]
 		errormsg = []
 		if(fuser==""):
 			errormsg.append("Username cannot be empty.")
@@ -272,24 +302,22 @@ def forgotpass(request):
 			errormsg.append("Password cannot be empty.")
 		elif(len(fpas)<8):
 			errormsg.append("Password should be atleast 8 character long.")
-		if(len(fmob)!=10 or fmob.isnumeric()==False):
-			errormsg.append("Invalid Mobile Number.")
+		elif(fpas!=conpass):
+			errormsg.append("Confirm Password not matched.")
+		if(len(otp)!=6 ):
+			errormsg.append("Please enter 6 character for OTP")
 		if(len(errormsg)>0):
-			return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Password"})
+			return HttpResponse(errormsg)
 		else:
-			result = firebase.get('/users',fuser)
-			if(result is not None):
-				if(fmob==str(result["Mobile"])):
-					hash_pass = hash_password(fpas);
-					firebase.delete("/users",fuser)
+			res = firebase.get('/otp',fuser)
+			if(otp==str(res['current'])):
+					hash_pass = hash_password(fpas)
+					result = firebase.get("/users",fuser)
+					print(result)
 					firebase.put('/users',fuser,{'Name':result['Name'],"Password":hash_pass,'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":result["DP"],"Cover":result['Cover']})
-					return render(request,'Login.html',{'info':'Password changed successfully. Now you can login.'})
-				else:
-					errormsg = ['Mobile Number did not match. Try Again!!']
-					return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Password"})
+					return HttpResponse("Password changed successfully. Now you can login")
 			else:
-				errormsg = ['Invalid Username. Please try again!!']
-				return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Password"})
+				return HttpResponse('OTP did not match. Try Again!!')
 	else:
 		redirect('login')
 	
@@ -522,9 +550,10 @@ def newmsg(request):
 				dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 				timestamp = dt_string
 				sender = username
-
+				n = ToastNotifier()
+				notibody = "Message sent to "+recipient
+				n.show_toast("Agyavart",notibody, duration = 20)
 				#for sender side message 
-
 				data = firebase.get('/sentmessage',sender)
 				res = {'message': msg,'recipient':recipient,'time':timestamp}
 				if(data is None):
@@ -543,6 +572,12 @@ def newmsg(request):
 				else:
 				    another.append(sen)
 				firebase.put('/recieved',recipient,another)
+				result = firebase.get("/NewMsg",recipient)
+				if(result is None):
+					data = 1
+				else:
+					data = result['New'] + 1
+				firebase.put("/NewMsg",recipient,{"New":data})
 				return HttpResponse("Message sent successfull.")
 			else:
 				return HttpResponse("Recipient not valid.")
@@ -616,3 +651,14 @@ def viewsent(request):
 		return render(request,"viewsent.html",{"user":user,"msg":msg,"time":time,"name":name,"photo":photo})
 	else:
 		redirect('message')
+
+def chkformsg(request):
+	if(request.session.has_key('is_logged') and request.session['is_logged']==True):	
+		user = request.session['username']
+		result = firebase.get("/NewMsg",user)
+		if(result is None or result['New']==0):
+			return HttpResponse("None")
+		else:
+			n = hr = ToastNotifier()
+			msg = "You have recieved "+result["New"]+" new message."
+			hr.show_toast("Agyavart",msg)
