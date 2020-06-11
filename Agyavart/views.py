@@ -96,6 +96,9 @@ def about(request):
 def register(request):
 	return render(request,'signup.html')
 
+def loader(request):
+	return render(request,'loader.html')
+
 
 def setting(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
@@ -610,6 +613,7 @@ def message(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
 		username = request.session['username']
 		result = firebase.get('/sentmessage',username)
+		usersdet = firebase.get('/users',None)
 		if(result is not None):
 			data = []
 			for i in range((len(result)-1),-1,-1):
@@ -618,14 +622,13 @@ def message(request):
 				name.recipient = result[i]['recipient']
 				name.message = result[i]['message']
 				name.time = result[i]['time']
-				getnaam = result[i]['recipient']+'/'+"Name"
-				name.name = firebase.get("/users",getnaam)
-				if(name.name is None):
+				try:
+					name.name = usersdet[name.recipient]["Name"]
+				except:
 					name.name = "Agyavart User"
-				print(name.name)
-				getphotu = result[i]['recipient']+'/'+"DP"
-				name.photo = firebase.get("/users",getphotu)
-				if(name.photo is None):
+				try:
+					name.photo = usersdet[name.recipient]["DP"]
+				except:
 					name.photo = "/media/images/user.png"
 				data.append(name)
 			return render(request,'msg.html',{'data':data})
