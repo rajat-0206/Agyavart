@@ -384,6 +384,13 @@ def deldp(request):
 		firebase.put('/users',usernaam,{'Name':result['Name'],"Password":result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":newdp,"Cover":result['Cover']})
 		return redirect('/profile')
 
+def delcover(request):
+		usernaam = request.session['username']
+		result = firebase.get("/users",usernaam)
+		newcover="/media/images/cover.jpeg"
+		firebase.put('/users',usernaam,{'Name':result['Name'],"Password":result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":result["DP"],"Cover":newcover})
+		return redirect('/profile')
+
 def covercng(request):
 	if request.method == "POST":
 		try:

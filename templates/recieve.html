@@ -31,7 +31,7 @@
 <div class="maincontent">
 <div class ="leftpane" id="leftpane"> 
 <nav class="navbar navbar-light bg-light" style="margin-top:0px; padding: 10px;height:80px; width: 100%;">
-<a href="recieve.html"><i class="fa fa-rotate-left" style="font-size:36px;color:#333;"></i></a>
+<a href="recieve.html"><i class="fa fa-rotate-left" style="font-size:36px;color:#333;" onclick="rotate(this)"></i></a>
   <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Search(available soon)" aria-label="Search" style="width: 150px;margin-right: 5px">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
@@ -88,6 +88,10 @@ function showmessage(photo,message,time)
     left.style.display = "block";
     right.style.display = "none";
   
+}
+
+function rotate(id) {
+  id.classList.toggle("roate");  
 }
 
 </script>
