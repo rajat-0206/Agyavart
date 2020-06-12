@@ -9,9 +9,8 @@
   <link rel="stylesheet" type="text/css" href="{% static 'styles/mesage.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   {% endblock %}
-
-
  <!--side Navbar -->
 {% block sidenav %}
 <div id="sidenav" class="bar fmt-shadow" style="background-color: #0a14507e;">
@@ -37,6 +36,7 @@
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
   </form>
 </nav>
+<div id="messagecon">
 <ul>
 {% if warning %}
 
@@ -53,6 +53,7 @@
 
 {% endif %}
 </ul>
+</div>
 </div>
 <div class = "rightpane" id="responce">
   <b>
@@ -93,6 +94,32 @@ function showmessage(photo,message,time)
 function rotate(id) {
   id.classList.toggle("roate");  
 }
+
+setInterval(function(){ 
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        if(this.responseText!="0")
+        { var url = "csrfmiddlewaretoken="+"{{csrf_token}}";
+          var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("messagecon").innerHTML = this.responseText;
+        }
+        };
+      xhttp.open("POST","displaymsg/", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send(url);
+    }
+  }
+  };
+  xhttp.open("GET","chkfornew/", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+ 
+
+}, 2000);
 
 </script>
 
