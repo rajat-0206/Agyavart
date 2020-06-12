@@ -283,8 +283,9 @@ a:focus{
  .badge {
   position: relative;
   border-radius: 50%;
-  background: #333;
-  color: #fff;
+  background: #fff;
+  color: #333;
+  border:2px solid black;
   right:10px;
   top:5px;
   margin-left: 10px;
@@ -679,6 +680,27 @@ function openNav() {
   document.getElementById('imag').classList.toggle("rotate");
   document.getElementById("sidenav").classList.toggle("change");
 }
+
+setInterval(function(){ 
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+          if(this.responseText!="0")
+          {
+              document.getElementById("noofmsg").innerHTML = this.responseText;
+              document.getElementById("noofmsg").style.color = "red";
+              document.getElementById("noofmsg").style.padding = "7px";
+
+          }
+    }
+  };
+  xhttp.open("GET","chkfornew/", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+ 
+
+}, 2000);
 </script> 
 </body>
 </html>
