@@ -280,6 +280,18 @@ a:focus{
 
 }
 
+ .badge {
+  position: relative;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  right:10px;
+  top:5px;
+  margin-left: 10px;
+  margin: 1px auto;
+  font-size: 20px;
+}
+
 
 </style>
 </head>
@@ -308,18 +320,19 @@ a:focus{
         <a class="nav-link" href="#"> </a>
       </li>
     </ul>
-    <span class="navbar-toggler-icon" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #fff; padding:3px; width:40px; height:30px; border-radius: 10px;border:2px solid #333;"></span>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+   <!--  <span class="navbar-toggler-icon" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #fff; padding:3px; width:40px; height:30px; border-radius: 10px;border:2px solid #333;"></span> -->
     <ul class="nav nav-pills" >
       <li class="nav-item">
-        <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"><button class="btn btn-secondary hide" data-toggle="modal" data-target="#messageModal" onclick="yoyo()" >Send new message </button> </a>
+        <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"></a>
+      </li>
+      <li class="nav-item">
+        <a href="recieve.html"><span class="badge align-top slow" id="noofmsg"><i class="fa fa-paper-plane"></i></span></a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0 notshow" >
       <input class="form-control mr-sm-2" type="search" placeholder="Search(available soon)" disabled>
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
     </form>
-  </div>
 </nav>
 
 

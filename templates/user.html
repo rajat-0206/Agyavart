@@ -178,6 +178,17 @@ a:focus{
   100% { -webkit-transform: translate(0,0px); }
 }
 
+.badge {
+  position: relative;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  right:10px;
+  top:5px;
+  margin-left: 10px;
+  margin: 1px auto;
+  font-size: 20px;
+}
 
 </style>
 <body>
@@ -206,18 +217,17 @@ a:focus{
         <a class="nav-link" href="#"> </a>
       </li>
     </ul>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="nav nav-pills" >
     <li class="nav-item">
       {%if is_loged %}
-      <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"><button class="btn btn-secondary hide" data-toggle="modal" data-target="#messageModal" onclick="yoyo()" >Send new message </button> </a>
+      <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"></a>
       {% endif %}
     </li>
+     <li class="nav-item">
+        <a href="recieve.html"><span class="badge align-top slow" id="noofmsg"><i class="fa fa-paper-plane"></i></span></a>
+      </li>
   </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0 notshow">
       <input class="form-control mr-sm-2" type="search" placeholder="Search(available soon)" disabled>
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
     </form>
@@ -528,6 +538,27 @@ document.getElementById("defaultOpen").click();
 function openNav() {
   document.getElementById("sidenav").classList.toggle("change")
 }
+
+setInterval(function(){ 
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+          if(this.responseText!="0")
+          {
+              document.getElementById("noofmsg").innerHTML = this.responseText;
+              document.getElementById("noofmsg").style.color = "red";
+              document.getElementById("noofmsg").style.padding = "7px";
+
+          }
+    }
+  };
+  xhttp.open("GET","chkfornew/", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+ 
+
+}, 2000);
 </script> 
 </body>
 </html>

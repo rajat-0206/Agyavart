@@ -296,10 +296,9 @@ body, html {
 		display: block;
 	}
 
-	.slow {
-	display: none;
-}
-
+	.notshow {
+		display: none;
+	}
 
 	#navbarTogglerDemo02{
       transform: translate(0%,0%);
