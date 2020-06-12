@@ -7,6 +7,8 @@ from datetime import datetime
 from .models import sentmessage,recievedmessage,users
 import os
 
+from win10toast import ToastNotifier
+
 from django.core.mail import EmailMultiAlternatives,send_mail
 
 import random
@@ -700,3 +702,7 @@ def displaymsg(request):
 			return render(request,'displaymsg.html',{'warning':"No message sent yet."})
 	else:
 		return redirect('recieve')
+
+def sendnoti(request):
+	hr = ToastNotifier()
+	hr.show_toast("Agyavart","You have recieved a new message")
