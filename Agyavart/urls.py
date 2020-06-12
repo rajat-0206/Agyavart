@@ -49,6 +49,8 @@ urlpatterns = [
     path('delcover/',views.delcover,name="cover"),
     path('loader.html',views.loader,name="loader"),
     path('loader',views.loader,name="loader1"),
+    path('chkfornew/',views.chkfornew,name="checker"),
+    path('displaymsg/',views.displaymsg,name="msgdisp"),
 
 
 

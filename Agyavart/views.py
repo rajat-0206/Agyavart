@@ -279,7 +279,8 @@ def sendotp(request):
 			code=str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))
 			htmlgen = '<p>Your OTP is <strong>'+code+'</strong></p>'
 			send_mail('OTP request for Agyavart Login','123456','noreply.jumblejuggle@gmail.com',[result['Email']],fail_silently=False,html_message=htmlgen)
-			firebase.put("/otp",username,{"current":code})
+			query = "otp/"+username
+			firebase.patch_async(query,{"current":code})
 			return HttpResponse("OTP sent on register Email")
 	else:
 		return redirect('login')
@@ -588,6 +589,12 @@ def newmsg(request):
 				else:
 				    another.append(sen)
 				firebase.put('/recieved',recipient,another)
+				query = recipient+"/NewMsg"
+				result = firebase.get("otp",query)
+				if result is None:
+					result = 0
+				query1 ="otp/"+recipient
+				firebase.patch_async(query1,{"NewMsg":result+1})
 				return HttpResponse("Message sent successfull.")
 			else:
 				return HttpResponse("Recipient not valid.")
@@ -609,6 +616,8 @@ def recieve(request):
 				name.time = result[i]['time']
 				name.photo = "/media/images/user.png"
 				data.append(name)
+			query = "otp/" + username
+			firebase.patch_async(query,{"NewMsg":0})
 			return render(request,'recieve.html',{'data':data})
 		else:
 			return render(request,'recieve.html',{'warning':"No message sent yet."})
@@ -661,3 +670,33 @@ def viewsent(request):
 		return render(request,"viewsent.html",{"user":user,"msg":msg,"time":time,"name":name,"photo":photo})
 	else:
 		redirect('message')
+
+def chkfornew(request):
+	username = request.session['username']
+	query = username+"/NewMsg"
+	result = firebase.get("otp/",query)
+	if(result is not None or result>0):
+		return HttpResponse(result)
+	else:
+		return HttpResponse("0")
+
+def displaymsg(request):
+	if(request.method=="POST"):
+		username = request.session['username']
+		result = firebase.get('/recieved',username)
+		if(result is not None):
+			data = []
+			for i in range((len(result)-1),-1,-1):
+				name = 'obj'+str(i)
+				name = recievedmessage()
+				name.message = result[i]['message']
+				name.time = result[i]['time']
+				name.photo = "/media/images/user.png"
+				data.append(name)
+			query = "otp/" + username
+			firebase.patch_async(query,{"NewMsg":0})
+			return render(request,'displaymsg.html',{'data':data})
+		else:
+			return render(request,'displaymsg.html',{'warning':"No message sent yet."})
+	else:
+		return redirect('recieve')
