@@ -10,7 +10,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('firebase-messaging-sw.js', (TemplateView.as_view(template_name="firebase-messaging-sw.js", content_type='application/javascript', )), name='firebase-messaging-sw.js'),
     path('sw.js', (TemplateView.as_view(template_name="sw.js", content_type='application/javascript', )), name='sw.js'),
-    path('',views.home,name='home'),
+    path('',views.loader,name='loader'),
     path('rmail.html',views.home,name='home'),
     path('login',views.login,name='login'),
     path('login.html',views.login,name='login'),
@@ -45,7 +45,10 @@ urlpatterns = [
     path('alluser',views.alluser,name="alluser"),
     path('offline.html',views.offline,name="offline"),
     path('sendotp/',views.sendotp,name="otp"),
-    path('deldp/',views.deldp,name="otp"),
+    path('deldp/',views.deldp,name="dp"),
+    path('delcover/',views.delcover,name="cover"),
+    path('loader.html',views.loader,name="loader"),
+    path('loader',views.loader,name="loader1"),
 
 
 

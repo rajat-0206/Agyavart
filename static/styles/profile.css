@@ -40,7 +40,7 @@ border-right: 1px solid #333;
 font-family:Britannic Bold;
 border-left: 2px solid #333;
 line-height:40px;
-
+transition: 0.2s ease-in-out;
 }
 
 
@@ -57,7 +57,7 @@ color:white;}
 }
 .change {
 		width:250px;
-		transition: width 0.5s ease;
+		transition: width 0.2s ease-in-out;
 }
 
 .cover {
@@ -168,11 +168,6 @@ body, html {
 	background-color: rgba(0,0,0,0.5);
 }
 
-.cover .blck .btn {
-	position: absolute;
-	top:80px;
-	right: 20px;
-}
 
 
 .cover:hover .blck {
@@ -259,6 +254,10 @@ body, html {
   from {transform:scale(0)}
   to {transform:scale(1)}
 }
+.navbar-toggler-icon{
+  display:none;
+}
+
 
 
 /* 100% Image Width on Smaller Screens */
@@ -275,8 +274,13 @@ body, html {
 }
 
 }
+
+
 @media screen and (max-width:991px)
 {
+	.navbar-toggler-icon{
+  display:block;
+}
 	.name {
 		display: none;
 	}

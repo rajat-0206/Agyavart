@@ -96,6 +96,9 @@ def about(request):
 def register(request):
 	return render(request,'signup.html')
 
+def loader(request):
+	return render(request,'loader.html')
+
 
 def setting(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
@@ -381,6 +384,13 @@ def deldp(request):
 		firebase.put('/users',usernaam,{'Name':result['Name'],"Password":result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":newdp,"Cover":result['Cover']})
 		return redirect('/profile')
 
+def delcover(request):
+		usernaam = request.session['username']
+		result = firebase.get("/users",usernaam)
+		newcover="/media/images/cover.jpeg"
+		firebase.put('/users',usernaam,{'Name':result['Name'],"Password":result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":result["DP"],"Cover":newcover})
+		return redirect('/profile')
+
 def covercng(request):
 	if request.method == "POST":
 		try:
@@ -610,6 +620,7 @@ def message(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
 		username = request.session['username']
 		result = firebase.get('/sentmessage',username)
+		usersdet = firebase.get('/users',None)
 		if(result is not None):
 			data = []
 			for i in range((len(result)-1),-1,-1):
@@ -618,14 +629,13 @@ def message(request):
 				name.recipient = result[i]['recipient']
 				name.message = result[i]['message']
 				name.time = result[i]['time']
-				getnaam = result[i]['recipient']+'/'+"Name"
-				name.name = firebase.get("/users",getnaam)
-				if(name.name is None):
+				try:
+					name.name = usersdet[name.recipient]["Name"]
+				except:
 					name.name = "Agyavart User"
-				print(name.name)
-				getphotu = result[i]['recipient']+'/'+"DP"
-				name.photo = firebase.get("/users",getphotu)
-				if(name.photo is None):
+				try:
+					name.photo = usersdet[name.recipient]["DP"]
+				except:
 					name.photo = "/media/images/user.png"
 				data.append(name)
 			return render(request,'msg.html',{'data':data})

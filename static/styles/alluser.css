@@ -38,6 +38,7 @@
     font-family: Lato;
     position: absolute;
     top: 40px;
+    width: :auto;
     left: 110px;
     display: inline-block;
     float: left;}
@@ -60,7 +61,6 @@
         width: 100%;
         margin:0px;
         height: 150px;
-        border-bottom: 1px solid #333;
         margin-bottom: 10px;
     
     }
@@ -69,6 +69,15 @@
         padding-top:20px;
         margin-bottom: 10px;
     }
+
+.heading{ font-size: 20px;
+    }
+
+.heading1{ font-size: 15px;
+    top: 50px;
+    }
+
+
 
 
 }
