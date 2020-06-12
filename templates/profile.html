@@ -680,26 +680,37 @@ function openNav() {
   document.getElementById('imag').classList.toggle("rotate");
   document.getElementById("sidenav").classList.toggle("change");
 }
-
+var x=0;
 setInterval(function(){ 
 
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-          if(this.responseText!="0")
+         if(this.responseText!="0")
           {
               document.getElementById("noofmsg").innerHTML = this.responseText;
               document.getElementById("noofmsg").style.color = "red";
               document.getElementById("noofmsg").style.padding = "7px";
-
           }
+          if(this.responseText!="0" && this.responseText>x){
+            x = this.responseText;
+            var xhttp = new XMLHttpRequest();
+              xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                    console.log("sent success")
+                }
+              };
+              xhttp.open("GET","sendnoti/", true);
+              xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              xhttp.send();
+          }
+
+         
     }
   };
   xhttp.open("GET","chkfornew/", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send();
- 
-
 }, 2000);
 </script> 
 </body>
