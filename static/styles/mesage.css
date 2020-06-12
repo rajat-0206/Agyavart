@@ -75,6 +75,13 @@ font-size:20px;
 
 	a:hover { color:black; }
 
+.roate {
+	transform: rotate(360deg);
+}
+
+
+
+
 
 @media screen and (max-width:991px)
 {

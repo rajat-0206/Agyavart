@@ -21,7 +21,7 @@ function showPage() {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
@@ -176,12 +176,12 @@ a:focus{
   100% { -webkit-transform: translate(0,0px); }
 }
 
-.btn {
+.coverbtn {
   position: absolute;
-  right: 50px;
-  background-color: #2196F3;
-  color: white;
-  padding: 16px;
+  right: 60px;
+  top: 80px;
+  background-color: #333;
+  padding: 10px;
   font-size: 16px;
   border: none;
   outline: none;
@@ -190,17 +190,34 @@ a:focus{
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
   position: absolute;
-  right:30px;
+  right:-30px;
+  top:100px;
+  z-index: 10;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 100%;
+  color:#333;
+  border:none;
   display: inline-block;
+  transition: 0.3s ease;
 }
 
+.cover:hover .dropdown {
+  display: inline-block;
+}
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-  display: block;
+  display: none;
   position: absolute;
+  right:60px;
+  top:128px;
   background-color: #f1f1f1;
   min-width: 160px;
   z-index: 1;
+}
+
+.showdropdown {
+  display: block;
 }
 
 /* Links inside the dropdown */
@@ -215,33 +232,55 @@ a:focus{
 .dropdown-content a:hover {background-color: #ddd}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
+/*.dropdown:hover .dropdown-content {
   display: block;
 }
-
+*/
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.btn:hover, .dropdown:hover .btn  {
-  background-color: #0b7dda;
+.coverbtn:hover, .dropdown:hover .coverbtn  {
+        animation: rotate 0.5s infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(-20deg);
+  }
+  to{
+    transform: rotate(20deg);
+  }
+}
+#imag {
+  font-size: 40px;
+  margin-left:5px;
+  background-color: #f8f8f8;
+  border-radius: 100%;
+  border:1px solid #333;
+  padding:5px;
+  height: 50px;
+  width: 50px;
+  padding-left:15px;
+  box-shadow: 2px 2px solid #333;
+  transition: 0.5s ease;
+
+  opacity: 0.9;
+  }
+
+  #imag:hover{
+    opacity: 1;
+  }
+
+
+
+  #imag:active {
+    border:3px solid #333;
+  }
+
+.rotate {
+  transform: rotate(180deg);
+
 }
 
 
-@media screen and (max-width:991px)
-{
-.imag {
-  border:0px;
-  background-color:#fff;
-  border-radius: 10px;
-  padding:3px;
-  opacity: 1;
-  padding-left: 0px;
-  height: 35px;
-  width: 35px;
-  border:2px solid #333;
-
-}
-
-
-}
 </style>
 </head>
 <body style="font-family: Jost, sans-serif;">
@@ -255,7 +294,7 @@ a:focus{
 <!--top nav bar -->
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-light profile-menu-bar">
-	<img src="{% static 'images/graphic.png' %}" class ="imag" width="30" height="30" class="d-inline-block align-top" alt="Open Navbar" style="margin-right: 10px; cursor: pointer;" onclick="openNav()">
+	<i id="imag" width="30" height="30" class="fa fa-angle-right d-inline-block align-top" aria-hidden="true" alt="Open Navbar" style="margin-right: 10px; cursor: pointer;" onclick="openNav()"></i>
    <a class="button-chip navbar-brand" href="rmail.html" style="font-size: 22px;color:white;background-color: #0059ff; ">
     <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" class="align-top" alt="Rmail Logo">
     Agyavart
@@ -341,18 +380,17 @@ a:focus{
 
 {% block content %}
 <div class="cover">
-	<div class ="blck">
-  <button class="btn btn-primary" data-toggle="modal" data-target=".cover-modal">View Cover</button>
+	<div class ="blck"  data-toggle="modal" data-target=".cover-modal"></div>
+	</div>
 <div class="dropdown">
-  <button class="btn btn btn-primary" style="border-left:1px solid navy">
-    <i class="fa fa-caret-down"></i>
+  <button class="coverbtn" style="border-radius: 100%;" onclick="showmenu()">
+    <i class='fa fa-pencil-alt' style="color: #fff;"></i>
   </button>
-  <div class="dropdown-content">
+  <div class="dropdown-content" id="dropdowncontent">
     <a href="#" data-toggle="modal" data-target="#coverModal">Change Cover Photo</a>
-    <a href="#">Delete Cover Image</a>
+    <a href="delcover" onclick="myFunction()">Delete Cover Image</a>
   </div>
 </div>
-	</div>
 	<img src="{{curl}}" width="100%" height ="250px" alt="">
 </div>
 <div class = "content">
@@ -410,7 +448,7 @@ a:focus{
       <td><a href="mailto:{{ Email }}">{{ Email }}</a></td>
     </tr>
     <tr>
-      <td><i class="fa fa-id-card-o" ></i>&nbsp;&nbsp;Birthday</td>
+      <td><i class="fa fa-id-card" ></i>&nbsp;&nbsp;Birthday</td>
       <td>{{ DOB }}</td>
     </tr>
     <tr>
@@ -494,7 +532,7 @@ a:focus{
     <label for="exampleFormControlFile1">Choose Profile Picture</label>
     <input type="file" class="form-control-file" name ="dp" id="exampleFormControlFile">
  		 </div>
- 		 <button type="submit" class="btn btn-primary">Save changes</button>
+ 		 <button type="submit" class="btn btn-primary" onclick="myFunction()">Save changes</button>
  		</form>
       </div>
     </div>
@@ -519,7 +557,7 @@ a:focus{
     <input type="tezt" name="username" value="{{username}}" style="display: none;">
     <input type="file" class="form-control-file" name ="cover" id="exampleFormControlFile">
      </div>
-     <button type="submit" class="btn btn-primary">Save changes</button>
+     <button type="submit" class="btn btn-primary" onclick="myFunction()">Save changes</button>
     </form>
       </div>
     </div>
@@ -553,6 +591,10 @@ function openPage(pageName,elmnt,color) {
 {% endblock %}
 
 <script type="text/javascript">
+
+  function showmenu() {
+    document.getElementById('dropdowncontent').classList.toggle('showdropdown');
+  }
 
   function yoyo()
   {
@@ -621,7 +663,8 @@ function bhejnahai() {
 
 document.getElementById("defaultOpen").click();
 function openNav() {
-  document.getElementById("sidenav").classList.toggle("change")
+  document.getElementById('imag').classList.toggle("rotate");
+  document.getElementById("sidenav").classList.toggle("change");
 }
 </script> 
 </body>
