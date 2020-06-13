@@ -37,6 +37,8 @@ function showPage() {
 
   <!-- Add Firebase products that you want to use -->
  <script type="text/javascript">
+
+
   
  window.onload =  function requestPermission() {
     console.log('Requesting permission...');
@@ -44,6 +46,7 @@ function showPage() {
     Notification.requestPermission().then((permission) => {
       if (permission === 'granted') {
         console.log('Notification permission granted.');
+
       } else {
         console.log('Unable to get permission to notify.');
       }
@@ -270,6 +273,7 @@ function showPage() {
 {% endblock %}
 <script type="application/javascript" src="https://sdki.truepush.com/sdk/v2.0.2/app.js" async></script>
 <script>
+
 var truepush = window.truepush || [];
 truepush.push(function(){
     truepush.Init({

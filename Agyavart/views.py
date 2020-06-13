@@ -7,6 +7,8 @@ from datetime import datetime
 from .models import sentmessage,recievedmessage,users
 import os
 
+from win10toast import ToastNotifier
+
 from django.core.mail import EmailMultiAlternatives,send_mail
 
 import random
@@ -112,7 +114,7 @@ def profile(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
 		username = request.session['username']
 		result = firebase.get('/users',username)
-		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
+		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'Mobile':result["Mobile"],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
 	else:
 		return redirect('login.html')
 
@@ -127,13 +129,13 @@ def user(request,username):
 				if(result is None):
 					return render(request,'user.html',{"is_loged":'True','warning':"No such user found"})
 				else:
-					return render(request,'user.html',{"is_loged":'True','title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
+					return render(request,'user.html',{"is_loged":'True','title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'Mobile':result["Mobile"],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
 		else:
 			result = firebase.get('/users',usernaam)
 			if(result is None):
 				return render(request,'user.html',{'warning':"No such user found"})
 			else:
-				return render(request,'user.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
+				return render(request,'user.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'Mobile':result["Mobile"],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
 
 
 def banao(request):
@@ -700,3 +702,7 @@ def displaymsg(request):
 			return render(request,'displaymsg.html',{'warning':"No message sent yet."})
 	else:
 		return redirect('recieve')
+
+def sendnoti(request):
+	hr = ToastNotifier()
+	hr.show_toast("Agyavart","You have recieved a new message")
