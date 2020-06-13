@@ -178,6 +178,17 @@ a:focus{
   100% { -webkit-transform: translate(0,0px); }
 }
 
+.badge {
+  position: relative;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  right:10px;
+  top:5px;
+  margin-left: 10px;
+  margin: 1px auto;
+  font-size: 20px;
+}
 
 </style>
 <body>
@@ -206,18 +217,17 @@ a:focus{
         <a class="nav-link" href="#"> </a>
       </li>
     </ul>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="nav nav-pills" >
     <li class="nav-item">
       {%if is_loged %}
-      <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"><button class="btn btn-secondary hide" data-toggle="modal" data-target="#messageModal" onclick="yoyo()" >Send new message </button> </a>
+      <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"></a>
       {% endif %}
     </li>
+     <li class="nav-item">
+        <a href="recieve.html"><span class="badge align-top slow" id="noofmsg"><i class="fa fa-paper-plane"></i></span></a>
+      </li>
   </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0 notshow">
       <input class="form-control mr-sm-2" type="search" placeholder="Search(available soon)" disabled>
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
     </form>
@@ -398,21 +408,21 @@ a:focus{
 	<center>
 <table class="table table-borderless fmt-animate-left">
   <tbody>
-    <tr>
-      <td ><i class="fa fa-facebook-official" style="font-size:20px;color:rgb(59,89,152);"></i>&nbsp;&nbsp;Facebook</td>
-      <td><a href="https://www.facebook.com/{{fb}}">https://www.facebook.com/{{fb}}</a></td>
+     <tr>
+      <td ><i class="fa fa-facebook-official" style="font-size:28px;" aria-hidden="true"></i> </td>
+      <td>{% if fb|length > 3 %}<a href="https://www.facebook.com/{{fb}}">@{{fb}}</a>{% else %}UA{% endif %}</td>
     </tr>
     <tr>
-      <td><i class="fa fa-instagram" style="font-size:20px;color:#3f729b;"></i>&nbsp;&nbsp;Instagram</td>
-      <td><a href=" https://www.instagram.com/{{insta}}"> https://www.instagram.com/{{insta}}</a></td>
+      <td><i class="fa fa-instagram" aria-hidden="true" style="font-size:28px;color:#3f729b;"></i></td>
+      <td>{% if insta|length > 3 %}<a href="https://www.instagram.com/{{insta}}">@{{insta}}{% else %}UA{% endif %}</a></td>
     </tr>
         <tr>
-      <td><i class="fa fa-twitter" style="font-size:20px;color:#38A1F3;"></i>&nbsp;&nbsp;Twitter</td>
-      <td><a href="https://www.twitter.com/{{twitter}}">https://www.twitter.com/{{twitter}}</td>
+      <td><i class="fa fa-twitter" aria-hidden="true" style="font-size:28px;color:#38A1F3;"></i></td>
+      <td>{% if twitter|length > 3 %}<a href="https://www.twitter.com/{{twitter}}">@{{twitter}}{% else %}UA{% endif %}</td>
     </tr>
         <tr>
-      <td>Tik Tok</td>
-      <td>@{{tok}}</td>
+      <td><i class="fa fa-linkedin" aria-hidden="true" style="font-size:28px;"></i></td>
+      <td>{% if toks|length > 3 %}<a href="https://www.linkedin.com/in/{{toks}}">@{{toks}}{% else %}UA{% endif %}</td>
     </tr>
   </tbody>
 </table>
@@ -528,6 +538,27 @@ document.getElementById("defaultOpen").click();
 function openNav() {
   document.getElementById("sidenav").classList.toggle("change")
 }
+
+setInterval(function(){ 
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+          if(this.responseText!="0")
+          {
+              document.getElementById("noofmsg").innerHTML = this.responseText;
+              document.getElementById("noofmsg").style.color = "red";
+              document.getElementById("noofmsg").style.padding = "7px";
+
+          }
+    }
+  };
+  xhttp.open("GET","/chkfornew/", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+ 
+
+}, 2000);
 </script> 
 </body>
 </html>
