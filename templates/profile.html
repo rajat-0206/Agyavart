@@ -20,8 +20,9 @@ function showPage() {
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
@@ -251,16 +252,18 @@ a:focus{
 }
 #imag {
   font-size: 40px;
+  font-weight:bold;
   margin-left:5px;
   background-color: #f8f8f8;
   border-radius: 100%;
   border:1px solid #333;
-  padding:5px;
+  padding:3px;
   height: 50px;
   width: 50px;
-  padding-left:15px;
+  padding-left:20px;
   box-shadow: 2px 2px solid #333;
   transition: 0.5s ease;
+  opacity: 0.9;
 
   opacity: 0.9;
   }
@@ -398,7 +401,7 @@ a:focus{
 	</div>
 <div class="dropdown">
   <button class="coverbtn" style="border-radius: 100%;" onclick="showmenu()">
-    <i class='fa fa-pencil-alt' style="color: #fff;"></i>
+    <i class='fa fa-pencil' style="color: #fff;"></i>
   </button>
   <div class="dropdown-content" id="dropdowncontent">
     <a href="#" data-toggle="modal" data-target="#coverModal">Change Cover Photo</a>
@@ -415,6 +418,8 @@ a:focus{
 	<div class="name">
 		<h1 style="font-size: 64px;font-family: Jost,sans-serif;">{{Name }}</h1>
     <h3 style="font-size: 26px;font-family: Jost,sans-serif;">@{{ username}}</h3>
+    <h4 style="font-size: 26px;font-family: Jost,sans-serif;">This is the bio
+    19</h4>
 	</div>
 </div>
 <center>
@@ -462,6 +467,10 @@ a:focus{
       <td><a href="mailto:{{ Email }}">{{ Email }}</a></td>
     </tr>
     <tr>
+      <td><i class="fa fa-phone" ></i>&nbsp;&nbsp;Phone</td>
+      <td>{{ Mobile }}</td>
+    </tr>
+    <tr>
       <td><i class="fa fa-id-card" ></i>&nbsp;&nbsp;Birthday</td>
       <td>{{ DOB }}</td>
     </tr>
@@ -478,7 +487,7 @@ a:focus{
 <table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-pencil" ></i>&nbsp;&nbsp;School</td>
+      <td ><i class='fas fa-book-reader'></i></i>&nbsp;&nbsp;School</td>
       <td>{{school }}</td>
     </tr>
     <tr>
@@ -499,20 +508,20 @@ a:focus{
 <table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-facebook-official"></i> </td>
-      <td><a href="https://www.facebook.com/{{fb}}">@{{fb}}</a></td>
+      <td ><i class="fa fa-facebook-official" style="font-size:28px;" aria-hidden="true"></i> </td>
+      <td>{% if fb|length > 3 %}<a href="https://www.facebook.com/{{fb}}">@{{fb}}</a>{% else %}UA{% endif %}</td>
     </tr>
     <tr>
-      <td><i class="fa fa-instagram" style="font-size:28px;color:#3f729b;"></i></td>
-      <td><a href="https://www.instagram.com/{{insta}}">@{{insta}}</a></td>
+      <td><i class="fa fa-instagram" aria-hidden="true" style="font-size:28px;color:#3f729b;"></i></td>
+      <td>{% if insta|length > 3 %}<a href="https://www.instagram.com/{{insta}}">@{{insta}}{% else %}UA{% endif %}</a></td>
     </tr>
         <tr>
-      <td><i class="fa fa-twitter" style="font-size:28px;color:#38A1F3;"></i></td>
-      <td><a href="https://www.twitter.com/{{twitter}}">@{{twitter}}</td>
+      <td><i class="fa fa-twitter" aria-hidden="true" style="font-size:28px;color:#38A1F3;"></i></td>
+      <td>{% if twitter|length > 3 %}<a href="https://www.twitter.com/{{twitter}}">@{{twitter}}{% else %}UA{% endif %}</td>
     </tr>
         <tr>
-      <td>Tik Tok</td>
-      <td>@{{tok}}</td>
+      <td><i class="fa fa-linkedin" aria-hidden="true" style="font-size:28px;"></i></td>
+      <td>{% if toks|length > 3 %}<a href="https://www.linkedin.com/in/{{toks}}">@{{toks}}{% else %}UA{% endif %}</td>
     </tr>
   </tbody>
 </table>
@@ -681,37 +690,37 @@ function openNav() {
   document.getElementById("sidenav").classList.toggle("change");
 }
 var x=0;
-setInterval(function(){ 
+// setInterval(function(){ 
 
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-         if(this.responseText!="0")
-          {
-              document.getElementById("noofmsg").innerHTML = this.responseText;
-              document.getElementById("noofmsg").style.color = "red";
-              document.getElementById("noofmsg").style.padding = "7px";
-          }
-          if(this.responseText!="0" && this.responseText>x){
-            x = this.responseText;
-            var xhttp = new XMLHttpRequest();
-              xhttp.onreadystatechange = function() {
-              if (this.readyState == 4 && this.status == 200) {
-                    console.log("sent success")
-                }
-              };
-              xhttp.open("GET","sendnoti/", true);
-              xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-              xhttp.send();
-          }
+//   var xhttp = new XMLHttpRequest();
+//   xhttp.onreadystatechange = function() {
+//     if (this.readyState == 4 && this.status == 200) {
+//          if(this.responseText!="0")
+//           {
+//               document.getElementById("noofmsg").innerHTML = this.responseText;
+//               document.getElementById("noofmsg").style.color = "red";
+//               document.getElementById("noofmsg").style.padding = "7px";
+//           }
+//           if(this.responseText!="0" && this.responseText>x){
+//             x = this.responseText;
+//             var xhttp = new XMLHttpRequest();
+//               xhttp.onreadystatechange = function() {
+//               if (this.readyState == 4 && this.status == 200) {
+//                     console.log("sent success")
+//                 }
+//               };
+//               xhttp.open("GET","sendnoti/", true);
+//               xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//               xhttp.send();
+//           }
 
          
-    }
-  };
-  xhttp.open("GET","chkfornew/", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send();
-}, 2000);
+//     }
+//   };
+//   xhttp.open("GET","chkfornew/", true);
+//   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//   xhttp.send();
+// }, 2000);
 </script> 
 </body>
 </html>
