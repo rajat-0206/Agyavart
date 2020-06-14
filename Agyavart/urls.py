@@ -52,6 +52,7 @@ urlpatterns = [
     path('chkfornew/',views.chkfornew,name="checker"),
     path('displaymsg/',views.displaymsg,name="msgdisp"),
     path('sendnoti/',views.sendnoti,name="notidisp"),
+    path('sendmail/',views.sendmail,name="mailotp"),
 
 
 
