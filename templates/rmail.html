@@ -7,9 +7,23 @@
 <title>
 Agyavart
 </title>
-{% progressive_web_app_meta %}
 {% endblock %}
-
+<link rel="manifest" href="/manifest.json">
+<script>
+  
+    // Initialize the service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/serviceworker.js', {
+            scope: '/' // <--- THIS BIT IS REQUIRED
+        }).then(function (registration) {
+            // Registration was successful
+            console.log('django-progressive-web-app: ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+            // registration failed :(
+            console.log('django-progressive-web-app: ServiceWorker registration failed: ', err);
+        });
+    }
+</script>
   <script>
 var myVar;
 function myFunction() {
@@ -271,7 +285,7 @@ function showPage() {
   </div>
 </div>
 {% endblock %}
-<script type="application/javascript" src="https://sdki.truepush.com/sdk/v2.0.2/app.js" async></script>
+<!-- <script type="application/javascript" src="https://sdki.truepush.com/sdk/v2.0.2/app.js" async></script>
 <script>
 
 var truepush = window.truepush || [];
@@ -283,6 +297,6 @@ truepush.push(function(){
         })
     })
   
-</script>
+</script> -->
 </body>
 </html>
