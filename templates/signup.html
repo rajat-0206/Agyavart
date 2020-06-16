@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{% static 'styles/mainsetup.css' %}">
   <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
   <meta name="theme-color" content="#498dcc">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" type="text/css" href="{% static 'styles/register.css' %}">
   <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
   <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
@@ -21,8 +22,8 @@
 
 <div id="error" class="fmt-animate-bottom" style="display: none; margin-top:100px;padding:0 42px 0 42px">
   <div class="alert alert-danger alert-dismissible fade show" style="padding:22px"> 
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-      <strong><h1 class="fmt-center" style="font-size:36px ; color:#b85b5b">Warning</h1></strong>
+    <a href="#" class="close"  onclick="document.getElementById('error').style.display='none'">&times;</a>
+      <strong><h1 class="fmt-center" style="font-size:36px ; color:#b85b5b"  id="dabbamessage">Warning</h1></strong>
       <ol>
         {% for i in warning %}
         <li style="font-size:28px;color:#b85b5b">{{i}}</li>
@@ -33,7 +34,7 @@
 
 <div class="main-w3layouts wrapper">
   <center>
-    <div class="fmt-animate-top" style="margin-top: 80px;">
+    <div class="fmt-animate-top">
       <p class="sub-catch-line">Let's start. From beginning.</p>
     </div>
   </center>
@@ -53,7 +54,10 @@
         <input type="text" class="text text-light" id="inputName" value="{{NAME}}" placeholder="Name" name="NAME" required>
         </a>
         <br>
-        <input type="email" class="text text-light" id="inputEmail4" value="{{EMAIL}}" placeholder="Email" name="EMAIL" required><br>
+        <input type="email" class="text text-light" id="inputEmail4" value="{{EMAIL}}" placeholder="Email" name="EMAIL" required>
+        <button type="button" class="btn btn-outline-dark text-light" id="otpbutton" value="Verify my Email" style="width: 30%; border-color: white; float: right; margin: 10px" onclick="sendmail()">
+            Verify Email
+          </button><br>
         <a href="#" data-toggle="tooltip" data-placement="top" title="Phone number should be 10 digit only">
         <input type="text" class="text text-light" id="inputMobile" value ="{{MOBILE}}" placeholder="Phone Number" name="MOBILE" required>
         </a>
@@ -70,18 +74,93 @@
         <input type="date" name="DOB" id="inputDOB" class ="text" required>
         <br>
         <center>
-          <button type="submit" class="btn btn-outline-dark text-light" id="signupbutton" value="SIGNUP" style="width: 70%; border-color: white;">
+          <button type="submit" class="btn btn-outline-dark text-light w3-tooltip" id="signupbutton" value="SIGNUP" style="width: 70%; border-color: white;" disabled="true">
+            <span class="w3-text w3-tag w3-small" id="signtooltip">Verify email first</span>
             Sign Up
           </button>
+          
         </center>
       </form>
     </div>
   </div>
 </div>
 
+<!-- SIgnup email modal -->
+ <div id="id01" class="w3-modal ">
+  <div class="w3-modal-content" style="margin-top: 100px;border-radius: 20px">
 
+    <header class="w3-container w3-blue">
+      <h2>SIGNUP</h2>
+    </header>
+
+    <div class="w3-container">
+      <div id="otperror" class="fmt-animate-bottom" style="display: none;">
+  <div class="alert alert-danger alert-dismissible fade show"> 
+    <a href="#" class="close"  onclick="document.getElementById('otperror').style.display='none'">&times;</a>
+      <strong><h1 class="fmt-center" style="font-size:16px ; color:#b85b5b"  id="otperrormsg">Warning</h1></strong>
+  </div>
+</div>
+      <h4>We have sent a OTP on the mail ID you entered <span id="mail"></span> </h4>
+      <p>* If you wish to change the email click cancel and signup again</p>
+    </div>
+    <div style="margin:10px">
+    <input class="w3-input" type="text" id="otptext" placeholder="Enter OTP" style="color:#333;border:1px solid #333">
+  </div>
+    <footer class="w3-container w3-blue" style="padding: 10px;">
+      <div style="float: right">
+      <button class="w3-button w3-white w3-border w3-border-blue w3-hover-red" onclick="document.getElementById('id01').style.display='none'" style="transition: 0.5s ease">Cancel</button>
+      <button class="w3-button w3-white w3-border w3-border-blue w3-hover-blue" onclick="verifyotp()" style="transition: 0.5s ease">Submit</button>
+    </div>
+    </footer>
+
+  </div>
+</div>
 
 <script type="text/javascript">
+  function sendmail() {
+  var em=document.getElementById('inputEmail4').value;
+  if(em=="")
+  {
+    document.getElementById("error").style.display = "block";
+    document.getElementById("dabbamessage").innerHTML = "Please Enter a email id";
+  }
+  else
+  {       document.getElementById('id01').style.display='block';
+         document.getElementById('mail').innerHTML = em;
+    var url = "email="+em+"&csrfmiddlewaretoken="+"{{csrf_token}}";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       raj = this.responseText;
+    }
+  };
+   xhttp.open("POST","sendmail/", true);
+   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   xhttp.send(url);
+}
+  }
+
+function verifyotp(){
+  rec = document.getElementById('otptext').value;
+  if(rec==raj)
+  {
+      document.getElementById('otpbutton').innerHTML = "Email Verified";
+      document.getElementById('otpbutton').disabled = true;
+      document.getElementById('id01').style.display='none';
+      document.getElementById('signtooltip').style.display='none';
+      document.getElementById('signupbutton').disabled=false;
+  }
+
+  else {
+      document.getElementById("otperror").style.display = "block";
+    document.getElementById("otperrormsg").innerHTML = "The OTP did not matched. Try again";
+  }
+}
+
+</script>
+<script type="text/javascript">
+  var em=document.getElementById('inputEmail4').value;
+  document.getElementById('mail').innerHTML = em;
 function checkform()
 {
   if(document.getElementById("inputUserame4").value=="" ||document.getElementById("inputPassword4").value=="" ||document.getElementById("inputName").value=="" ||document.getElementById("inputEmail4").value=="" ||document.getElementById("inputMobile").value=="" ||document.getElementById("inputDOB").value=="" || document.getElementById("inputGender").value=="Gender")
@@ -94,7 +173,7 @@ function checkform()
     
   }
 }
- 
+
   
   $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();   
