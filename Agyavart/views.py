@@ -717,3 +717,11 @@ def displaymsg(request):
 def sendnoti(request):
 	hr = ToastNotifier()
 	hr.show_toast("Agyavart","You have recieved a new message")
+
+
+# IMPLEMENTINH CHATS
+
+def room(request, room_name):
+    return render(request, 'chat/room.html', {
+        'room_name': room_name
+    })

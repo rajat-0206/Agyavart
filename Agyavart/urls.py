@@ -52,7 +52,11 @@ urlpatterns = [
     path('chkfornew/',views.chkfornew,name="checker"),
     path('displaymsg/',views.displaymsg,name="msgdisp"),
     path('sendnoti/',views.sendnoti,name="notidisp"),
+<<<<<<< Updated upstream
     path('sendmail/',views.sendmail,name="mailotp"),
+=======
+    path('chat/<str:room_name>/', views.room, name='room'),
+>>>>>>> Stashed changes
 
 
 
