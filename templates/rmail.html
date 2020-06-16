@@ -7,9 +7,23 @@
 <title>
 Agyavart
 </title>
-{% progressive_web_app_meta %}
 {% endblock %}
-
+<link rel="manifest" href="/manifest.json">
+<script>
+  
+    // Initialize the service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/serviceworker.js', {
+            scope: '/' // <--- THIS BIT IS REQUIRED
+        }).then(function (registration) {
+            // Registration was successful
+            console.log('django-progressive-web-app: ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+            // registration failed :(
+            console.log('django-progressive-web-app: ServiceWorker registration failed: ', err);
+        });
+    }
+</script>
   <script>
 var myVar;
 function myFunction() {
@@ -22,6 +36,17 @@ function showPage() {
 </script>
   
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-16LE">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name=”description” content="Building a world of anonymity, yet closer together. Join our community now!">
+<meta property="og:title" content="Agyavart">
+<meta property="og:type" content="Social Platform">
+<meta property="og:url" content="https://rajathandsom.pythonanywhere.com/">
+<meta property="og:description" content="Building a world of anonymity, yet closer together. Join our community now!">
+<meta property="og:image" content="https://rajathandsom.pythonanywhere.com/static/images/hero_bg_1.jpg">
+<meta name="favicon" content="https://rajathandsom.pythonanywhere.com/static/images/rmailLogoConcept.png">
+<meta name="twitter:card" content="https://rajathandsom.pythonanywhere.com/static/images/hero_bg_1.jpg">
+<meta name="linkedin:card" content="https://rajathandsom.pythonanywhere.com/static/images/hero_bg_1.jpg">
 <meta name="theme-color" content="#498dcc">
 	<!-- CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -271,7 +296,7 @@ function showPage() {
   </div>
 </div>
 {% endblock %}
-<script type="application/javascript" src="https://sdki.truepush.com/sdk/v2.0.2/app.js" async></script>
+<!-- <script type="application/javascript" src="https://sdki.truepush.com/sdk/v2.0.2/app.js" async></script>
 <script>
 
 var truepush = window.truepush || [];
@@ -283,6 +308,6 @@ truepush.push(function(){
         })
     })
   
-</script>
+</script> -->
 </body>
 </html>

@@ -3,20 +3,14 @@
   "name": "Agyavart",
   "icons": [
     {
-      "src": "static/images/rmailLogoConcept.png",
+      "src": "static/images/pwa-192x192.png",
       "type": "image/png",
-      "sizes": "756x756"
-    },
-    {
-      "src": "static/images/rmailLogoConcept.png",
-      "type": "image/png",
-      "sizes": "756x756"
+      "sizes": "192x192"
     }
   ],
   "start_url": "http://127.0.0.1:8000/",
-  "scope": ".",
+  "scope": "/",
   "background_color": "#3367D6",
   "display": "standalone",
-  "theme_color": "#3367D6",
-  "gcm_sender_id": "223304863434"
+  "theme_color": "#3367D6"
 }
