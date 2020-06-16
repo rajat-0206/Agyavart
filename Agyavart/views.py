@@ -271,7 +271,6 @@ def logout(request):
 
 def sendotp(request):
 	if(request.method=="POST"):
-		print("got in otp")
 		username = request.POST['username']
 		result = firebase.get("/users",username)
 		if(result is None):
@@ -286,6 +285,18 @@ def sendotp(request):
 			return HttpResponse("OTP sent on register Email")
 	else:
 		return redirect('login')
+
+def sendmail(request):
+	if(request.method=="POST"):
+		email = request.POST['email']
+		lis=[1,2,3,4,5,6,7,8,9,0,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+		code=str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))
+		htmlgen = '<p>Your OTP for completing registration is <strong>'+code+'</strong></p>'
+		send_mail('OTP request for new Agyavart account','123456','noreply.jumblejuggle@gmail.com',[email],fail_silently=False,html_message=htmlgen)
+		return HttpResponse(code)
+	else:
+		return redirect('signup')
+
 
 
 def forgotpass(request):
@@ -706,3 +717,11 @@ def displaymsg(request):
 def sendnoti(request):
 	hr = ToastNotifier()
 	hr.show_toast("Agyavart","You have recieved a new message")
+
+
+# IMPLEMENTINH CHATS
+
+def room(request, room_name):
+    return render(request, 'chat/room.html', {
+        'room_name': room_name
+    })
