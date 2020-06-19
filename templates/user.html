@@ -8,6 +8,12 @@
   {% endblock %}
 	<!-- CSS only -->
   <script>
+  window.onload =  function requestPermission() {
+    
+    setTimeout( function(){ 
+      document.getElementById("pageloader").style.display="none";
+    console.log('Requesting permission...');
+  });
 var myVar;
 function myFunction() {
   document.getElementById("loaderbackground").style.display = "block";
@@ -22,8 +28,12 @@ function showPage() {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<meta name="theme-color" content="#008080">
+<link rel="apple-touch-icon" href="apple-touch-icon-180x180.png">
+<link rel="apple-touch-icon" sizes="152x152" href="pwa-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
 <!-- JS, Popper.js, and jQuery -->
+<link rel="stylesheet" type="text/css" href="{% static 'styles/loader.css' %}">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="{% static '/styles/profile.css' %}">
@@ -48,6 +58,25 @@ a:focus{
     text-decoration: none;
     color:#2195f38c;
 }
+
+.pageloader{
+    width: 100%;
+  height: 100%;
+  position: fixed;
+  top:0px;
+  left: 0px;
+  z-index: 1789;
+  background-color:  #008080;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+ }
 /* Center the loader */
 #loaderbackground {
   width: 100%;
@@ -194,6 +223,29 @@ a:focus{
 <body>
 <!--top nav bar -->
 <body style="font-family: Jost, sans-serif;">
+  <!-- website loader -->
+<div class="pageloader" id="pageloader">
+<div id="pageloadcontainer">
+  <span class="pageloadbrand">
+  <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" alt="Agyavart Icon">
+  </span>
+  <div class="pageloaddivider" aria-hidden="true"></div>
+  <p class="loading-text" aria-label="Loading">
+    <span class="letter L" aria-hidden="true">L</span>
+    <span class="letter" aria-hidden="true">o</span>
+    <span class="letter" aria-hidden="true">a</span>
+    <span class="letter" aria-hidden="true">d</span>
+    <span class="letter" aria-hidden="true">i</span>
+    <span class="letter" aria-hidden="true">n</span>
+    <span class="letter" aria-hidden="true">g</span>
+  </p>
+</div>
+<br>
+<div class="bottom">
+  Agyavart
+  </div>
+</div>
+  <!-- In page loader -->
 <div id="loaderbackground" style="display: none;">
 <div id ="loader21" class="dot"></div>
 <div id ="loader22" class="dot"></div>
