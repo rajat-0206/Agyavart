@@ -47,8 +47,12 @@ function showPage() {
 <meta name="favicon" content="https://rajathandsom.pythonanywhere.com/static/images/rmailLogoConcept.png">
 <meta name="twitter:card" content="https://rajathandsom.pythonanywhere.com/static/images/hero_bg_1.jpg">
 <meta name="linkedin:card" content="https://rajathandsom.pythonanywhere.com/static/images/hero_bg_1.jpg">
-<meta name="theme-color" content="#498dcc">
+<meta name="theme-color" content="#008080">
+<link rel="apple-touch-icon" href="apple-touch-icon-180x180.png">
+<link rel="apple-touch-icon" sizes="152x152" href="pwa-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
 	<!-- CSS only -->
+<link rel="stylesheet" type="text/css" href="{% static 'styles/loader.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{% static '/styles/fmt.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static '/styles/mainsetup.css' %}">
@@ -66,8 +70,15 @@ function showPage() {
 
   
  window.onload =  function requestPermission() {
+    
+    setTimeout( function(){ 
+      document.getElementById("pageloader").style.display="none";
     console.log('Requesting permission...');
+  },5000);
     // [START request_permission]
+    setTimeout( function(){ 
+    // Do something after 1 second 
+  
     Notification.requestPermission().then((permission) => {
       if (permission === 'granted') {
         console.log('Notification permission granted.');
@@ -76,7 +87,7 @@ function showPage() {
         console.log('Unable to get permission to notify.');
       }
     });
-
+      }  , 3000 );
   }
   </script>
 <style>
@@ -90,7 +101,24 @@ function showPage() {
     background-position-y: 50%;
   }
   /* Center the loader */
- 
+ .pageloader{
+    width: 100%;
+  height: 100%;
+  position: fixed;
+  top:0px;
+  left: 0px;
+  z-index: 1789;
+  background-color:  #008080;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+ }
 /* Center the loader */
 #loaderbackground {
   width: 100%;
@@ -224,6 +252,29 @@ function showPage() {
 </style>
 </head>
 <body>
+<!-- website loader -->
+<div class="pageloader" id="pageloader">
+<div id="pageloadcontainer">
+  <span class="pageloadbrand">
+  <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" alt="Agyavart Icon">
+  </span>
+  <div class="pageloaddivider" aria-hidden="true"></div>
+  <p class="loading-text" aria-label="Loading">
+    <span class="letter L" aria-hidden="true">L</span>
+    <span class="letter" aria-hidden="true">o</span>
+    <span class="letter" aria-hidden="true">a</span>
+    <span class="letter" aria-hidden="true">d</span>
+    <span class="letter" aria-hidden="true">i</span>
+    <span class="letter" aria-hidden="true">n</span>
+    <span class="letter" aria-hidden="true">g</span>
+  </p>
+</div>
+<br>
+<div class="bottom">
+  Agyavart
+  </div>
+</div>
+  <!-- In page loader -->
   <div id="loaderbackground" style="display: none;">
 <div id ="loader21" class="dot"></div>
 <div id ="loader22" class="dot"></div>
@@ -232,7 +283,7 @@ function showPage() {
 <div id="loadertext" class="sub-catch-line fmt-center">Hold up</div>
 </div>
 <nav class="navbar fixed-top navbar-expand-lg ">
-  <a class="navbar-brand button-chip" href="rmail.html" style="background-color: #0059ff;">
+  <a class="navbar-brand button-chip" href="rmail.html" style="background-color: #008080;">
     <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" class="align-top" alt="Agyavart Icon">
     Agyavart
   </a>

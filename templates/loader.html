@@ -16,17 +16,44 @@
 <meta name="favicon" content="https://rajathandsom.pythonanywhere.com/static/images/rmailLogoConcept.png">
 <meta name="twitter:card" content="https://rajathandsom.pythonanywhere.com/static/images/hero_bg_1.jpg">
 <meta name="linkedin:card" content="https://rajathandsom.pythonanywhere.com/static/images/hero_bg_1.jpg">
+<meta name="theme-color" content="#008080">
+<link rel="apple-touch-icon" href="apple-touch-icon-180x180.png">
+<link rel="apple-touch-icon" sizes="152x152" href="pwa-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
 <title>Agyavart</title>
 <script type="text/javascript">
 </script>
 </head>
+<style type="text/css">
+  
+* {
+  box-sizing: border-box;
+
+}
+  *::before, *::after {
+    box-sizing: border-box;
+  }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+  background:  #008080;
+  overflow: hidden;
+}
+</style>
 <body >
 <!-- <img src="{%static 'images/loader.gif' %}" class="gif"> -->
-<div id="container">
-	<span class="brand">
+<div id="pageloadcontainer">
+	<span class="pageloadbrand">
 	<img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" alt="Agyavart Icon">
   </span>
-  <div class="divider" aria-hidden="true"></div>
+  <div class="pageloaddivider" aria-hidden="true"></div>
   <p class="loading-text" aria-label="Loading">
     <span class="letter L" aria-hidden="true">L</span>
     <span class="letter" aria-hidden="true">o</span>

@@ -10,7 +10,7 @@
   ],
   "start_url": "http://127.0.0.1:8000/",
   "scope": "/",
-  "background_color": "#3367D6",
+  "background_color": " #008080",
   "display": "standalone",
-  "theme_color": "#3367D6"
+  "theme_color": " #008080"
 }
