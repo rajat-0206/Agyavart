@@ -291,11 +291,10 @@ a:focus{
   padding:3px;
   height: 50px;
   width: 50px;
-  padding-left:20px;
+  padding-left:10px;
   box-shadow: 2px 2px solid #333;
   transition: 0.5s ease;
   opacity: 0.9;
-
   opacity: 0.9;
   }
 
@@ -322,11 +321,38 @@ a:focus{
   border:2px solid black;
   right:10px;
   top:5px;
-  margin-left: 10px;
+  margin-right:5px  ;
   margin: 1px auto;
   font-size: 20px;
 }
 
+@media screen and (max-width:424px)
+{
+
+  .dpimg {
+    width:200px;
+    height:200px;
+  }
+
+  .dp {
+    position: absolute;
+    top:150px;
+    left:10px;
+  }
+
+  .content{
+    height: 100px;
+  }
+
+  #imag {
+    width:35px;
+    height: 35px;
+    font-size: 30px;
+    padding:0px;
+    padding-left: 5px;
+    vertical-align: middle;
+  }
+}
 
 </style>
 </head>
@@ -365,33 +391,23 @@ a:focus{
 <!--top nav bar -->
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-light profile-menu-bar">
-	<i id="imag" width="30" height="30" class="fa fa-angle-right d-inline-block align-top" aria-hidden="true" alt="Open Navbar" style="margin-right: 10px; cursor: pointer;" onclick="openNav()"></i>
-   <a class="button-chip navbar-brand" href="rmail.html" style="font-size: 22px;color:white;background-color: #0059ff; ">
+  <ul class="nav nav-pills">
+	<li  class="nav-item">
+   <span class="badge align-top slow" id="imag" style="margin-right: 10px; cursor: pointer;" onclick="openNav()" aria-hidden="true" alt="Open Navbar" ><i class="fa fa-angle-right"></i></span></li>
+   <li  class="nav-item"><a class="button-chip navbar-brand" href="rmail.html">
     <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" class="align-top" alt="Rmail Logo">
     Agyavart
-    </a>
-  
-  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"> </a>
-      </li>
-    </ul>
-   <!--  <span class="navbar-toggler-icon" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #fff; padding:3px; width:40px; height:30px; border-radius: 10px;border:2px solid #333;"></span> -->
-    <ul class="nav nav-pills" >
-      <li class="nav-item">
-        <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"></a>
-      </li>
+    </a></li>
+      <li class="nav-item" style="vertical-align: middle;">
+    <span class="badge align-top slow" onclick="yoyo()" style="align-self:right ; cursor: pointer;" data-toggle="modal" data-target="#messageModal"><i class="fa fa-plus"></i></span></li>&nbsp;&nbsp;
       <li class="nav-item">
         <a href="recieve.html"><span class="badge align-top slow" id="noofmsg"><i class="fa fa-paper-plane"></i></span></a>
       </li>
-    </ul>
     <form class="form-inline my-2 my-lg-0 notshow" >
       <input class="form-control mr-sm-2" type="search" placeholder="Search(available soon)" disabled>
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
     </form>
+</ul>
 </nav>
 
 
@@ -511,7 +527,7 @@ a:focus{
 </div>
 </div>
 	<div class="secondname">
-		<h1 style="font-size: 46px;font-family: Jost,sans-serif;">{{Name }}</h1>
+		<h1 style="font-size: 36px;font-family: Jost,sans-serif;">{{Name }}</h1>
     <h3 style="font-size: 22px;font-family: Jost,sans-serif;">@{{ username}}</h3>	</div>
 
 <div id="Home" class="tabcontent fmt-animate-bottom">
