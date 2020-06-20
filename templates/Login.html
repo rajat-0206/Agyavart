@@ -3,7 +3,7 @@
 {%block temp %}
 <head>
   <title>Login | Agyavart</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="theme-color" content="#498dcc">
   <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
@@ -41,8 +41,9 @@
   </div>
 </center>
 
-<div class="fmt-col  m6 loginbox" style="margin-bottom:80px">
-  <div class="work-box fmt-animate-bottom">
+<!--problem in this. Needs a remake-->
+<div class="fmt-row fmt-red loginbox" style="margin-bottom:80px">
+  <div class="work-box fmt-center fmt-col  fmt-animate-bottom">
     <form action="auth" method = "post" onsubmit="myFunction()">
       {% csrf_token %}
       <label class="input-label fmt-animate-left" for="email">Your username.</label>
@@ -52,10 +53,10 @@
       <input class="edit-text-box fmt-animate-right" type="password" id="pass" name ="password" required>
       <br /><br /><br />
       <div class="fmt-row">
-        <div class="fmt-col m5">
+        <div class="fmt-col fmt-half">
           <button type="submit" class="fmt-left button-block-sec fmt-animate-left">Let's go</button>
         </div>
-        <div class="fmt-col m7 fmt-animate-right">
+        <div class="fmt-col fmt-half fmt-animate-right">
           <a href="#" data-toggle="modal" data-target="#myModal" style="margin-top:12px" class="fmt-right button-tab" onclick="reset()">Any problem?</a>
         </div>
       </div>
