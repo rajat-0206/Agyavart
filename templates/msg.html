@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
 <style type="text/css">
+ #newmsgdialog #contact::-webkit-scrollbar {
+    color:#333;
+  }
 </style>
   {% endblock %}
 
@@ -36,12 +39,12 @@
 <nav class="navbar navbar-light bg-light" style="margin-top:0px; padding: 10px;height:80px; width: 100%;">
 <a href="message.html"><i class="fa fa-rotate-left" style="font-size:36px;color:#333;" onclick="rotate(this)"></i></a>
   <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search(available soon)" style="width: 150px;margin-right: 5px" disabled>
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" id="myInput" onkeyup="searchmsg()" aria-label="Search" style="width: 150px;margin-right: 5px">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
 </nav>
 <div id="messagecon">
-<ul>
+<ul id="messageul">
 {% if warning %}
 <h2 style="margin:0px auto"> No message yet </h2>
 {% else %}
@@ -102,6 +105,28 @@ function rotate(id) {
 
 
   
+}
+
+function searchmsg() {
+// Declare variables
+var input, filter, ul, li, a, i, txtValue;
+input = document.getElementById('myInput');
+filter = input.value.toUpperCase();
+ul = document.getElementById("messageul");
+li = ul.getElementsByTagName('li');
+
+// Loop through all list items, and hide those who don't match the search query
+for (i = 0; i < li.length; i++) {
+stro = li[i].getElementsByTagName("H3")[0];
+stro1 = li[i].getElementsByTagName("ARTICLE")[0];
+txtValue = stro.textContent || stro.innerText;
+txtValue1 =  stro1.textContent || stro1.innerText ;
+if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue1.toUpperCase().indexOf(filter) > -1) {
+  li[i].style.display = "";
+} else {
+li[i].style.display = "none";
+}
+}
 }
 
 // function bulao(){
