@@ -54,6 +54,7 @@ urlpatterns = [
     path('sendnoti/',views.sendnoti,name="notidisp"),
     path('sendmail/',views.sendmail,name="mailotp"),
     path('chat/<str:room_name>/', views.room, name='room'),
+    path('rajat',views.rajat,name="Rajat"),
 
 
 

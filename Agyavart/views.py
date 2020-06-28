@@ -41,6 +41,8 @@ firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/'
 # auth = firebase.auth()
 
 #Hasing Functions
+def rajat(request):
+	return render(request,'rajat.html')
 def offline(request):
     return render(request,"offline.html")
 
