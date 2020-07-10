@@ -32,3 +32,9 @@ class users:
 	name: str
 	username: str
 
+class chatmsg:
+	message: str
+	sender: str
+	name : str
+	#time : str
+

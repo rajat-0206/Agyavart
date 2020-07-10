@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 
 from datetime import datetime
 
-from .models import sentmessage,recievedmessage,users
+from .models import sentmessage,recievedmessage,users,chatmsg
 import os
 
 from win10toast import ToastNotifier
@@ -43,6 +43,10 @@ firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/'
 #Hasing Functions
 def rajat(request):
 	return render(request,'rajat.html')
+
+def privacy(request):
+	return render(request,'privacy.html')
+
 def offline(request):
     return render(request,"offline.html")
 
@@ -716,14 +720,46 @@ def displaymsg(request):
 	else:
 		return redirect('recieve')
 
-def sendnoti(request):
-	hr = ToastNotifier()
-	hr.show_toast("Agyavart","You have recieved a new message")
+
+#IMPLEMENTING  CHAT
+
+def chatroom(request):
+	username = request.session['username']
+	recipient  = request.GET['recipient']
+	result = firebase.get('users/',username)
+	rec = firebase.get('users/',recipient)
+	roomcode = firebase.get('chat/',username+"/"+recipient+"/roomcode")
+	if(roomcode==None):
+		roomcode = hash_password(username+recipient)
+		firebase.patch('chat/'+username+"/"+recipient,{"roomcode":roomcode})
+		firebase.patch('chat/'+recipient+"/"+username,{"roomcode":roomcode})
+	chatlog = firebase.get("chatlog/",roomcode)
+	pastmsg = []
+	if(chatlog is not None):
+		for i in chatlog:
+			obj = chatmsg()
+			obj.message = i["message"]
+			obj.sender = i["sender"]
+			obj.name = i["name"]
+			pastmsg.append(obj)
+	return render(request,'rajat.html',{"chatlog":pastmsg,"roomcode":roomcode,"username":username})
+
+def save_message(request):
+	roomcode = request.POST["roomcode"]
+	message = request.POST['message']
+	sender = request.session['username']
+	result = firebase.get('users/',sender)
+	chatlog = firebase.get('chatlog/',roomcode)
+	if(chatlog==None):
+		chatlog = []
+		chatlog.append({"message":message,"sender":sender,"name":result['Name']})
+	else:
+		chatlog.append({"message":message,"sender":sender,"name":result['Name']})
+	#time = request.POST["time"]
+	firebase.put_async('chatlog/',roomcode,chatlog)
+	return HttpResponse("done")
+
+def temp(request):
+	return render(request,'chat_template.html')
 
 
-# IMPLEMENTINH CHATS
-
-def room(request, room_name):
-    return render(request, 'chat/room.html', {
-        'room_name': room_name
-    })
