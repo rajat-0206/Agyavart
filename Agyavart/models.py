@@ -36,5 +36,5 @@ class chatmsg:
 	message: str
 	sender: str
 	name : str
-	#time : str
+	time : str
 

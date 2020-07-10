@@ -741,20 +741,23 @@ def chatroom(request):
 			obj.message = i["message"]
 			obj.sender = i["sender"]
 			obj.name = i["name"]
+			if("time" in i.keys()):
+				obj.time = i["time"]
 			pastmsg.append(obj)
-	return render(request,'rajat.html',{"chatlog":pastmsg,"roomcode":roomcode,"username":username})
+	return render(request,'rajat.html',{"chatlog":pastmsg,"roomcode":roomcode,"recipient":recipient,"username":username,"recName":rec["Name"],"photo":result['DP']})
 
 def save_message(request):
 	roomcode = request.POST["roomcode"]
 	message = request.POST['message']
 	sender = request.session['username']
+	time = request.POST['time']
 	result = firebase.get('users/',sender)
 	chatlog = firebase.get('chatlog/',roomcode)
 	if(chatlog==None):
 		chatlog = []
-		chatlog.append({"message":message,"sender":sender,"name":result['Name']})
+		chatlog.append({"message":message,"sender":sender,"name":result['Name'],"time":time})
 	else:
-		chatlog.append({"message":message,"sender":sender,"name":result['Name']})
+		chatlog.append({"message":message,"sender":sender,"name":result['Name'],"time":time})
 	#time = request.POST["time"]
 	firebase.put_async('chatlog/',roomcode,chatlog)
 	return HttpResponse("done")
