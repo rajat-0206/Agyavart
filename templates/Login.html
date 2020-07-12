@@ -3,9 +3,6 @@
 {%block temp %}
 <head>
   <title>Login | Agyavart</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="theme-color" content="#498dcc">
   <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
   <link rel="stylesheet" href="{% static 'styles/fmt.css' %}">
   <link rel="stylesheet" href="{% static 'styles/mainsetup.css' %}">
@@ -21,7 +18,6 @@
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   <strong>Info!</strong> {{info }}
 </div>
-
 <div id="error" class="fmt-animate-bottom" style="display: none; margin-top:100px;padding:0 42px 0 42px">
   <div class="alert alert-danger alert-dismissible fade show" style="padding:22px">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -34,16 +30,13 @@
     </ol>
   </div>
 </div>
-
 <center>
   <div class="fmt-animate-top" style="margin-top: 80px;">
    <p class="sub-catch-line">Welcome Back.</p>
   </div>
 </center>
-
-<!--problem in this. Needs a remake-->
-<div class="fmt-row fmt-red loginbox" style="margin-bottom:80px">
-  <div class="work-box fmt-center fmt-col  fmt-animate-bottom">
+<div class="fmt-col  m6 loginbox" style="margin-bottom:80px;">
+  <div class="work-box fmt-animate-bottom">
     <form action="auth" method = "post" onsubmit="myFunction()">
       {% csrf_token %}
       <label class="input-label fmt-animate-left" for="email">Your username.</label>
@@ -56,7 +49,7 @@
         <div class="fmt-col fmt-half">
           <button type="submit" class="fmt-left button-block-sec fmt-animate-left">Let's go</button>
         </div>
-        <div class="fmt-col fmt-half fmt-animate-right">
+        <div class="fmt-col m5 fmt-animate-right">
           <a href="#" data-toggle="modal" data-target="#myModal" style="margin-top:12px" class="fmt-right button-tab" onclick="reset()">Any problem?</a>
         </div>
       </div>
@@ -68,7 +61,6 @@
     <a href="signup.html"><span class="button-normal-body fmt-animate-right">Join us</span></a>
   </div>
 </div>
-
 <!-- Forgot password section -->
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
@@ -122,6 +114,7 @@
         </button>
         </div>
         </div>
+        <!-- fpassword closed here -->
         <div id="funame" class="tabcontent">
           <form method="post" action="fuser" onsubmit="myFunction()">
             {% csrf_token %}
@@ -130,11 +123,11 @@
             </div>
             <button type="submit" class="btn btn-block btn-success">Submit</button>
             
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
 </div>
 
 

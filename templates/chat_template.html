@@ -1,0 +1,116 @@
+
+{% extends 'profile.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		{%block title %}
+		<title>Chat</title>
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'styles/chat1.css' %}">
+		{% endblock %}
+	</head>
+	<body>
+		{%block content %}
+	<div class="container-fluid h-100">
+			<div class="row justify-content-center h-100">
+				
+				<div class="chat" style="padding: 0px;"><div class="card mb-sm-3 mb-md-0 contacts_card">
+					<div class="card-header">
+						<div class="input-group">
+							<input type="text" id="myInput" onkeyup="searchcontact()" placeholder="Search..." name="" class="form-control search">
+							<div class="input-group-prepend">
+								<span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+							</div>
+						</div>
+					</div>
+					<div class="card-body contacts_body">
+						<ui class="contacts" id ="contactslist">
+						{% for i in messages %}
+						{% if i.isread is False %}
+						<a href="/chatroom?recipient={{i.username}}">
+						<li class="active">
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="{{i.photo}}" class="rounded-circle user_img">
+								</div>
+								<div class="user_info">
+									<span>{{i.name}}</span>
+								</div>
+							</div>
+						</li>
+					</a>
+					{%else %}
+						<a href="/chatroom?recipient={{i.username}}">
+						<li>
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="{{i.photo}}" class="rounded-circle user_img">
+								</div>
+								<div class="user_info">
+									<span>{{i.name}}</span>
+								</div>
+							</div>
+						</li>
+					</a>
+					{% endif %}
+					{% endfor %}
+						</ui>
+					</div>
+
+				</div></div> 
+				
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+			$(document).ready(function(){
+$('#action_menu_btn').click(function(){
+	$('.action_menu').toggle();
+});
+	});
+
+setInterval(function(){
+      var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        document.getElementById('contactslist').innerHTML = this.responseText;
+        searchcontact();
+      };
+    }
+  xhttp.open("GET","/refresh", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+},2000);
+	</script>
+<script type="text/javascript">
+	function searchcontact() {
+// Declare variables
+var input, filter, ul, li, a, i, txtValue;
+input = document.getElementById('myInput');
+filter = input.value.toUpperCase();
+ul = document.getElementById("contactslist");
+a = ul.getElementsByTagName('a');
+
+// Loop through all list items, and hide those who don't match the search query
+for (i = 0; i < a.length; i++) {
+P = a[i].getElementsByTagName("SPAN")[0];
+txtValue = P.textContent || P.innerText;
+if (txtValue.toUpperCase().indexOf(filter) > -1) {
+  a[i].style.display = "";
+} else {
+a[i].style.display = "none";
+}
+}
+}
+</script>
+	{% endblock %}
+</html>

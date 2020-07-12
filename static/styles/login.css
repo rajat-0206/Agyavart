@@ -97,26 +97,6 @@ body {font-family: Arial;}
 input:focus  {box-shadow: 5px 0px 30px black;
 				}
 
-
-.btn-login {width: 400px;
-		cursor: pointer;
-				height:50px;
-			padding:0 5px;
-			margin:15px 5px 0 5px;
-			background-color: emerald;
-			border:none;
-			color:black;
-			text-align: center;
-			border-radius: 5px 5px 5px 5px;
-			border-bottom: nephritis solid;
-			
-			}
-
-.naved {margin-top:12px;}
-
-.container1 .forget{ color:black;
-			font-size: 20px; }
-
 h2   {text-align: center;
 		color:blue;
 		font-size: 60px;
@@ -161,11 +141,6 @@ footer a:first-child {margin-left: 20px;}
 .right  a:last-child {margin-right:20px;
 		}
 
-nav {margin: 0px;
-padding:0px;
-display: inline;
-float: right;
-}
 
 
  h7 {margin:10px 10px 0 0;
