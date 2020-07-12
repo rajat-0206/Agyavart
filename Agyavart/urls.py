@@ -51,9 +51,16 @@ urlpatterns = [
     path('loader',views.loader,name="loader1"),
     path('chkfornew/',views.chkfornew,name="checker"),
     path('displaymsg/',views.displaymsg,name="msgdisp"),
-    path('sendnoti/',views.sendnoti,name="notidisp"),
     path('sendmail/',views.sendmail,name="mailotp"),
-    path('chat/<str:room_name>/', views.room, name='room'),
+    path('chatroom',views.chatroom,name="chat"),
+    path('privacy',views.privacy,name="privacy"),
+    path('save_message/',views.save_message,name="Save message"),
+    path('thread',views.msgthread,name="thread"),
+    path('refresh',views.refresh,name="refersh"),
+    path('videocall',views.videocall,name="videocall"),
+    path('cutcall',views.cutcall,name='callcutt'),
+    path('status',views.status,name="status"),
+    path('chkforcall',views.chkforcall,name="call"),
 
 
 

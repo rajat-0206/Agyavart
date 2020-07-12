@@ -32,3 +32,15 @@ class users:
 	name: str
 	username: str
 
+class chatmsg:
+	message: str
+	sender: str
+	name : str
+	time : str
+
+class threads:
+	uesrname: str
+	name : str
+	photo : str
+	isread: bool
+

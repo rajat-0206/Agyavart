@@ -6,12 +6,6 @@
     padding:5px;
     height: 100%;    } 
 
-.column {
-    width: 80%;
-    padding: 0 8px;
-    height: 110px;
-    margin-bottom: 10px;
-}
 
 /* Display the columns below each other instead of side by side on small screens */
 
@@ -20,6 +14,9 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background-color: white;
     height: 110px;
+    width: 80%;
+    height: 110px;
+    margin-bottom: 10px;
     padding:5px;
 }
 
@@ -58,15 +55,16 @@
 
  @media (max-width: 991px) {
     .column {
-        width: 100%;
-        margin:0px;
-        height: 150px;
-        margin-bottom: 10px;
+        
     
     }
     .card {
         height: 150px;
         padding-top:20px;
+        margin-bottom: 10px;
+        width: 100%;
+        margin:0px;
+        height: 150px;
         margin-bottom: 10px;
     }
 

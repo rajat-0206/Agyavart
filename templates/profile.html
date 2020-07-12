@@ -42,6 +42,7 @@ function showPage() {
 <link rel="stylesheet" type="text/css" href="{% static 'styles/profile.css' %}">
 <link rel="stylesheet" href="{% static 'styles/fmt.css' %}">
 <link rel="stylesheet" href="{% static 'styles/mainsetup.css' %}">
+<link rel="stylesheet" href="{% static 'styles/snackbar.css' %}">
 <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
 <style>
   a{
@@ -67,7 +68,7 @@ a:focus{
   top:0px;
   left: 0px;
   z-index: 1789;
-  background-color:  #008080;
+  background-color: rgba(0,0,0,0.6);
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   line-height: 1.5;
@@ -360,6 +361,12 @@ a:focus{
 
 <!-- website loader -->
 <div class="pageloader" id="pageloader">
+<div id ="loader21" class="dot"></div>
+<div id ="loader22" class="dot"></div>
+<div id ="loader23" class="dot"></div>
+<div id ="loader24" class="dot"></div>
+</div>
+<!-- <div class="pageloader" id="pageloader">
 <div id="pageloadcontainer">
   <span class="pageloadbrand">
   <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" alt="Agyavart Icon">
@@ -379,7 +386,7 @@ a:focus{
 <div class="bottom">
   Agyavart
   </div>
-</div>
+</div> -->
   <!-- In page loader -->
 <div id="loaderbackground" style="display: none;">
 <div id ="loader21" class="dot"></div>
@@ -418,7 +425,7 @@ a:focus{
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" id="closemsgmodal" aria-label="Close">
           <span aria-hidden="true" onclick="revyoyo()">&times;</span>
         </button>
       </div>
@@ -451,7 +458,10 @@ a:focus{
     </div>
   </div>
 </div>
-
+<!--videocalling -->
+<div id="videocallingmodal">
+  
+</div>
 <!--side Navbar -->
 {% block sidenav %}
 <div id="sidenav" class="bar fmt-shadow" style="background-color: #0a14507e;">
@@ -597,15 +607,10 @@ a:focus{
   </tbody>
 </table>
 </center></div>
-<div id="About" class="tabcontent fmt-bottom fmt-animate-bottom ">
-  <h3>About</h3>
-  <p>Who we are and what we do.</p>
-</div>
 <div class="fmt-bottom fmt-shadow" style="z-index: 3;">
   <button class="tablink" style="outline: none;" onclick="openPage('Home', this, '#7236aa ')" id="defaultOpen"><i class="fa fa-user"></i></button>
   <button class="tablink" style="outline: none;" onclick="openPage('News', this, '#7236aa ')"><i class="fa fa-book"></i></button>
   <button class="tablink" style="outline: none;" onclick="openPage('Contact', this, '#7236aa ')"><i class="fa fa-link"></i></button>
-  <button class="tablink" style="outline: none;" onclick="openPage('About', this, '#7236aa ')"><i class="fa fa-picture-o"></i></button>
 </div>
 
 
@@ -657,6 +662,13 @@ a:focus{
     </div>
   </div>
 </div>
+
+<!-- modal for calling -->
+
+ <div id="snackBar" class="snackbar snack-show">
+    <span class="snackText" id="snackText"></span>
+    <button class="snack-button" id="snackButton"></button>
+<script type="text/javascript" src="{% static 'scripts/snackbar.js' %}"></script>
 <script type="text/javascript">
 
 
@@ -679,7 +691,7 @@ function openPage(pageName,elmnt,color) {
 }
 
 // Get the element with id="defaultOpen" and click on it
-
+document.getElementById("defaultOpen").click();
 </script>
 
 {% endblock %}
@@ -731,22 +743,21 @@ function bhejnahai() {
 
   if(flag==1)
   {
-    document.getElementById("msgloader").style.display = "block";
-    document.getElementById("msgsubmit").style.display = "none";
-    document.getElementById('message-text').disabled = true;
-    document.getElementById('recipient').disabled = true;
+    document.getElementById("closemsgmodal").click();
+    document.getElementById('message-text').value = "";
+    document.getElementById('recipient').value = "";
+    showSnackBar(text ='Sending Message.....',hasAction = false,actionText = String(),isNormal = true,isWarning = false);
+    
   var url = "recipient="+kisko+"&message="+sandhesa+"&csrfmiddlewaretoken="+"{{csrf_token}}";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-
-    document.getElementById("dabba").style.display = "block";
-    document.getElementById("msgloader").style.display = "none";
-    document.getElementById("msgsubmit").style.display = "block";
-    document.getElementById('message-text').disabled = false;
-    document.getElementById('recipient').disabled = false;
-    document.getElementById("dabbaerrormsg").innerHTML = this.responseText;
-    }
+      if(this.responseText=='Message sent successfull.')
+          showSnackBar(text =this.responseText,hasAction = false,actionText = String(),isNormal = true,isWarning = false);
+        else{
+          showSnackBar(text =this.responseText,hasAction = false,actionText = String(),isNormal = false,isWarning = true);
+        }
+        }
   };
   xhttp.open("POST","newmsg/", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -755,12 +766,27 @@ function bhejnahai() {
   
 }
 
-document.getElementById("defaultOpen").click();
 function openNav() {
   document.getElementById('imag').classList.toggle("rotate");
   document.getElementById("sidenav").classList.toggle("change");
 }
 var x=0;
+
+setInterval(function(){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+         if(this.responseText!="no")
+         {
+         document.getElementById('videocallingmodal').innerHTML = this.responseText;
+      }
+        }
+        };
+  xhttp.open("GET","/chkforcall", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+},3000);
 // setInterval(function(){ 
 
 //   var xhttp = new XMLHttpRequest();

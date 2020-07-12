@@ -1,0 +1,27 @@
+function changename() {
+  fname = document.getElementById("fname").value;
+  lname = document.getElementById('lname').value;
+  var letters = /^[A-Za-z]+$/;
+   if(fname=="" || !fname.match(letters) || !lname.match(letters) )
+   {
+    showSnackBar(text ='Invalid Name',hasAction = false,actionText = String(),isNormal = true,isWarning = true);
+ 
+   }
+   else{
+    fname = fname[0].toUpperCase()+fname.slice(1);
+  lname = lname[0].toUpperCase()+lname.slice(1);
+  showSnackBar(text ='Changing Name...',hasAction = false,actionText = String(),isNormal = true,isWarning = false);
+  document.getElementById('id01').style.display="none";
+  var xhttp = new XMLHttpRequest();
+      var url = "first="+fname+"&last="+lname+"&csrfmiddlewaretoken="+"{{csrf_token}}";
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      showSnackBar(text =this.responseText,hasAction = false,actionText = String(),isNormal = true,isWarning = false);
+            document.getElementById('nameofuser').innerHTML = fname+" "+lname;
+      };
+    }
+  xhttp.open("POST","/change_name", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send(url);
+   }
+}
