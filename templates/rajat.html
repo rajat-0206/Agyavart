@@ -51,7 +51,7 @@ function showPage() {
             <div class="card-header msg_head">
               <div class="d-flex bd-highlight">
                 <div class="back_cam">
-                 <a href="/user/{{recipient}}" onclick="myFunction()"><span><i class="fa fa-arrow-left" aria-hidden="true"></i></span></a>
+                 <a href="/thread" onclick="myFunction()"><span><i class="fa fa-arrow-left" aria-hidden="true"></i></span></a>
                  </div>
                 <div class="img_cont">
 
@@ -62,7 +62,7 @@ function showPage() {
                   <p>1767 Messages</p>
                 </div>
                 <div class="video_cam">
-                  <span><i class="fas fa-video"></i></span>
+                  <span onclick="videocall()"><i class="fas fa-video"></i></span>
                   <span><i class="fas fa-phone"></i></span>
                 </div>
               </div>
@@ -136,7 +136,7 @@ function sendsecret(){
 
 const name = "{{Name}}"; //comes from views.py
 
-const chatHash = "{{Roomcode}}"; //generatedby views.py
+const chatHash = "{{roomcode}}"; //generatedby views.py
 const configuration = {
   iceServers: [{
     url: 'stun:stun.l.google.com:19302'
@@ -354,7 +354,7 @@ var main = document.createElement("DIV");
 t.scrollTop = t.scrollHeight;
  //insertMessageToDOM(data, true);
   var xhttp = new XMLHttpRequest();
-  var url = "roomcode="+"{{roomcode}}"+"&message="+value+"&time="+time+"&csrfmiddlewaretoken="+"{{csrf_token}}";
+  var url = "roomcode="+"{{roomcode}}"+"&message="+value+"&recipient="+"{{recipient}}"+"&time="+time+"&csrfmiddlewaretoken="+"{{csrf_token}}";
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       if(this.responseText=='Message sent successfull.')
@@ -367,6 +367,11 @@ t.scrollTop = t.scrollHeight;
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(url);
   dataChannel.send(JSON.stringify(data));
+}
+
+function videocall(){
+  url = "/videocall?roomcode="+"{{roomcode}}"+"&recipient="+"{{recipient}}";
+  location.href = url;
 }
 </script>
 </body>

@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 
 from datetime import datetime
 
-from .models import sentmessage,recievedmessage,users,chatmsg
+from .models import sentmessage,recievedmessage,users,chatmsg,threads
 import os
 
 from win10toast import ToastNotifier
@@ -744,12 +744,18 @@ def chatroom(request):
 			if("time" in i.keys()):
 				obj.time = i["time"]
 			pastmsg.append(obj)
+	data = firebase.get("newmsg/",username)
+	if(data is not None):
+		data.remove(recipient)
+		print(data)
+		firebase.put("newmsg/",username,data)
 	return render(request,'rajat.html',{"chatlog":pastmsg,"roomcode":roomcode,"recipient":recipient,"username":username,"recName":rec["Name"],"photo":result['DP']})
 
 def save_message(request):
 	roomcode = request.POST["roomcode"]
 	message = request.POST['message']
 	sender = request.session['username']
+	recipient = request.POST['recipient']
 	time = request.POST['time']
 	result = firebase.get('users/',sender)
 	chatlog = firebase.get('chatlog/',roomcode)
@@ -760,9 +766,125 @@ def save_message(request):
 		chatlog.append({"message":message,"sender":sender,"name":result['Name'],"time":time})
 	#time = request.POST["time"]
 	firebase.put_async('chatlog/',roomcode,chatlog)
+	result = firebase.get_async("newmsg/",sender)
+	if(result is None):
+		result =[]
+		result.insert(0,recipient)
+	else:
+		result.remove(recipient)	
+		result.insert(0,recipient)
+	result1 = firebase.get_async("newmsg/",recipient)
+	if(result1 is None):
+		result1 =[]
+		result1.insert(0,sender)
+	else:
+		result.insert(0,sender)
+	firebase.put_async('newmsg/',sender,result)
+	firebase.put_async('newmsg/',recipient,result1)
 	return HttpResponse("done")
 
-def temp(request):
-	return render(request,'chat_template.html')
+def msgthread(request):
+	username = request.session['username']
+	new = firebase.get("newmsg/",username)
+	thread = firebase.get("threads/",username)
+	result = firebase.get("users/",None)
+	newthread = []
+	todeliver = []
+	if(new is not None):
+		for i in new:
+			if(i not in newthread):
+				obj = threads()
+				obj.username = i
+				obj.name = result[i]["Name"]
+				obj.photo = result[i]["DP"]
+				obj.isread = False
+				todeliver.append(obj)
+				newthread.append(i)
 
+	if(thread is not None):
+		for i in thread:
+			if(i not in newthread):
+				obj = threads()
+				obj.username = i
+				obj.name = result[i]["Name"]
+				obj.photo = result[i]["DP"]
+				print(obj.photo,result[i]["DP"])
+				obj.isread = True
+				todeliver.append(obj)
+				newthread.append(i)
+	firebase.put('threads/',username,newthread)
+	return render(request,"chat_template.html",{"messages":todeliver})
 
+def refresh(request):
+	username = request.session['username']
+	new = firebase.get("newmsg/",username)
+	thread = firebase.get("threads/",username)
+	result = firebase.get("users/",None)
+	newthread = []
+	todeliver = []
+	if(new is not None):
+		for i in new:
+			if(i not in newthread):
+				obj = threads()
+				obj.username = i
+				obj.name = result[i]["Name"]
+				obj.dp = result[i]["DP"]
+				obj.isread = False
+				todeliver.append(obj)
+				newthread.append(i)
+
+	if(thread is not None):
+		for i in thread:
+			if(i not in newthread):
+				obj = threads()
+				obj.username = i
+				obj.name = result[i]["Name"]
+				obj.photo = result[i]["DP"]
+				print(obj.photo,result[i]["DP"])
+				obj.isread = True
+				todeliver.append(obj)
+				newthread.append(i)
+	firebase.put('threads/',username,newthread)
+	return render(request,"temp.html",{"messages":todeliver})
+
+#IMPLEMENTING CALLING LOGIC
+def videocall(request):
+	username = request.session['username']
+	roomcode = request.GET['roomcode']
+	recipient = request.GET['recipient']
+	status = firebase.get("calling/",recipient)
+	result = firebase.get("users/",None)
+	if(status is not None):
+		if(status["current"]!=username):
+			return render(request,'videocall.html',{"roomcode":roomcode,"RecName":result[recipient]["Name"],"warning":"is on another call"})
+	firebase.put_async("calling/",username,{"current":recipient})
+	firebase.put_async("calling/",recipient,{"current":username})
+	return render(request,'videocall.html',{"roomcode":roomcode,"RecName":result[recipient]["Name"]})
+
+def cutcall(request):
+	username = request.session['username']
+	recipient = request.GET['recipient']
+	firebase.delete("calling/",username)
+	firebase.delete("calling/",recipient)
+	return redirect('/thread')
+
+def status(request):
+	username = request.session["username"]
+	ownsta = firebase.get("calling/",username)
+	if(ownsta is None):
+		return HttpResponse("ended")
+	else:
+		return HttpResponse("going")
+
+def chkforcall(request):
+	username = request.session["username"]
+	ownsta = firebase.get("calling/",username)
+	if(ownsta is None):
+		return HttpResponse("no")
+	else:
+		recipient = ownsta["current"]
+		result = firebase.get("users/",recipient)
+		roomcode = firebase.get('chat/',username+"/"+recipient+"/roomcode")
+		url = "/videocall?roomcode="+roomcode+"&recipient="+recipient
+		cuturl = "/cutcall?recipient="+recipient
+		return render(request,"callingmsg.html",{"Name":result["Name"],"url":url,"cuturl":cuturl})

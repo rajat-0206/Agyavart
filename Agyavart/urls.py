@@ -55,7 +55,12 @@ urlpatterns = [
     path('chatroom',views.chatroom,name="chat"),
     path('privacy',views.privacy,name="privacy"),
     path('save_message/',views.save_message,name="Save message"),
-    path('temp',views.temp,name="temp"),
+    path('thread',views.msgthread,name="thread"),
+    path('refresh',views.refresh,name="refersh"),
+    path('videocall',views.videocall,name="videocall"),
+    path('cutcall',views.cutcall,name='callcutt'),
+    path('status',views.status,name="status"),
+    path('chkforcall',views.chkforcall,name="call"),
 
 
 

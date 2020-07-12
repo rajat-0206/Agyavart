@@ -38,3 +38,9 @@ class chatmsg:
 	name : str
 	time : str
 
+class threads:
+	uesrname: str
+	name : str
+	photo : str
+	isread: bool
+
