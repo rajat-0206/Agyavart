@@ -6,13 +6,10 @@
 
 <a href = "http://rajathandsom.pythonanywhere.com/">Can check deployed site here</a>
 
-<h5> Development still in process. Stay tuned </h5>
 
-<h2> Session comming soon!!!<h2>
 
 # Thanks
 # A joint venture of
 # Rajat Shrivastava
 # UI improved by - Priyanshu Ranjan
 
-# Extra functions by - Muskan Maheshwari
