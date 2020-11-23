@@ -63,3 +63,8 @@ node_modules/
 
 # dotenv environment variables file
 .env
+db.sqlite3
+/Agyavart/__pycache__/*
+/Agyavart/migrations/__pycache__/*
+/Rmail/__pycache__/*
+package-lock.json
