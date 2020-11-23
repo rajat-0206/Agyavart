@@ -1,0 +1,16 @@
+<ul>
+{% if warning %}
+
+<h2 style="margin:0px auto"> No message yet </h2>
+{% else %}
+{% for i in data %}
+<li onclick="showmessage('{{i.photo}}','{{i.message}}','{{i.time}}')">
+<a><img src="{{ i.photo }}">
+<h3><strong>Someone</strong></h3>
+<article style="margin-bottom: 20px;"><strong style="color: #333">Message:&nbsp;&nbsp;</strong>{{ i.message }}</article>
+</a>
+</li>
+{% endfor %}
+
+{% endif %}
+</ul>

@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Video Call</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/videocall.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/fmt.css' %}">
+	<script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+</head>
+<style type="text/css">
+  .mute {
+    background-color: green;
+    color:#fff;
+    outline:0px;
+    transition: 0.5s ease;
+  }
+</style>
+<body>
+        <audio src="{% static 'images/audio.mp3' %}" loop="loop" id="caller"></audio>
+        <div class="modal-dialog" style="margin-top:0px;margin-bottom: 0px; width:100%;height:100%;background-color: #000">
+            <div class="modal-content" style="height:100%;background-color: #000">
+                <div class="close-modal end-call hide" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl">
+                        </div>
+                    </div>
+                </div>
+                <div class="container" style="padding:0px;background-color: #000">
+                    <div class="row">
+                        <div class="col-lg-12" style="padding:0px;background-color: #000">
+                            <div class="modal-body" style="padding:0px;background-color: #000">
+                                <!-- Project Details Go Here -->
+                                <h2 class="title text-center">Calling {{RecName}}</h2>
+                                {% if warning %}
+                                <h4>{RecName }} {{warning}}</h4>
+                                {% endif %}
+                                <div class="pure-u-2-3" id="video-container">
+                                    <video id="remoteVideo" autoplay></video>
+                                    <video id="localVideo" autoplay muted></video>
+                                </div>
+
+                                <div class="text-center mt-3 floating">
+                                    <button type="button" id="microphone" class="btn btn-secondary mute-audio ml-3 mt-2" style="border:0px;border-radius: 50%;padding:10px"><i class="fa fa-microphone-slash" style="font-size:20px"></i></button>
+                                    <button type="button" class="btn btn-danger end-call ml-3 mt-2" onclick="callcut()" style="border:0px;border-radius: 50%;padding:10px"><i class="fa fa-phone rotation" aria-hidden="true" style="font-size:24px;"></i></button>
+                                    <button type="button" id="speaker" class="btn btn-secondary mute-audio ml-3 mt-2" style="border:0px;border-radius: 50%;padding:10px"><i class="fa fa-volume-off" style="font-size:20px" aria-hidden="true"></i></button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+const roomHash = "{{roomcode}}";
+
+const configuration = {
+ iceServers: [{
+   urls: 'stun:stun.l.google.com:19302' // Google's public STUN server
+ }]
+};
+
+function onSuccess() {};
+function onError(error) {
+  console.error(error);
+};
+
+// Room name needs to be prefixed with 'observable-'
+const roomName = 'observable-' + roomHash;
+let room;
+const drone = new ScaleDrone('QrLN4zJgXAKY5rco');
+
+drone.on('open', error => {
+ if (error) {
+   return onError(error);
+ }
+ room = drone.subscribe(roomName);
+ room.on('open', error => {
+   if (error) {
+     onError(error);
+   }
+ });
+ // We're connected to the room and received an array of 'members'
+ // connected to the room (including us). Signaling server is ready.
+ room.on('members', members => {
+   if (members.length >= 3) {
+     return alert('The room is full');
+   }
+   // If we are the second user to connect to the room we will be creating the offer
+   const isOfferer = members.length === 2;
+   startWebRTC(isOfferer);
+   startListentingToSignals();
+   console.log(members.length);
+ });
+});
+
+function sendMessage(message) {
+ drone.publish({
+   room: roomName,
+   message
+ });
+}
+
+let pc;
+function startWebRTC(isOfferer) {
+ pc = new RTCPeerConnection(configuration);
+
+ // 'onicecandidate' notifies us whenever an ICE agent needs to deliver a
+ // message to the other peer through the signaling server
+ pc.onicecandidate = event => {
+   if (event.candidate) {
+     sendMessage({'candidate': event.candidate});
+   }
+ };
+
+ // If user is offerer let the 'negotiationneeded' event create the offer
+ if (isOfferer) {
+   pc.onnegotiationneeded = () => {
+     pc.createOffer().then(localDescCreated).catch(onError);
+   }
+ }
+
+ // When a remote stream arrives display it in the #remoteVideo element
+ pc.onaddstream = event => {
+
+   remoteVideo.srcObject = event.stream;
+   document.getElementById("caller").pause();
+
+   if(event.stream.video===false){
+    console.log("video not comming");
+   }
+   else{
+    console.log("video comming");
+   }
+ };
+
+ navigator.mediaDevices.getUserMedia({
+   audio: true,
+   video: true,
+ }).then(stream => {
+   // Display your local video in #localVideo element
+   localVideo.srcObject = stream;
+   {% ifequal tune "yes" %}
+   document.getElementById("caller").play();
+    {% endifequal %}
+   // Add your stream to be sent to the conneting peer
+   pc.addStream(stream);
+ }, onError);
+}
+
+function startListentingToSignals() {
+ // Listen to signaling data from Scaledrone
+ room.on('data', (message, client) => {
+   // Message was sent by us
+   if (!client || client.id === drone.clientId) {
+     return;
+   }
+   if (message.sdp) {
+     // This is called after receiving an offer or answer from another peer
+     pc.setRemoteDescription(new RTCSessionDescription(message.sdp), () => {
+       // When receiving an offer lets answer it
+       if (pc.remoteDescription.type === 'offer') {
+         pc.createAnswer().then(localDescCreated).catch(onError);
+       }
+     }, onError);
+   } else if (message.candidate) {
+     // Add the new ICE candidate to our connections remote description
+     pc.addIceCandidate(
+       new RTCIceCandidate(message.candidate), onSuccess, onError
+     );
+   }
+ });
+}
+
+function localDescCreated(desc) {
+ pc.setLocalDescription(
+   desc,
+   () => sendMessage({'sdp': pc.localDescription}),
+   onError
+ );
+}
+
+function callcut(){
+	url = "/cutcall?recipient="+"{{recipient}}";
+  location.href = url;
+}
+
+setInterval(function(){
+	var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if(this.responseText=='ended')
+      {
+         location.href = "/profile"
+      }
+        }
+        };
+  xhttp.open("GET","/status", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+},2000);
+</script>
+</html>

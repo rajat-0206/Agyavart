@@ -1,78 +1,130 @@
-
-//app Name
-var CACHE_NAME = 'agyavart_app';
-
-//file to cache
-var staticAssets = [
-'/./',
-'/static/styles/fmt.css',
-'/static/styles/login.css',
-'/static/styles/mail.css',
-'/static/styles/mainsetup.css',
-'/static/styles/mesage.css',
-'/static/styles/profile.css',
-'/static/styles/register.css',
-'/static/styles/side_nav.css',
+importScripts('https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js');
 
 
+
+var CACHE_NAME = 'agyavart-cache-v2';
+var urlsToCache = [
+  '/loader.html',
+  '/offline.html',
+  '/static/images/rmailLogoConcept.svg',
+  '/static/images/hero_bg_1.jpg'
 
 ];
 
 self.addEventListener('install', function(event) {
-	// Perform install steps
-	event.waitUntil(
-	  caches.open(CACHE_NAME)
-		.then(function(cache) {
-		  console.log('Opened cache');
-		  return cache.addAll(staticAssets);
-		})
-	);
-  });
+  // Perform install steps
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
 
 
-  self.addEventListener('activate', function(event) {
 
-	var cacheWhitelist = ['pages-cache-v1', 'blog-posts-cache-v1'];
-  
-	event.waitUntil(
-	  caches.keys().then(function(cacheNames) {
-		return Promise.all(
-		  cacheNames.map(function(cacheName) {
-			if (cacheWhitelist.indexOf(cacheName) === -1) {
-			  return caches.delete(cacheName);
-			}
-		  })
-		);
-	  })
-	);
-  });
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    // Enable navigation preload if it's supported.
+    // See https://developers.google.com/web/updates/2017/02/navigation-preload
+    if ('navigationPreload' in self.registration) {
+      await self.registration.navigationPreload.enable();
+    }
+  })());
 
-  self.addEventListener('fetch', function(event) {
-	event.respondWith(
-	  caches.match(event.request)
-		.then(function(response) {
-		  // Cache hit - return response
-		  if (response) {
-			return response;
-		  }
-  
-		  return fetch(event.request).then(
-			function(response) {
-			  // Check if we received a valid response
-			  if(!response || response.status !== 200 || response.type !== 'basic') {
-				return response;
-			  }
-  
-			  var responseToCache = response.clone();
-  
-			  caches.open(CACHE_NAME)
-				.then(function(cache) {
-				  cache.put(event.request, responseToCache);
-				});
-  
-			  return response;
-			}
-		  );
-		})
-	  );
-  });
+  // Tell the active service worker to take control of the page immediately.
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', (event) => {
+  // We only want to call event.respondWith() if this is a navigation request
+  // for an HTML page.
+  if (event.request.mode === 'navigate') {
+    event.respondWith((async () => {
+      try {
+        // First, try to use the navigation preload response if it's supported.
+        const preloadResponse = await event.preloadResponse;
+        if (preloadResponse) {
+          return preloadResponse;
+        }
+
+        const networkResponse = await fetch(event.request);
+        return networkResponse;
+      } catch (error) {
+
+        console.log('Fetch failed; returning offline page instead.', error);
+
+        const cache = await caches.open(CACHE_NAME);
+        const cachedResponse = await cache.match('/offline.html');
+        return cachedResponse;
+      }
+    })());
+  }
+
+});
+// const OFFLINE_VERSION = 1;
+// const CACHE_NAME = 'offline';
+
+// const OFFLINE_URL = '/offline.html';
+
+// const filesToCache = [
+//   '/loader.html'
+
+// ];
+
+// const staticCacheName = 'agyavart-cache-v1';
+
+// self.addEventListener('install', (event) => {
+//   event.waitUntil((async () => {
+
+//     caches.open(staticCacheName)
+//     .then(cache => {
+//       return cache.addAll(filesToCache);
+//     });
+
+//     const cache = await caches.open(CACHE_NAME);
+
+//     await cache.add(new Request(OFFLINE_URL, {cache: 'reload'}));
+//   })());
+// });
+
+// self.addEventListener('activate', (event) => {
+//   event.waitUntil((async () => {
+//     // Enable navigation preload if it's supported.
+//     // See https://developers.google.com/web/updates/2017/02/navigation-preload
+//     if ('navigationPreload' in self.registration) {
+//       await self.registration.navigationPreload.enable();
+//     }
+//   })());
+
+//   // Tell the active service worker to take control of the page immediately.
+//   self.clients.claim();
+// });
+
+// self.addEventListener('fetch', (event) => {
+//   // We only want to call event.respondWith() if this is a navigation request
+//   // for an HTML page.
+//   if (event.request.mode === 'navigate') {
+//     event.respondWith((async () => {
+//       try {
+//         // First, try to use the navigation preload response if it's supported.
+//         const preloadResponse = await event.preloadResponse;
+//         if (preloadResponse) {
+//           return preloadResponse;
+//         }
+
+//         const networkResponse = await fetch(event.request);
+//         return networkResponse;
+//       } catch (error) {
+
+//         console.log('Fetch failed; returning offline page instead.', error);
+
+//         const cache = await caches.open(CACHE_NAME);
+//         const cachedResponse = await cache.match(OFFLINE_URL);
+//         return cachedResponse;
+//       }
+//     })());
+//   }
+
+
+// });
