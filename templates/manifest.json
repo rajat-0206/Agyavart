@@ -1,16 +1,72 @@
 {
   "short_name": "Agyavart",
   "name": "Agyavart",
+  "lang": "en-US",
+  "categories": ["social"],
   "icons": [
+    {
+      "src": "static/images/rmailLogoConcept.svg",
+      "type": "svg",
+      "sizes": "756x756"
+    },
+    {
+      "src": "static/images/rmailLogoConcept.png",
+      "type": "image/png",
+      "sizes": "591x726"
+    },
     {
       "src": "static/images/pwa-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
-    }
+    },
+    {
+        "src" : "static/images/pwa-72x72.png",
+        "type": "image/png",
+        "sizes": "72x72"
+      },
+      {
+        "src" : "static/images/pwa-96x96.png",
+        "type": "image/png",
+        "sizes": "96x96"
+      },
+      {
+        "src" : "static/images/pwa-128x128.png",
+        "type": "image/png",
+        "sizes": "128x128"
+      },
+      {
+        "src" : "static/images/pwa-144x144.png",
+        "type": "image/png",
+        "sizes": "144x144"
+      },
+      {
+        "src" : "static/images/pwa-152x152.png",
+        "type": "image/png",
+        "sizes": "152x152"
+      },
+      {
+        "src" : "static/images/pwa-384x384.png",
+        "type": "image/png",
+        "sizes": "384x384"
+      },
+      {
+        "src" : "static/images/pwa-512x512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
   ],
-  "start_url": "http://127.0.0.1:8000/",
-  "scope": "/",
-  "background_color": " #008080",
+  "app": {
+    "background": {
+      "scripts": ["OneSignal.js", "background.js"]
+    }
+  },
+  "permissions": ["gcm", "storage", "notifications", "identity", "browser"]
+  ,
+  "description": "Building a world of anonymity, yet closer together",
+  "start_url": "https://rajathandsom.pythonanywhere.com",
+  "scope": ".",
+  "background_color": "#008080",
   "display": "standalone",
-  "theme_color": " #008080"
+  "theme_color": "#008080",
+  "gcm_sender_id": "223304863434"
 }

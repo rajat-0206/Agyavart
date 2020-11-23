@@ -1,6 +1,6 @@
 * {box-sizing: border-box;}
 
-body { 
+body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -40,7 +40,7 @@ border-right: 1px solid #333;
 font-family:Britannic Bold;
 border-left: 2px solid #333;
 line-height:40px;
-transition: 0.2s ease-in-out;
+
 }
 
 
@@ -57,7 +57,7 @@ color:white;}
 }
 .change {
 		width:250px;
-		transition: width 0.2s ease-in-out;
+		transition: width 0.5s ease;
 }
 
 .cover {
@@ -69,18 +69,20 @@ color:white;}
 	position: absolute;
 	top:100px;
 	left:30px;
+	width:300px;
+	height: 300px;
 	border-radius: 100%;
 }
 .dpimg {
 	width:300px;
-	height: 300px;	
+	height: 300px;
 	border-radius: 100%;
 	border:3px solid #fff;
 	align-self: center;
 	cursor:pointer;
 	transition: border 0.1s ease;
 
-} 
+}
 
 .dpimg:active {
 	border:6px solid #fff;
@@ -112,7 +114,7 @@ body, html {
   cursor: pointer;
   padding: 8px;
   font-size: 34px;
-  width: 25%;
+  width: 33.33%;
   transition: 0.3s ease;
 }
 
@@ -166,6 +168,11 @@ body, html {
 	background-color: rgba(0,0,0,0.5);
 }
 
+.cover .blck .btn {
+	position: absolute;
+	top:80px;
+	right: 20px;
+}
 
 
 .cover:hover .blck {
@@ -215,7 +222,7 @@ body, html {
  	font-size: 20px;
  	font-family: Jost,sans-seri;
  	color: #333;
- 	padding-top:10px; 
+ 	padding-top:10px;
  	background-color: #fff;
  	cursor:pointer;
  	transition: 0.6s ease;
@@ -252,10 +259,6 @@ body, html {
   from {transform:scale(0)}
   to {transform:scale(1)}
 }
-.navbar-toggler-icon{
-  display:none;
-}
-
 
 
 /* 100% Image Width on Smaller Screens */
@@ -272,13 +275,8 @@ body, html {
 }
 
 }
-
-
 @media screen and (max-width:991px)
 {
-	.navbar-toggler-icon{
-  display:block;
-}
 	.name {
 		display: none;
 	}
@@ -294,13 +292,13 @@ body, html {
 		display: block;
 	}
 
-	.notshow {
-		display: none;
-	}
+	.slow {
+	display: none;
+}
+
 
 	#navbarTogglerDemo02{
       transform: translate(0%,0%);
     }
 
 }
-

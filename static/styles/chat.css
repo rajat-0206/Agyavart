@@ -16,17 +16,17 @@ a {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
-}}
+  background: #555;
+}
 		.chat{
 			margin:0px;
 			height: 100%;
@@ -34,6 +34,15 @@ a {
 		.card{
 			height: 100%;
 			background-color: rgba(0,0,0,0.4) !important;
+		}
+
+		.localvideo {
+				position:absolute;
+				top:0px;
+				max-height: 15%;
+				max-width: 10%;
+				border-radius: 20px;
+				box-shadow: 2px 2px;
 		}
 		.contacts_body{
 			padding:  0.75rem 0 !important;
@@ -44,7 +53,7 @@ a {
 			overflow-y: auto;
 		}
 		.card-header{
-			
+
 			border-bottom: 0 !important;
 		}
 	 .card-footer{
@@ -111,13 +120,13 @@ a {
 			height: 50px;
 			width: 50px;
 			border:1.5px solid #f5f6fa;
-		
+
 		}
 		.user_img_msg{
 			height: 40px;
 			width: 40px;
 			border:1.5px solid #f5f6fa;
-		
+
 		}
 	.img_cont{
 			position: relative;
@@ -180,40 +189,40 @@ a {
 		margin-bottom: auto;
 		margin-left: 10px;
 		border-radius: 25px;
-		background-color: #82ccdd;
+		background-color:#78e08f;
 		padding: 10px;
 		position: relative;
+		padding-bottom: 5px;
 	}
 	.msg_cotainer_send{
 		margin-top: auto;
 		margin-bottom: auto;
 		margin-right: 10px;
 		border-radius: 25px;
-		background-color: #78e08f;
+		background-color: #82ccdd;
 		padding: 10px;
 		position: relative;
+		padding-bottom: 5px;
 	}
 	.msg_time{
 		user-select: none;
-		color: rgba(255,255,255,0.5);
+		color: 	rgba(0,0,0,0.5);
 		font-size: 10px;
 		margin:0px;
-		float: left;
-		position: absolute;
-		padding:0px;
-		color:#000;
-		margin-bottom: 5px;
+		position: relative;
+		float: right;
+		padding: 5px;
+		transform: translateY(5px);
 	}
 	.msg_time_send{
 		user-select: none;
-		color: rgba(255,255,255,0.5);
+		color:	rgba(0,0,0,0.5);
 		font-size: 10px;
 		margin:0px;
-		position: absolute;
-		right: 0px;
-		padding: 0px;
-		margin-bottom: 5px;
-		color:#000;
+		position: relative;
+		float: right;
+		padding: 5px;
+		transform: translateY(5px);
 	}
 	.msg_head{
 		position: relative;
@@ -249,11 +258,16 @@ a {
 	}
 	.action_menu ul li i{
 		padding-right: 10px;
-	
+
 	}
 	.action_menu ul li:hover{
 		cursor: pointer;
 		background-color: rgba(0,0,0,0.2);
+	}
+	@media(max-width: 991px){
+		.modal-dialog {
+			margin-left: 0px;
+		}
 	}
 	@media(max-width: 576px){
 	.contacts_card{
@@ -267,7 +281,7 @@ a {
 	}
 
 	.card {
-		width: 100%;	
+		width: 100%;
 		border-radius: 0px;
 	}
 	.chat{
@@ -320,7 +334,7 @@ a {
   margin: -75px 0 0 -75px;
   border-radius: 100%;
   color: #456;
-  background-color:#456; 
+  background-color:#456;
 
 }
 
@@ -440,3 +454,4 @@ a {
   margin: 1px auto;
   font-size: 20px;
 }
+

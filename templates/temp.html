@@ -1,6 +1,6 @@
 {% for i in messages %}
 						{% if i.isread is False %}
-						<a href="/chatroom?recipient={{i.username}}">
+						<a href="/chatroom?recipient={{i.username}}" onclick="myFunction()">
 						<li class="active">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
@@ -13,8 +13,8 @@
 						</li>
 					</a>
 					{%else %}
-						<a href="/chatroom?recipient={{i.username}}">
-						<li>
+						<a href="/chatroom?recipient={{i.username}}" onclick="myFunction()">
+						<li class="normal">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
 									<img src="{{i.photo}}" class="rounded-circle user_img">

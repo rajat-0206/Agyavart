@@ -19,10 +19,23 @@
 		{% endblock %}
 	</head>
 	<body>
+	    {% block sidenav %}
+	    <div id="sidenav" class="bar fmt-shadow" style="background-color: #0a14507e;">
+        <div class="navhead">
+        <a href="/profile" class="button-chip" onclick="myFunction()">PROFILE</a>
+        <a href="/message" class="button-chip" onclick="myFunction()">SENT MESSAGE</a>
+        <a href="/recieve" class="button-chip" onclick="myFunction()">RECIEVED MESSAGE</a>
+        <a href="/thread" class="active button-chip" onclick="myFunction()">CHATS</a>
+        <a href ="/alluser" class="button-chip" onclick="myFunction()" >VIEW ALL USERS</a>
+        <a href="/setting" class="button-chip" onclick="myFunction()">SETTINGS</a>
+        <a href="logout()" class="spcl button-chip"  onclick="myFunction()">LOGOUT</a>
+        </div>
+        </div>
+          {% endblock %}
 		{%block content %}
 	<div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">
-				
+
 				<div class="chat" style="padding: 0px;"><div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
 						<div class="input-group">
@@ -36,7 +49,7 @@
 						<ui class="contacts" id ="contactslist">
 						{% for i in messages %}
 						{% if i.isread is False %}
-						<a href="/chatroom?recipient={{i.username}}">
+						<a href="/chatroom?recipient={{i.username}}" onclick="myFunction()">
 						<li class="active">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
@@ -49,8 +62,8 @@
 						</li>
 					</a>
 					{%else %}
-						<a href="/chatroom?recipient={{i.username}}">
-						<li>
+						<a href="/chatroom?recipient={{i.username}}" onclick="myFunction()">
+						<li class="normal">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
 									<img src="{{i.photo}}" class="rounded-circle user_img">
@@ -66,8 +79,8 @@
 						</ui>
 					</div>
 
-				</div></div> 
-				
+				</div></div>
+
 			</div>
 		</div>
 	</body>

@@ -1,13 +1,11 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
+{%extends 'rmail.html' %}
+{% block temp %}
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/styles/fmt.css">
     <link rel="stylesheet" href="/static/styles/main_setup.css">
     <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
-    <link rel="icon" href="{% static '/images/rmailLogoConcept.svg' %}">
     <title>Page Not Found</title>
     <style media="screen">
       body{
@@ -25,8 +23,8 @@
       #message h2 { color: #f3ffe3; font-weight: bold; font-size: 36px; margin: 0 0 8px; }
       #message h1 { font-size: 24px; font-weight: 300; color: #75060699; margin: 0 0 16px;}
       #message p { line-height: 140%; margin: 16px 0 24px; font-size: 18px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+      #message a {  text-align: center; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; }
+      #message { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
       #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
       @media (max-width: 600px) {
         body, #message { margin-top: 0; box-shadow: none; }
@@ -34,11 +32,14 @@
       }
     </style>
   </head>
+  {% endblock %}
+  {%block content %}
   <body>
     <div id="message">
       <h2>This is what they call Error 404.</h2>
       <h1>Page Not Found</h1>
       <p>Maybe you landed on a wrong page, which actually isn't one. Try checking the URL again for any typos.</p>
+        <a href="/login.html"><h1 style="color:#f8f8f8;">Go back to Home</h1></a>
     </div>
   </body>
-</html>
+{% endblock %}

@@ -18,6 +18,7 @@
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   <strong>Info!</strong> {{info }}
 </div>
+
 <div id="error" class="fmt-animate-bottom" style="display: none; margin-top:100px;padding:0 42px 0 42px">
   <div class="alert alert-danger alert-dismissible fade show" style="padding:22px">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -30,12 +31,14 @@
     </ol>
   </div>
 </div>
+
 <center>
   <div class="fmt-animate-top" style="margin-top: 80px;">
    <p class="sub-catch-line">Welcome Back.</p>
   </div>
 </center>
-<div class="fmt-col  m6 loginbox" style="margin-bottom:80px;">
+
+<div class="fmt-col m6 loginbox" style="margin-bottom:80px">
   <div class="work-box fmt-animate-bottom">
     <form action="auth" method = "post" onsubmit="myFunction()">
       {% csrf_token %}
@@ -46,25 +49,27 @@
       <input class="edit-text-box fmt-animate-right" type="password" id="pass" name ="password" required>
       <br /><br /><br />
       <div class="fmt-row">
-        <div class="fmt-col fmt-half">
+        <div class="fmt-col m5">
           <button type="submit" class="fmt-left button-block-sec fmt-animate-left">Let's go</button>
         </div>
-        <div class="fmt-col m5 fmt-animate-right">
-          <a href="#" data-toggle="modal" data-target="#myModal" style="margin-top:12px" class="fmt-right button-tab" onclick="reset()">Any problem?</a>
+        <div class="fmt-col m7 fmt-animate-right">
+          <a href="#" data-toggle="modal" data-target="#myModal" style="margin-top:12px" class="fmt-right button-tab">Any problem?</a>
         </div>
       </div>
+      <br />
     </form>
   </div>
   <br/>
   <div class="fmt-center">
     <span class="normal-body-text fmt-animate-left">You new here?&#160;</span>
-    <a href="signup.html"><span class="button-normal-body fmt-animate-right">Join us</span></a>
+    <a href="signup"><span class="button-normal-body fmt-animate-right">Join us</span></a>
   </div>
 </div>
+
 <!-- Forgot password section -->
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">    
+  <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -78,10 +83,10 @@
           <button class="tablinks" onclick="openCity(event, 'funame')">Forgot Username</button>
         </div>
         <div id="fpassword" class="tabcontent">
-           <div id="dabba" style="display: none; z-index: 10;"> 
+           <div id="dabba" style="display: none; z-index: 10;">
       <div class="alert alert-primary alert-dismissible fade show" >
           <a href="#" class="close" id="close" onclick="gayaalertmsg()">&times;</a>
-          <strong><h4 id ="dabbaerrormsg"></h4></strong> 
+          <strong><h4 id ="dabbaerrormsg"></h4></strong>
         </div>
       </div>
           <div id="firstpass" style="display: block">
@@ -114,7 +119,6 @@
         </button>
         </div>
         </div>
-        <!-- fpassword closed here -->
         <div id="funame" class="tabcontent">
           <form method="post" action="fuser" onsubmit="myFunction()">
             {% csrf_token %}
@@ -122,12 +126,12 @@
               <input type="text" class="form-control" name="mobile" placeholder="Mobile number" required>
             </div>
             <button type="submit" class="btn btn-block btn-success">Submit</button>
-            
-         </form>
-       </div>
-     </div>
-   </div>
- </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -154,7 +158,7 @@ ifo.style.display = 'block';
 
 function gayaalertmsg(){
   document.getElementById("dabba").style.display="none";
-  
+
 }
 
 function reset() {

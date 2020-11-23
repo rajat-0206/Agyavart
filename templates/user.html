@@ -8,12 +8,9 @@
   {% endblock %}
 	<!-- CSS only -->
   <script>
-  window.onload =  function requestPermission() {
-    setTimeout( function(){ 
+   setTimeout( function(){
       document.getElementById("pageloader").style.display="none";
-    console.log('Requesting permission...');
-  },1000);
-  }
+  },2000);
 var myVar;
 function myFunction() {
   document.getElementById("loaderbackground").style.display = "block";
@@ -23,23 +20,69 @@ function showPage() {
   document.getElementById("loaderbackground").style.display = "none";
 }
 </script>
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script>
+  var OneSignal = window.OneSignal || [];
+  OneSignal.push(function() {
+    OneSignal.init({
+      appId: "22619c08-de49-4043-9d0a-d4a7d1f0b2ed",
+    });
+  });
+
+ function logout(){
+    myFunction();
+    OneSignal.push(function() {
+    OneSignal.removeExternalUserId();
+});
+window.location.replace('/logout.html');
+}
+</script>
 <link rel="icon" href="{% static 'images/rmailLogoConcept.svg' %}">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-16LE">
+<meta name=”description” content="Building a world of anonymity, yet closer together. Join our community now!">
+<meta property="og:title" content="Agyavart">
+<meta property="og:type" content="Social Platform">
+<meta property="og:url" content="https://rajathandsom.pythonanywhere.com/">
+<meta property="og:description" content="Building a world of anonymity, yet closer together.">
+<meta property="og:image" content="https://rajathandsom.pythonanywhere.com/static/images/agyavartsocial.jpg">
+<meta name="favicon" content="https://rajathandsom.pythonanywhere.com/static/images/rmailLogoConcept.png">
+<meta name="twitter:card" content="https://rajathandsom.pythonanywhere.com/static/images/agyavartsocial.jpg">
+<meta name="linkedin:card" content="https://rajathandsom.pythonanywhere.com/static/images/agyavartsocial.jpg">
+<meta name="theme-color" content="#008080">
+<link rel="apple-touch-icon" href="https://rajathandsom.pythonanywhere.com/static/images/apple-touch-icon-180x180.png">
+<link rel="apple-touch-icon" sizes="150x150" href="https://rajathandsom.pythonanywhere.com/static/images/pwa-150x150.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://rajathandsom.pythonanywhere.com/static/images/apple-touch-icon-180x180.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<meta name="theme-color" content="#008080">
-<link rel="apple-touch-icon" href="apple-touch-icon-180x180.png">
-<link rel="apple-touch-icon" sizes="152x152" href="pwa-192x192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+
 <!-- JS, Popper.js, and jQuery -->
-<link rel="stylesheet" type="text/css" href="{% static 'styles/loader.css' %}">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="{% static '/styles/profile.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/loader.css' %}">
 <link rel="stylesheet" href="{% static 'styles/fmt.css' %}">
 <link rel="stylesheet" href="{% static 'styles/mainsetup.css' %}">
 <link rel="stylesheet" href="/static/styles/side_nav.css">
+<link rel="stylesheet" href="/static/styles/snackbar.css">
+<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-analytics.js"></script>
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyBp17YUm4uju7nqT5syTdGIUc_mJ253PH0",
+    authDomain: "agyavart-27f8b.firebaseapp.com",
+    databaseURL: "https://agyavart-27f8b.firebaseio.com",
+    projectId: "agyavart-27f8b",
+    storageBucket: "agyavart-27f8b.appspot.com",
+    messagingSenderId: "223304863434",
+    appId: "1:223304863434:web:585b9e9ace6b42ad51ee33",
+    measurementId: "G-7KW9B9M084"
+  };
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
 </head>
 <style type="text/css">
@@ -66,7 +109,7 @@ a:focus{
   top:0px;
   left: 0px;
   z-index: 1789;
-  background-color:  #008080;
+  background-color:rgba(0,0,0,0.6);
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   line-height: 1.5;
@@ -77,6 +120,7 @@ a:focus{
   min-height: 100vh;
   overflow: hidden;
  }
+
 /* Center the loader */
 #loaderbackground {
   width: 100%;
@@ -98,7 +142,7 @@ a:focus{
   margin: -75px 0 0 -75px;
   border-radius: 100%;
   color: #456;
-  background-color:#456; 
+  background-color:#456;
 
 }
 
@@ -206,46 +250,111 @@ a:focus{
   80% { -webkit-transform: translate(0,-30px); }
   100% { -webkit-transform: translate(0,0px); }
 }
+    .navbar-toggler-icon{
+  display:none;
+}
+
+
+#imag {
+  font-size: 40px;
+  font-weight:bold;
+  margin-left:5px;
+  background-color: #f8f8f8;
+  border-radius: 100%;
+  border:1px solid #333;
+  padding:3px;
+  height: 50px;
+  width: 50px;
+  padding-left:20px;
+  box-shadow: 2px 2px solid #333;
+  transition: 0.5s ease;
+  opacity: 0.9;
+  }
+
+  #imag:hover{
+    opacity: 1;
+  }
+
+
+
+  #imag:active {
+    border:3px solid #333;
+  }
+
+.rotate {
+  transform: rotate(180deg);
+
+}
 
 .badge {
   position: relative;
   border-radius: 50%;
-  background: #333;
-  color: #fff;
+  background: #fff;
+  color: #333;
+  border:2px solid black;
   right:10px;
   top:5px;
   margin-left: 10px;
   margin: 1px auto;
   font-size: 20px;
 }
+.tablink {
+    width:33.33%;
+}
+
+@media screen and (max-width:391px)
+{
+    .button-chip {
+        padding:5px 3px 3px 5px;
+    }
+@media screen and (max-width:991px)
+{
+
+  .navbar-toggler-icon{
+  display:block;
+}
+.notshow {
+    display:none;
+}
+
+
+    }
+
+
 
 </style>
 <body>
-<!--top nav bar -->
-<body style="font-family: Jost, sans-serif;">
-  <!-- website loader -->
-<div class="pageloader" id="pageloader">
-<div id="pageloadcontainer">
-  <span class="pageloadbrand">
-  <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" alt="Agyavart Icon">
-  </span>
-  <div class="pageloaddivider" aria-hidden="true"></div>
-  <p class="loading-text" aria-label="Loading">
-    <span class="letter L" aria-hidden="true">L</span>
-    <span class="letter" aria-hidden="true">o</span>
-    <span class="letter" aria-hidden="true">a</span>
-    <span class="letter" aria-hidden="true">d</span>
-    <span class="letter" aria-hidden="true">i</span>
-    <span class="letter" aria-hidden="true">n</span>
-    <span class="letter" aria-hidden="true">g</span>
-  </p>
+
+ <!-- website loader -->
+ <div class="pageloader" id="pageloader">
+<div id ="loader21" class="dot"></div>
+<div id ="loader22" class="dot"></div>
+<div id ="loader23" class="dot"></div>
+<div id ="loader24" class="dot"></div>
 </div>
-<br>
-<div class="bottom">
-  Agyavart
-  </div>
-</div>
+<!--<div class="pageloader" id="pageloader">-->
+<!--<div id="pageloadcontainer">-->
+<!--  <span class="pageloadbrand">-->
+<!--  <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" alt="Agyavart Icon">-->
+<!--  </span>-->
+<!--  <div class="pageloaddivider" aria-hidden="true"></div>-->
+<!--  <p class="loading-text" aria-label="Loading">-->
+<!--    <span class="letter L" aria-hidden="true">L</span>-->
+<!--    <span class="letter" aria-hidden="true">o</span>-->
+<!--    <span class="letter" aria-hidden="true">a</span>-->
+<!--    <span class="letter" aria-hidden="true">d</span>-->
+<!--    <span class="letter" aria-hidden="true">i</span>-->
+<!--    <span class="letter" aria-hidden="true">n</span>-->
+<!--    <span class="letter" aria-hidden="true">g</span>-->
+<!--  </p>-->
+<!--</div>-->
+<!--<br>-->
+<!--<div class="bottom">-->
+<!--  Agyavart-->
+<!--  </div>-->
+<!--</div>-->
   <!-- In page loader -->
+<body style="font-family: Jost, sans-serif;">
 <div id="loaderbackground" style="display: none;">
 <div id ="loader21" class="dot"></div>
 <div id ="loader22" class="dot"></div>
@@ -253,14 +362,14 @@ a:focus{
 <div id ="loader24" class="dot"></div>
 <div id="loadertext" class="sub-catch-line fmt-center">Hold up</div>
 </div>
-
+<!--top nav bar -->
 <nav class="navbar fixed-top navbar-expand-lg navbar-light profile-menu-bar">
-	<img src="{% static 'images/graphic.png' %}" class ="imag" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 10px; cursor: pointer;" onclick="openNav()">
-  <a class="button-chip navbar-brand" href="/rmail.html" style="font-size: 22px;color:white;background-color: #0059ff;">
+<i id="imag" width="30" height="30" class="fa fa-angle-right d-inline-block align-top" aria-hidden="true" alt="Open Navbar" style="margin-right: 10px; cursor: pointer;" onclick="openNav()"></i>
+  <a class="button-chip navbar-brand" href="/rmail" style="font-size: 22px;color:white;background-color: #008080;" onclick="myFunction()">
     <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" class="align-top" alt="Agyavart Logo">
     Agyavart
   </a>
-  
+
   <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
         <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
@@ -272,18 +381,13 @@ a:focus{
     <ul class="nav nav-pills" >
     <li class="nav-item">
       {%if is_loged %}
-      <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"></a>
+     <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"></a>
       {% endif %}
     </li>
-     <li class="nav-item">
-        <a href="recieve.html"><span class="badge align-top slow" id="noofmsg"><i class="fa fa-paper-plane"></i></span></a>
+    <li class="nav-item">
+        <a href="/recieve" onclick="myFunction()"><span class="badge align-top" id="noofmsg"><i class="fa fa-paper-plane"></i></span></a>
       </li>
   </ul>
-    <form class="form-inline my-2 my-lg-0 notshow">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search(available soon)" disabled>
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
-    </form>
-  </div>
 </nav>
 
 
@@ -294,25 +398,25 @@ a:focus{
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" id="closemsgmodal" aria-label="Close">
           <span aria-hidden="true" onclick="revyoyo()">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div id="dabba" style="display: none; z-index: 10;"> 
+        <div id="dabba" style="display: none; z-index: 10;">
       <div class="alert alert-danger alert-dismissible fade show" >
           <a href="#" class="close" id="close" onclick="gayaalertmsg()">&times;</a>
-          <strong><h4 id ="dabbaerrormsg"></h4></strong> 
+          <strong><h4 id ="dabbaerrormsg"></h4></strong>
         </div>
       </div>
         <form>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient" name="recipient" value="">
+            <label for="recipient-name" class="col-form-label">Recipient (username):</label>
+            <input type="text" class="form-control" id="recipient" name="recipient" value="" placeholder="Enter recipient's username">
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text" rows="6" name="message"></textarea>
+            <textarea class="form-control" id="message-text" rows="6" name="message" placeholder="Enter your message"></textarea>
           </div>
         </form>
       </div>
@@ -327,23 +431,27 @@ a:focus{
     </div>
   </div>
 </div>
+<!--videocalling -->
+<div id="videocallingmodal">
 
+</div>
 <!--side Navbar -->
 {% block sidenav %}
 
 <div id="sidenav" class="bar fmt-shadow" style="background-color: #0a14507e;">
 <div class="navhead">
 {% if is_loged %}
-<a href="/profile.html" class="button-chip" onclick="myFunction()">PROFILE</a>
-  <a href="/message.html" class="button-chip" onclick="myFunction()">SENT MESSAGE</a>
-  <a href="/recieve.html" class="button-chip" onclick="myFunction()">RECIEVED MESSAGE</a>
-  <a href ="/alluser.html" class="active button-chip" onclick="myFunction()" >VIEW ALL USERS<br/>{{ username}}</a>
-  <a href="/setting.html" class="button-chip" onclick="myFunction()">SETTINGS</a>
-  <a href="/logout.html" class="spcl button-chip"  onclick="myFunction()">LOGOUT</a>
+<a href="/profile" class="button-chip" onclick="myFunction()">PROFILE</a>
+  <a href="/message" class="button-chip" onclick="myFunction()">SENT MESSAGE</a>
+  <a href="/recieve" class="button-chip" onclick="myFunction()">RECIEVED MESSAGE</a>
+  <a href="/thread" class="button-chip" onclick="myFunction()">CHATS</a>
+  <a href ="/alluser" class="active button-chip" onclick="myFunction()" >VIEW ALL USERS<br/>{{ username}}</a>
+  <a href="/setting" class="button-chip" onclick="myFunction()">SETTINGS</a>
+  <a href="#" class="spcl button-chip"  onclick="logout()">LOGOUT</a>
 {% else %}
-<a href="/rmail.html button-chip">HOME</a>
-<a href="/login.html button-chip">LOGIN</a>
-<a href="/signup.html button-chip" >SIGNUP</a>
+<a href="/rmail" class="button-chip">HOME</a>
+<a href="/login" class="button-chip">LOGIN</a>
+<a href="/signup" class="button-chip" >SIGNUP</a>
 {% endif %}
 </div>
 </div>
@@ -360,7 +468,7 @@ a:focus{
   <p class="mb-0"><a href="/rmail.com">Return Home</a></p>
   {% endif %}
 </div>
- 
+
 {%else %}
 {% block content %}
 <div class="cover">
@@ -375,7 +483,7 @@ a:focus{
     <h3>@{{ username}}</h3>
     {% if is_loged %}
     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#messageModal"  onclick="cod('{{username}}')">Message</button>
-    <button type="button" class="btn btn-secondary" onclick="openchat()">Chat</button>
+        <button type="button" class="btn btn-secondary" onclick="openchat()">Chat</button>
     {% endif %}
 	</div>
 </div>
@@ -407,7 +515,7 @@ a:focus{
     <h3>@{{ username}}</h3>
     {% if is_loged %}
     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#messageModal" onclick="cod('{{username}}')">Message</button>
-    <button type="button" class="btn btn-secondary" onclick="openchat()">Chat</button>
+        <button type="button" class="btn btn-secondary" onclick="openchat()">Chat</button>
     {% endif %}	</div>
 
 
@@ -415,7 +523,6 @@ a:focus{
       <button class="tablink" style="outline: none;" onclick="openPage('Home', this, '#7236aa ')" id="defaultOpen"><i class="fa fa-user"></i></button>
       <button class="tablink" style="outline: none;" onclick="openPage('News', this, '#7236aa ')"><i class="fa fa-book"></i></button>
       <button class="tablink" style="outline: none;" onclick="openPage('Contact', this, '#7236aa ')"><i class="fa fa-link"></i></button>
-      <button class="tablink" style="outline: none;" onclick="openPage('About', this, '#7236aa ')"><i class="fa fa-picture-o"></i></button>
     </div>
   <div id="Home" class="tabcontent fmt-animate-bottom">
     <center>
@@ -423,6 +530,10 @@ a:focus{
   <tbody>
     <td><i class="fa fa-envelope" style="font-size:20px"></i>&nbsp;&nbsp;Email</td>
       <td><a href="mailto:{{ Email }}">{{ Email }}</a></td>
+    </tr>
+    <tr>
+      <td><i class="fa fa-phone" ></i>&nbsp;&nbsp;Phone</td>
+      <td>{{ Mobile }}</td>
     </tr>
     <tr>
       <td><i class="fa fa-id-card-o" style="font-size:20px"></i>&nbsp;&nbsp;Birthday</td>
@@ -442,7 +553,7 @@ a:focus{
     <table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-pencil" style="font-size:20px"></i>&nbsp;&nbsp;School</td>
+      <td ><i class="fas fa-book-reader" style="font-size:20px"></i>&nbsp;&nbsp;School</td>
       <td>{{school }}</td>
     </tr>
     <tr>
@@ -462,7 +573,7 @@ a:focus{
 	<center>
 <table class="table table-borderless fmt-animate-left">
   <tbody>
-     <tr>
+    <tr>
       <td ><i class="fa fa-facebook-official" style="font-size:28px;" aria-hidden="true"></i> </td>
       <td>{% if fb|length > 3 %}<a href="https://www.facebook.com/{{fb}}">@{{fb}}</a>{% else %}UA{% endif %}</td>
     </tr>
@@ -476,20 +587,19 @@ a:focus{
     </tr>
         <tr>
       <td><i class="fa fa-linkedin" aria-hidden="true" style="font-size:28px;"></i></td>
-      <td>{% if toks|length > 3 %}<a href="https://www.linkedin.com/in/{{toks}}">@{{toks}}{% else %}UA{% endif %}</td>
+      <td>{% if tok|length > 3 %}<a href="https://www.linkedin.com/in/{{tok}}">@{{tok}}{% else %}UA{% endif %}</td>
     </tr>
   </tbody>
 </table>
 </center></div>
 
-<div id="About" class="tabcontent fmt-animate-bottom">
-  <h3>About</h3>
-  <p>Who we are and what we do.</p>
-</div>
 
 
 <script type="text/javascript">
-
+function openchat(){
+    myFunction();
+  location.href = "/chatroom?recipient="+"{{username}}";
+}
 
 $('#exampleModal').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
@@ -510,16 +620,18 @@ function openPage(pageName,elmnt,color) {
 }
 
 // Get the element with id="defaultOpen" and click on it
-
+document.getElementById("defaultOpen").click();
 </script>
 
 {% endblock %}
 {%endif %}
-
+ <div id="snackBar" class="snackbar snack-show">
+    <span class="snackText" id="snackText"></span>
+    <button class="snack-button" id="snackButton"></button>
+    </div>
+<script type="text/javascript" src="{% static 'scripts/snackbar.js' %}"></script>
 <script type="text/javascript">
-function openchat(){
-  location.href = "/chatroom?recipient="+"{{username}}";  
-}
+
   function cod(username) {
     yoyo();
     document.getElementById("recipient").value = username;
@@ -542,7 +654,7 @@ function revyoyo()
 
 function gayaalertmsg(){
   document.getElementById("dabba").style.display="none";
-  
+
 }
 
 function bhejnahai() {
@@ -554,48 +666,47 @@ function bhejnahai() {
   if(kisko =="")
   {
    document.getElementById("dabba").style.display = "block";
-   document.getElementById("dabbaerrormsg").innerHTML = "Please Fill a recipient"; 
+   document.getElementById("dabbaerrormsg").innerHTML = "Please Fill a recipient";
    flag =0;
   }
   if(sandhesa=="")
   {
     document.getElementById("dabba").style.display = "block";
-   document.getElementById("dabbaerrormsg").innerHTML = "Please input some text to send"; 
+   document.getElementById("dabbaerrormsg").innerHTML = "Please input some text to send";
    flag = 0;
   }
 
   if(flag==1)
   {
-    document.getElementById("msgloader").style.display = "block";
-    document.getElementById("msgsubmit").style.display = "none";
-    document.getElementById('message-text').disabled = true;
-    document.getElementById('recipient').disabled = true;
+   document.getElementById("closemsgmodal").click();
+    document.getElementById('message-text').value = "";
+    document.getElementById('recipient').value = "";
+    showSnackBar(text ='Sending Message.....',hasAction = false,actionText = String(),isNormal = true,isWarning = false);
   var url = "recipient="+kisko+"&message="+sandhesa+"&csrfmiddlewaretoken="+"{{csrf_token}}";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 
-    document.getElementById("dabba").style.display = "block";
-    document.getElementById("msgloader").style.display = "none";
-    document.getElementById("msgsubmit").style.display = "block";
-    document.getElementById('message-text').disabled = false;
-    document.getElementById('recipient').disabled = false;
-    document.getElementById("dabbaerrormsg").innerHTML = this.responseText;
+    if(this.responseText=='Message sent successfull.')
+          showSnackBar(text =this.responseText,hasAction = false,actionText = String(),isNormal = true,isWarning = false);
+        else{
+          showSnackBar(text =this.responseText,hasAction = false,actionText = String(),isNormal = false,isWarning = true);
+        }
     }
   };
   xhttp.open("POST","/newmsg/", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(url);
 }
-  
+
 }
 
-document.getElementById("defaultOpen").click();
 function openNav() {
+document.getElementById('imag').classList.toggle("rotate");
   document.getElementById("sidenav").classList.toggle("change")
 }
 
-setInterval(function(){ 
+setInterval(function(){
 
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -612,9 +723,24 @@ setInterval(function(){
   xhttp.open("GET","/chkfornew/", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send();
- 
+
 
 }, 2000);
-</script> 
+
+setInterval(function(){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+         if(this.responseText!="no")
+         {
+         document.getElementById('videocallingmodal').innerHTML = this.responseText;
+      }
+        }
+        };
+  xhttp.open("GET","/chkforcall", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+},2000);
+</script>
 </body>
 </html>

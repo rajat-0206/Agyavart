@@ -135,19 +135,20 @@ hr {
 <div id="sidenav" class="bar fmt-shadow" style="background-color: #0a14507e;">
   <div class="navhead">
   <div id="cross">&times;</div>
-  <a href="profile.html" class="button-chip" onclick="myFunction()">PROFILE</a>
-  <a href="message.html" class="button-chip" onclick="myFunction()">SENT MESSAGE</a>
-  <a href="recieve.html" class="button-chip" onclick="myFunction()">RECIEVED MESSAGE</a>
-  <a href ="alluser.html" class="button-chip" onclick="myFunction()" >VIEW ALL USERS</a>
-  <a href="setting.html" class="active button-chip" onclick="myFunction()">SETTINGS</a>
+  <a href="profile" class="button-chip" onclick="myFunction()">PROFILE</a>
+  <a href="message" class="button-chip" onclick="myFunction()">SENT MESSAGE</a>
+  <a href="recieve" class="button-chip" onclick="myFunction()">RECIEVED MESSAGE</a>
+  <a href="thread" class="button-chip" onclick="myFunction()">CHATS</a>
+  <a href ="alluser" class="button-chip" onclick="myFunction()" >VIEW ALL USERS</a>
+  <a href="setting" class="active button-chip" onclick="myFunction()">SETTINGS</a>
   <a href="logout.html" class="spcl button-chip"  onclick="myFunction()">LOGOUT</a>
   </div>
   </div>
-{% endblock %} 
+{% endblock %}
 
 
 {% block content %}
-<div id="error" style="display: none; margin-top:100px;"> 
+<div id="error" style="display: none; margin-top:100px;">
 <div class="alert alert-danger alert-dismissible fade show" >
           <a href="#" class="close" id="close" onclick="gayaalert()">&times;</a>
           <strong><h4 id ="errormsg"></h4></strong>
@@ -277,7 +278,7 @@ Settings
   <div class="content_center">
   <h5>
     <div class="form-group col-md-8">
-      
+
     <div class="form-group col-md-8">
       <label>Change Password</label>
       <input type="password" class="form-control" id="curpassword" placeholder="Enter current Password" name="curpassword" required>
@@ -289,12 +290,12 @@ Settings
 
   <center><button type="" class="btn btn-outline-dark" id = "cngpass" style="width: 25%;" onclick="changepass()" >CHANGE PASSWORD</button></center>
 <center><h2 style="font-family: cursive; color: black;">OR</h2></center>
- 
-  
+
+
     <!-- <button type="button" class="btn btn-danger" style="  position : absolute; width:100%; left: 50%;">Delete My Account</button> -->
     <!-- <center><button type="" class="btn btn-danger" style="width: 25%; margin-top: 5px;">Delete My Account</button></center> -->
     <center><button onclick="document.getElementById('id01').style.display='block'" type="" class="btn btn-danger" style="width: 25%; margin-top: 5px;">DELETE MY ACCOUNT</button></center>
-  
+
   <div id="id01" class="modal">
     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
     <form class="modal-content" action="">
@@ -318,7 +319,7 @@ Settings
 </div>
 
 </div>
-  
+
 </div>
 
 
@@ -326,7 +327,7 @@ Settings
 
 {% if warning %}
   document.getElementById("error").style.display = "block";
-  document.getElementById("errormsg").innerHTML = '{{warning}}'; 
+  document.getElementById("errormsg").innerHTML = '{{warning}}';
 {% endif %}
 function delacc() {
 
@@ -347,7 +348,7 @@ function delacc() {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
             if(this.responseText=="done")
-            { 
+            {
               window.location.replace("login.html");
             }
             else
@@ -414,7 +415,7 @@ function changepass () {
     }
   };
   xhttp.open("GET", url, true);
-  xhttp.send();  
+  xhttp.send();
 }
 }
 
@@ -456,5 +457,5 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-</script> 
+</script>
 {% endblock %}

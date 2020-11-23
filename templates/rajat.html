@@ -1,12 +1,43 @@
-
-
-<!------ Include the above in your HEAD tag ---------->
 {% load static %}
 <!DOCTYPE html>
 <html>
   <head>
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script>
+let myCustomUniqueUserId = "{{username}}";
+  var OneSignal = window.OneSignal || [];
+  OneSignal.push(function() {
+    OneSignal.init({
+      appId: "22619c08-de49-4043-9d0a-d4a7d1f0b2ed",
+      promptOptions: {
+        slidedown: {
+          enabled: true,
+          autoPrompt: true,
+          timeDelay: 5,
+          pageViews: 1
+        }
+      }
+    });
+    OneSignal.setExternalUserId(myCustomUniqueUserId);
+  });
+ </script>
     {% block title %}
     <title>Chat</title>
+    <link rel="icon" href="{% static 'images/rmailLogoConcept.svg' %}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-16LE">
+<meta name=”description” content="Agyavart Chat. Have realtime chat experience never before. Join Now.">
+<meta property="og:title" content="Agyavart">
+<meta property="og:type" content="Social Platform">
+<meta property="og:url" content="https://rajathandsom.pythonanywhere.com/">
+<meta property="og:description" content="Agyavart Chat. Have realtime chat experience never before. Join Now.">
+<meta property="og:image" content="https://rajathandsom.pythonanywhere.com/static/images/pwa-192x192.png">
+<meta name="favicon" content="https://rajathandsom.pythonanywhere.com/static/images/pwa-192x192.png">
+<meta name="twitter:card" content="https://rajathandsom.pythonanywhere.com/static/images/pwa-192x192.png">
+<meta name="linkedin:card" content="https://rajathandsom.pythonanywhere.com/static/images/pwa-192x192.png">
+<meta name="theme-color" content="#008080">
+<link rel="apple-touch-icon" href="https://rajathandsom.pythonanywhere.com/static/images/apple-touch-icon-180x180.png">
+<link rel="apple-touch-icon" sizes="150x150" href="https://rajathandsom.pythonanywhere.com/static/images/pwa-150x150.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://rajathandsom.pythonanywhere.com/static/images/apple-touch-icon-180x180.png">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -18,8 +49,11 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'styles/chat.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/fmt.css' %}">
+     <link rel="stylesheet" type="text/css" href="{% static 'styles/fmt.css' %}">
     <script type="text/javascript">
+    window.onload = function(){
+        document.getElementById("loaderbackground").style.display = "none";
+    }
       function myFunction() {
   document.getElementById("loaderbackground").style.display = "block";
 }
@@ -29,15 +63,15 @@ function showPage() {
 }
     </script>
     <style type="text/css">
-      .messages{
-        overflow-y: scroll;
-
+      a:hover{
+          color:white;
+          text-decoration:none;
       }
     </style>
     {% endblock %}
   </head>
 <body>
-  <div id="loaderbackground" style="display: none;">
+    <div id="loaderbackground">
 <div id ="loader21" class="dot"></div>
 <div id ="loader22" class="dot"></div>
 <div id ="loader23" class="dot"></div>
@@ -50,7 +84,7 @@ function showPage() {
           <div class="card">
             <div class="card-header msg_head">
               <div class="d-flex bd-highlight">
-                <div class="back_cam">
+                 <div class="back_cam">
                  <a href="/thread" onclick="myFunction()"><span><i class="fa fa-arrow-left" aria-hidden="true"></i></span></a>
                  </div>
                 <div class="img_cont">
@@ -59,11 +93,11 @@ function showPage() {
                 </div>
                 <div class="user_info">
                   <span>{{recName}}</span>
-                  <p>1767 Messages</p>
+                  <p id="onlineicon">Not active</p>
                 </div>
-                <div class="video_cam">
+                <div class="video_cam" style="margin-left:30px">
                   <span onclick="videocall()"><i class="fas fa-video"></i></span>
-                  <span><i class="fas fa-phone"></i></span>
+                  <span onclick="videocall(true)"><i class="fas fa-phone"></i></span>
                 </div>
               </div>
               <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
@@ -71,17 +105,17 @@ function showPage() {
                 <ul>
                   <a href="/user/{{recipient}}" onclick="myFunction()"><li><i class="fas fa-user-circle"></i> View profile</li></a>
                   <a href="/message" onclick="myFunction()"><li><i class="fas fa-users"></i>Send secret message</li></a>
-                  <li><i class="fa fa-trash" aria-hidden="true"></i>Delete this chat</li>
+                  <li><i class="fas fa-trash" aria-hidden="true"></i>Search in chat</li>
                   <li><i class="fas fa-ban"></i> Block</li>
                 </ul>
               </div>
             </div>
-            <div class="card-body msg_card_body messages" id="chatmessage">
+            <div class="card-body msg_card_body messages" id="chatmessage" style="margin-bottom:8px;">
               {% if chatlog is not None %}
                 {% for i in chatlog %}
                 {%ifnotequal i.sender username %}
               <div class="d-flex justify-content-start mb-4">
-<!--    
+<!--
                 <div class="img_cont_msg">
                   <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
                 </div> -->
@@ -99,7 +133,7 @@ function showPage() {
                 <!-- <div class="img_cont_msg">
               <img src="{% static 'images/user.png' %}"  class="rounded-circle user_img_msg">
                 </div>
-              </div> -->  
+              </div> -->
             </div>
             {% endifnotequal %}
             {% endfor %}
@@ -110,7 +144,7 @@ function showPage() {
                 <div class="input-group-append">
                   <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
                 </div>
-                <textarea name="" id="textmessage" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                <textarea name="" id="textmessage" onkeyup="typing()" class="form-control type_msg" placeholder="Type your message..."></textarea>
                 <div class="input-group-append">
                   <span class="input-group-text send_btn" id="send"><i class="fas fa-location-arrow"></i></span>
               </div>
@@ -119,6 +153,10 @@ function showPage() {
         </div>
       </div>
     </div>
+
+<div id="videocallingmodal">
+
+</div>
 <script type="text/javascript">
       $(document).ready(function(){
 $('#action_menu_btn').click(function(){
@@ -152,7 +190,7 @@ const drone = new ScaleDrone('QrLN4zJgXAKY5rco');
 const roomName = 'observable-' + chatHash;
 // Scaledrone room used for signaling
 let room;
- 
+
 // Wait for Scaledrone signaling server to connect
 drone.on('open', error => {
   if (error) {
@@ -168,8 +206,8 @@ drone.on('open', error => {
   // We're connected to the room and received an array of 'members'
   // connected to the room (including us). Signaling server is ready.
   room.on('members', members => {
-    if (members.length >= 3) {
-      return console.log("full"); //Here we can show if member is online or not
+    if (members.length >= 2) {
+      console.log("room full"); //Here we can show if member is online or not
     }
     // If we are the second user to connect to the room we will be creating the offer
     const isOfferer = members.length === 2;
@@ -187,7 +225,7 @@ function sendSignalingMessage(message) {
 function startWebRTC(isOfferer) {
   console.log('Starting WebRTC in as', isOfferer ? 'offerer' : 'waiter');
   pc = new RTCPeerConnection(configuration);
- 
+
   // 'onicecandidate' notifies us whenever an ICE agent needs to deliver a
   // message to the other peer through the signaling server
   pc.onicecandidate = event => {
@@ -195,8 +233,8 @@ function startWebRTC(isOfferer) {
       sendSignalingMessage({'candidate': event.candidate});
     }
   };
- 
- 
+
+
   if (isOfferer) {
     // If user is offerer let them create a negotiation offer and set up the data channel
     pc.onnegotiationneeded = () => {
@@ -211,7 +249,7 @@ function startWebRTC(isOfferer) {
       setupDataChannel();
     }
   }
- 
+
   startListentingToSignals();
 }
 
@@ -223,12 +261,12 @@ function setupDataChannel() {
   {
     msg = JSON.parse(event.data);
      dom = document.getElementById('chatmessage');
-    // var naam = document.createElement("P");
-    // var message = document.createElement('P');
-    // naam.appendChild(document.createTextNode(msg.name));
-    // message.appendChild(document.createTextNode(msg.content));
-    // dom.appendChild(naam);
-    // dom.appendChild(message);
+    if(msg.content=="typing...")
+    {
+     document.getElementById('onlineicon').innerHTML = "typing..";
+    }
+    else{
+    document.getElementById('onlineicon').innerHTML = "Active Now";
     var main = document.createElement("DIV");
     main.classList.add("d-flex");
     main.classList.add("justify-content-start");
@@ -236,7 +274,7 @@ function setupDataChannel() {
     var message = document.createElement("DIV");
     message.classList.add("msg_cotainer");
     message.appendChild(document.createTextNode(msg.content));
-    var samay = document.createElement("SPAN");
+    var samay = document.createElement("P");
     samay.classList.add("msg_time");
     samay.appendChild(document.createTextNode(msg.time));
     message.appendChild(samay);
@@ -245,15 +283,21 @@ function setupDataChannel() {
     var t = document.getElementById("chatmessage");
     t.scrollTop = t.scrollHeight;
   }
+  }
     // insertMessageToDOM(JSON.parse(event.data), false)
 }
- 
+
 function checkDataChannelState() {
   console.log('WebRTC channel state is:', dataChannel.readyState);
   if (dataChannel.readyState === 'open') {
+     document.getElementById("onlineicon").innerHTML = "Active Now";
     console.log("Person is online");
     //insertMessageToDOM({content: 'WebRTC data channel is now open'});
   }
+  else{
+      document.getElementById("onlineicon").innerHTML = "Not active";
+  }
+
 }
 
 function startListentingToSignals() {
@@ -288,6 +332,16 @@ function localDescCreated(desc) {
   );
 }
 
+function typing(){
+
+  const data = {
+    content: "typing..."
+};
+
+dataChannel.send(JSON.stringify(data));
+
+}
+
 // function insertMessageToDOM(options, isFromMe) {
 //   const template = document.querySelector('template[data-template="message"]');
 //   const nameEl = template.content.querySelector('.message__name');
@@ -302,10 +356,10 @@ function localDescCreated(desc) {
 //   } else {
 //     messageEl.classList.add('message--theirs');
 //   }
- 
+
 //   const messagesEl = document.querySelector('.messages');
 //   messagesEl.appendChild(clone);
- 
+
 //   // Scroll to bottom
 //   messagesEl.scrollTop = messagesEl.scrollHeight - messagesEl.clientHeight;
 // }
@@ -325,7 +379,8 @@ sendbtn.onclick = function() {
               hour="0"+hour;
             }
             var time = hour + ":" + minute ;
- 
+if(value!="")
+{
   const data = {
     name,
     content: value,
@@ -344,7 +399,7 @@ var main = document.createElement("DIV");
     var message = document.createElement("DIV");
     message.classList.add("msg_cotainer_send");
     message.appendChild(document.createTextNode(value));
-    var samay = document.createElement("SPAN");
+    var samay = document.createElement("P");
     samay.classList.add("msg_time_send");
     samay.appendChild(document.createTextNode(time));
     message.appendChild(samay);
@@ -354,7 +409,7 @@ var main = document.createElement("DIV");
 t.scrollTop = t.scrollHeight;
  //insertMessageToDOM(data, true);
   var xhttp = new XMLHttpRequest();
-  var url = "roomcode="+"{{roomcode}}"+"&message="+value+"&recipient="+"{{recipient}}"+"&time="+time+"&csrfmiddlewaretoken="+"{{csrf_token}}";
+  var url = "roomcode="+"{{roomcode}}"+"&message="+value+"&time="+time+"&recipient="+"{{recipient}}"+"&csrfmiddlewaretoken="+"{{csrf_token}}";
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       if(this.responseText=='Message sent successfull.')
@@ -368,9 +423,17 @@ t.scrollTop = t.scrollHeight;
   xhttp.send(url);
   dataChannel.send(JSON.stringify(data));
 }
+}
 
-function videocall(){
+function videocall(audio=false){
+    myFunction();
+  if(audio==false)
+  {
   url = "/videocall?roomcode="+"{{roomcode}}"+"&recipient="+"{{recipient}}";
+}
+else{
+  url = "/videocall?roomcode="+"{{roomcode}}"+"&recipient="+"{{recipient}}"+"&audio=yes";
+  }
   location.href = url;
 }
 </script>

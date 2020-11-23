@@ -27,7 +27,7 @@
 			background-color: rgba(0,0,0,0.4) !important;
 		}
 
-		
+
 		.contacts_body{
 			padding:  0.75rem 0 !important;
 			overflow-y: auto;
@@ -104,23 +104,26 @@
 		.contacts li{
 			width: 100% !important;
 			padding: 5px 10px;
-			margin-bottom: 15px !important;
-			background-color: #48AAC9;
+			border-bottom:1px solid #333;
+
 		}
 	.active{
 			background-color: rgba(0,0,0,0.3);
+	}
+	.normal {
+	    background-color: #48AAC9;
 	}
 		.user_img{
 			height: 70px;
 			width: 70px;
 			border:1.5px solid #f5f6fa;
-		
+
 		}
 		.user_img_msg{
 			height: 40px;
 			width: 40px;
 			border:1.5px solid #f5f6fa;
-		
+
 		}
 	.img_cont{
 			position: relative;
@@ -167,41 +170,35 @@
 		cursor: pointer;
 		margin-right: 20px;
 	}
-	.msg_cotainer{
-		margin-top: auto;
-		margin-bottom: auto;
-		margin-left: 10px;
-		border-radius: 25px;
-		background-color: #82ccdd;
-		padding: 10px;
-		padding-bottom: 3px;
-		position: relative;
-	}
-	.msg_cotainer_send{
+.msg_cotainer_send{
 		margin-top: auto;
 		margin-bottom: auto;
 		margin-right: 10px;
 		border-radius: 25px;
 		background-color: #78e08f;
 		padding: 10px;
-		padding-bottom: 3px;
 		position: relative;
+		padding-bottom: 5px;
 	}
 	.msg_time{
 		user-select: none;
-		color: rgba(255,255,255,0.5);
+		color: 	rgba(0,0,0,0.5);
 		font-size: 10px;
 		margin:0px;
-		padding:0px;
-		color:#696969;
+		position: relative;
+		float: right;
+		padding: 5px;
+		transform: translateY(5px);
 	}
 	.msg_time_send{
 		user-select: none;
-		color: rgba(255,255,255,0.5);
+		color:	rgba(0,0,0,0.5);
 		font-size: 10px;
 		margin:0px;
-		padding: 0px;
-		color:#696969;
+		position: relative;
+		float: right;
+		padding: 5px;
+		transform: translateY(5px);
 	}
 
 	#textmessage{
@@ -243,7 +240,7 @@
 	}
 	.action_menu ul li i{
 		padding-right: 10px;
-	
+
 	}
 	.action_menu ul li:hover{
 		cursor: pointer;
@@ -252,7 +249,7 @@
 	@media(max-width: 991px){
 
 	.card {
-		width: 100%;	
+		width: 100%;
 		border-radius: 0px;
 	}
 	.chat{

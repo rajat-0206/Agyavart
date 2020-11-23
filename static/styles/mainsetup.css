@@ -203,11 +203,11 @@ a:hover{
     color:white
 }
 .work-box{
-    margin-top: 24px;
+    margin-top: 28px;
     background-color: #08a4ff41;
     border-radius: 12px;
-    border-width: 0;
-    padding: 28px;
+    border-width: 12px;
+    padding: 32px;
     transition: 0.3s ease;
 }
 .work-box:hover{

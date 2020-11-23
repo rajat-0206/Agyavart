@@ -5,15 +5,11 @@
   {% block title %}
 
   <head>
-  <title>Message</title>
+  <title>Sent Message</title>
   <link rel="stylesheet" type="text/css" href="{% static 'styles/mesage.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
-<style type="text/css">
- #newmsgdialog #contact::-webkit-scrollbar {
-    color:#333;
-  }
-</style>
+
   {% endblock %}
 
 
@@ -21,11 +17,12 @@
 {% block sidenav %}
 <div id="sidenav" class="bar fmt-shadow" style="background-color: #0a14507e;">
   <div class="navhead">
-  <a href="profile.html" class="button-chip" onclick="myFunction()">PROFILE</a>
-  <a href="message.html" class="active button-chip" onclick="myFunction()">SENT MESSAGE</a>
-  <a href="recieve.html" class="button-chip" onclick="myFunction()">RECIEVED MESSAGE</a>
-  <a href ="alluser.html" class="button-chip" onclick="myFunction()" >VIEW ALL USERS</a>
-  <a href="setting.html" class="button-chip" onclick="myFunction()">SETTINGS</a>
+  <a href="profile" class="button-chip" onclick="myFunction()">PROFILE</a>
+  <a href="message" class="active button-chip" onclick="myFunction()">SENT MESSAGE</a>
+  <a href="recieve" class="button-chip" onclick="myFunction()">RECIEVED MESSAGE</a>
+  <a href="thread" class="button-chip" onclick="myFunction()">CHATS</a>
+  <a href ="alluser" class="button-chip" onclick="myFunction()" >VIEW ALL USERS</a>
+  <a href="setting" class="button-chip" onclick="myFunction()">SETTINGS</a>
   <a href="logout.html" class="spcl button-chip"  onclick="myFunction()">LOGOUT</a>
   </div>
   </div>
@@ -34,16 +31,15 @@
 
 {% block content %}
 <div class="maincontent">
-<div class ="leftpane" id="leftpane"> 
+<div class ="leftpane" id="leftpane">
 
 <nav class="navbar navbar-light bg-light" style="margin-top:0px; padding: 10px;height:80px; width: 100%;">
-<a href="message.html"><i class="fa fa-rotate-left" style="font-size:36px;color:#333;" onclick="rotate(this)"></i></a>
+<a href="message.html"><i class="fa fa-rotate-left" style="font-size:36px;color:#333;"></i></a>
   <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" id="myInput" onkeyup="searchmsg()" aria-label="Search" style="width: 150px;margin-right: 5px">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <input class="form-control mr-sm-2" type="search"  id="myInput" onkeyup="searchmsg()" placeholder="Search Messages" aria-label="Search" style="width: 150px;margin-right: 5px" >
+    <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="searchmsg()">Search</button>
   </form>
 </nav>
-<div id="messagecon">
 <ul id="messageul">
 {% if warning %}
 <h2 style="margin:0px auto"> No message yet </h2>
@@ -59,7 +55,6 @@
 
 {% endif %}
 </ul>
-</div>
 </div>
 <div class = "rightpane" id="responce">
   <b>
@@ -97,16 +92,8 @@ function showmessage(name,photo,username,message,time)
     right = document.getElementById("responce");
     left.style.display = "block";
     right.style.display = "none";
-  
+
 }
-
-function rotate(id) {
-  id.classList.toggle("roate");
-
-
-  
-}
-
 function searchmsg() {
 // Declare variables
 var input, filter, ul, li, a, i, txtValue;
@@ -129,22 +116,8 @@ li[i].style.display = "none";
 }
 }
 
-// function bulao(){
-// setInterval(function(){ 
 
-//   var xhttp = new XMLHttpRequest();
-//   xhttp.onreadystatechange = function() {
-//     if (this.readyState == 4 && this.status == 200) {
-//         location.reload();
-//   }
-//   };
-//   xhttp.open("GET","message", true);
-//   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//   xhttp.send();
- 
 
-// }, 3000);
-// }
 </script>
 
 {%endblock %}

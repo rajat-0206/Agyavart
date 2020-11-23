@@ -1,5 +1,4 @@
 
-
 <style type="text/css">
   #forchota {
     display: none;
@@ -15,25 +14,25 @@
 
 <div class="containermsg" style="margin:0px auto;width:90%;height: 100%;">
 <nav class="navbar navbar-light bg-light">
-   <a class="navbar-brand" href="user/{{user}}">
      <i class="fa fa-arrow-circle-left" id="forchota" style="font-size:36px;margin-top:0px;margin-left: 0px;margin-right:10px; float: left;" onclick="hiderightpane()"></i>
-    <img src="{{photo}}" width="30" height="30" class="d-inline-block align-top" alt="">
+   <a class="navbar-brand" href="user/{{user}}" style="margin-left:0px;" onclick="myFunction()">
+    <img src="{{photo}}" width="30" height="30" class="d-inline-block align-top" alt="Profile Pic">
     {% if name is None %}Someone {%else %}{{name}} {% endif %}
   </a>
 </nav>
 <form style="margin-top: 10px;">
-  {% if name is None %} 
+  {% if name is None %}
   &nbsp;
-  {% else %} 
+  {% else %}
   <div class="form-group">
     <label for="exampleFormControlInput1">Username</label>
     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" disabled value="{{user}}">
-  </div> 
+  </div>
   {%endif %}
   <div class="form-group">
     <label for="exampleFormControlInput1">Time</label>
     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" disabled value="{{time}}">
-  </div>  
+  </div>
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Message</label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled>{{msg}}</textarea>
