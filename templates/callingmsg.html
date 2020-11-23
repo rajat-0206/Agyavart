@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+  <div id="id05" class="w3-modal" style="display: block">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-teal">
+        <h2>Incomming Call</h2>
+      </header>
+      <div class="w3-container">
+        {% if audio %}
+        <p>You have a incomming audio call from {{Name}}</p>
+        {% else %}
+        <p>You have a incomming video call from {{Name}}</p>
+        {% endif %}
+      </div>
+      <footer class="w3-container w3-teal">
+        <a href="{{cuturl}}"><button class="w3-button w3-red" onclick="document.getElementById('id05').style.display='none'">Decline</button></a>
+         <a href="{{url}}" ><button class="w3-button w3-green" onclick="myFunction()">Answer</button></a>
+
+      </footer>
+    </div>
+  </div>
+</div>

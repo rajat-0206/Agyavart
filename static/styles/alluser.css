@@ -1,0 +1,75 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700);
+.maincontent {
+    margin-top:80px;
+    padding:5px;
+    height: 100%;
+    }
+
+
+/* Display the columns below each other instead of side by side on small screens */
+
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: white;
+    height: 110px;
+    padding:5px;
+    width: 80%;
+    padding: 0 8px;
+    height: 110px;
+    margin-bottom: 10px;
+}
+
+
+.heading{ font-size: 30px;
+    color: black;
+    font-family: Lato;
+    position: absolute;
+    top: 5px;
+    left: 110px;
+    display: inline-block;
+    float: left;}
+
+.heading1{ font-size: 20px;
+    color: black;
+    font-family: Lato;
+    position: absolute;
+    top: 40px;
+    left: 110px;
+    display: inline-block;
+    float: left;}
+
+
+
+
+
+ .card img{ cursor: pointer;
+    width:100px;
+    height:100px;
+    display: inline-block;
+    float: left;
+    border-radius: 100%;
+    }
+
+
+ @media (max-width: 991px) {
+    .card {
+        height: 150px;
+        padding-top:20px;
+        margin-bottom: 10px;
+         width: 100%;
+        margin:0px;
+        height: 150px;
+        margin-bottom: 10px;
+    }
+
+    .heading{ font-size: 20px;
+    }
+
+.heading1{ font-size: 15px;
+    top: 42px;
+    }
+
+
+
+}

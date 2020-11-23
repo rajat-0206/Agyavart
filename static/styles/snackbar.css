@@ -1,0 +1,38 @@
+      .snackbar{z-index:3;display:none;position: fixed;bottom:0;float:bottom;padding:4px;box-shadow: 1px 5px 5px #00000044;border-radius:4px;background-color: #216bd3;margin:12px}
+      .snackText{padding:8px 16px!important;text-align:left;float:left;font-size: 18px;color:white;
+      }
+      .snack-button{
+          float:right!important;
+          background-color: white;
+          color:#216bd3;
+          font-size:18px;
+          margin: 4px;
+          border-width: 0;
+          border-radius: 4px;
+          box-shadow: 1px 5px 10px #00000022;
+          padding:4px 12px 4px 12px;
+          transition: 0.2s ease;
+          cursor: pointer;
+      }:focus{
+          outline: none;
+      }
+      .snack-show{
+          position:fixed;
+          animation:animatebotom 0.4s ease;
+          animation-fill-mode: forwards;
+      }
+      @keyframes
+      animatebotom{
+           from{bottom:-300px;opacity:0}
+            to{bottom:0;opacity:1;display:block}
+      }
+      .snack-hide{
+          position:fixed;
+          animation:animatebottom 0.4s ease;
+          animation-fill-mode: forwards;
+      }
+      @keyframes
+      animatebottom{
+          from{bottom:0;opacity:1}
+          to{bottom:-300px;opacity:0;display:none;}
+      }

@@ -1,8 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
+
 from datetime import datetime
-from .models import sentmessage,recievedmessage
+
+from .models import sentmessage,recievedmessage,users,chatmsg,threads
+
+from django.core.mail import EmailMultiAlternatives,send_mail
+
+import random
+
+import requests
+import json
 
 import hashlib, binascii, os
 
@@ -30,30 +39,48 @@ firebase = firebase.FirebaseApplication('https://agyavart-27f8b.firebaseio.com/'
 
 #Hasing Functions
 
+def privacy(request):
+    return render(request,"privacypolicy.html")
+
+def offline(request):
+    return render(request,"offline.html")
+
 def manifest(request):
 	return render(request,'manifest.json')
-
-def sw(request):
-	return render(request,"serviceworker.js")	
-
 def temp(request):
 	return render(request,'signup1.html')
+
+def about(request):
+	return render(request,"about.html")
+
+def handle404(request,exception):
+    return render(request,"404.html")
+def alluser(request):
+	result = firebase.get("/users",None)
+	data =[]
+	for i in result:
+		obj = users()
+		obj.username = i
+		obj.name = result[i]['Name']
+		obj.photo = result[i]['DP']
+		data.append(obj)
+	return render(request,'alluser.html',{'data':data})
 
 def hash_password(password):
     """Hash a password for storing."""
     salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
-    pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), 
+    pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'),
                                 salt, 100000)
     pwdhash = binascii.hexlify(pwdhash)
     return (salt + pwdhash).decode('ascii')
- 
+
 def verify_password(stored_password, provided_password):
     """Verify a stored password against one provided by user"""
     salt = stored_password[:64]
     stored_password = stored_password[64:]
-    pwdhash = hashlib.pbkdf2_hmac('sha512', 
-                                  provided_password.encode('utf-8'), 
-                                  salt.encode('ascii'), 
+    pwdhash = hashlib.pbkdf2_hmac('sha512',
+                                  provided_password.encode('utf-8'),
+                                  salt.encode('ascii'),
                                   100000)
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == stored_password
@@ -61,16 +88,19 @@ def verify_password(stored_password, provided_password):
 # Create your views here.
 
 def home(request):
-	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
-		return redirect('profile')
-	else:
-		return render(request,'rmail.html')
+		if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+			return redirect('profile')
+		else:
+			return render(request,'rmail.html')
 
 def about(request):
 	return render(request,'about.html')
 
 def register(request):
 	return render(request,'signup.html')
+
+def loader(request):
+	return render(request,'loader.html')
 
 
 def setting(request):
@@ -85,7 +115,7 @@ def profile(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
 		username = request.session['username']
 		result = firebase.get('/users',username)
-		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
+		return render(request,'profile.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'Mobile':result["Mobile"],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
 	else:
 		return redirect('login')
 
@@ -100,13 +130,13 @@ def user(request,username):
 				if(result is None):
 					return render(request,'user.html',{"is_loged":'True','warning':"No such user found"})
 				else:
-					return render(request,'user.html',{"is_loged":'True','title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
+					return render(request,'user.html',{"is_loged":'True','title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'Mobile':result["Mobile"],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
 		else:
 			result = firebase.get('/users',usernaam)
 			if(result is None):
 				return render(request,'user.html',{'warning':"No such user found"})
 			else:
-				return render(request,'user.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
+				return render(request,'user.html',{'title':result['Name'],'Name':result['Name'],'username':username,'Email':result['Email'],'Mobile':result["Mobile"],'DOB':result['Birtdate'],'Gender':result['Gender'],"school":result['School'],"college":result["College"],"higher":result["Higher"],"fb":result['FB'],"insta":result["Insta"],"twitter":result["Twitter"],"tok":result["Tok"],'durl':result['DP'],'curl':result['Cover']})
 
 
 def banao(request):
@@ -239,12 +269,43 @@ def logout(request):
 	return render(request,'Login.html')
 
 
+
+def sendotp(request):
+	if(request.method=="POST"):
+		username = request.POST['username']
+		result = firebase.get("/users",username)
+		if(result is None):
+			return HttpResponse('No account associated with this username')
+		else:
+			lis=[1,2,3,4,5,6,7,8,9,0,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+			code=str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))
+			htmlgen = '<p>Your OTP is <strong>'+code+'</strong></p>'
+			send_mail('OTP request for Agyavart Login','123456','noreply.jumblejuggle@gmail.com',[result['Email']],fail_silently=False,html_message=htmlgen)
+			query = "otp/"+username
+			firebase.patch_async(query,{"current":code})
+			return HttpResponse("OTP sent on register Email")
+	else:
+		return redirect('login')
+
+def sendmail(request):
+	if(request.method=="POST"):
+		email = request.POST['email']
+		lis=[1,2,3,4,5,6,7,8,9,0,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+		code=str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))
+		htmlgen = '<p>Your OTP for completing registration is <strong>'+code+'</strong></p>'
+		send_mail('OTP request for new Agyavart account','123456','noreply.jumblejuggle@gmail.com',[email],fail_silently=False,html_message=htmlgen)
+		return HttpResponse(code)
+	else:
+		return redirect('signup')
+
+
 def forgotpass(request):
 	if request.method == "POST":
-		fuser = request.POST["fuser"]
+		fuser = request.POST["username"]
 		fuser = fuser.lower()
-		fmob = request.POST["fmob"]
-		fpas = request.POST["newpwd"]
+		otp = request.POST["otp"]
+		fpas = request.POST["password"]
+		conpass = request.POST["conpass"]
 		errormsg = []
 		if(fuser==""):
 			errormsg.append("Username cannot be empty.")
@@ -256,27 +317,25 @@ def forgotpass(request):
 			errormsg.append("Password cannot be empty.")
 		elif(len(fpas)<8):
 			errormsg.append("Password should be atleast 8 character long.")
-		if(len(fmob)!=10 or fmob.isnumeric()==False):
-			errormsg.append("Invalid Mobile Number.")
+		elif(fpas!=conpass):
+			errormsg.append("Confirm Password not matched.")
+		if(len(otp)!=6 ):
+			errormsg.append("Please enter 6 character for OTP")
 		if(len(errormsg)>0):
-			return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Password"})
+			return HttpResponse(errormsg)
 		else:
-			result = firebase.get('/users',fuser)
-			if(result is not None):
-				if(fmob==str(result["Mobile"])):
-					hash_pass = hash_password(fpas);
-					firebase.delete("/users",fuser)
+			res = firebase.get('/otp',fuser)
+			if(otp==str(res['current'])):
+					hash_pass = hash_password(fpas)
+					result = firebase.get("/users",fuser)
+					print(result)
 					firebase.put('/users',fuser,{'Name':result['Name'],"Password":hash_pass,'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":result["DP"],"Cover":result['Cover']})
-					return render(request,'Login.html',{'info':'Password changed successfully. Now you can login.'})
-				else:
-					errormsg = ['Mobile Number did not match. Try Again!!']
-					return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Password"})
+					return HttpResponse("Password changed successfully. Now you can login")
 			else:
-				errormsg = ['Invalid Username. Please try again!!']
-				return render(request,'Login.html',{"warning":errormsg,"title":"Forgot Password"})
+				return HttpResponse('OTP did not match. Try Again!!')
 	else:
 		redirect('login')
-	
+
 
 def forgotusername(request):
 	if request.method == "POST":
@@ -316,12 +375,16 @@ def imgcng(request):
 		print(changedp.name)
 		result = firebase.get("/users",usernaam)
 		if(result["DP"]=="/media/images/user.png"):
-			changedp.name = usernaam+"1"+".jpg"
+		    temp = os.getcwd()+"/Django-Project/media/images/"+usernaam+"dp"+".jpg"
+		    changedp.name = usernaam+"dp"+".jpg"
+		    if(os.path.exists(temp)):
+		        os.remove(temp)
 		else:
-			i = int(result["DP"][-5])
-			changedp.name = usernaam+str(i+1)+".jpg"
+		    temp = os.getcwd()+"/Django-Project/media/images/"+usernaam+"dp"+".jpg"
+		    os.remove(temp)
+		    changedp.name = usernaam+"dp"+".jpg"
 		print(changedp.name)
-		dpurl = "/media/images/"+changedp.name 
+		dpurl = "/media/images/"+changedp.name
 		user = Rmail(pic = changedp)
 		user.save()
 		firebase.delete("/users",usernaam)
@@ -329,6 +392,13 @@ def imgcng(request):
 		return redirect('profile')
 	else:
 		return redirect('profile')
+
+def deldp(request):
+		usernaam = request.session['username']
+		result = firebase.get("/users",usernaam)
+		newdp="/media/images/user.png"
+		firebase.put('/users',usernaam,{'Name':result['Name'],"Password":result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":newdp,"Cover":result['Cover']})
+		return redirect('/profile')
 
 def covercng(request):
 	if request.method == "POST":
@@ -339,11 +409,15 @@ def covercng(request):
 		usernaam = request.session['username']
 		result = firebase.get("/users",usernaam)
 		if(result["Cover"]=="/media/images/cover.jpeg"):
-			changecover.name = usernaam+"cover1"+".jpg"
+		    temp = os.getcwd()+"/Django-Project/media/images/"+usernaam+"cover"+".jpg"
+		    changecover.name = usernaam+"cover"+".jpg"
+		    if(os.path.exists(temp)):
+		        os.remove(temp)
 		else:
-			i = int(result["Cover"][-5])
-			changecover.name = usernaam+"cover"+str(i+1)+".jpg"
-		curl = "/media/images/"+changecover.name 
+		    temp = os.getcwd()+"/Django-Project/media/images/"+usernaam+"cover"+".jpg"
+		    os.remove(temp)
+		    changecover.name = usernaam+"cover"+".jpg"
+		curl = "/media/images/"+changecover.name
 		user = Rmail(pic = changecover)
 		user.save()
 		firebase.delete("/users",usernaam)
@@ -351,7 +425,14 @@ def covercng(request):
 		return redirect('profile')
 	else:
 		return redirect('profile')
-	
+
+def delcover(request):
+		usernaam = request.session['username']
+		result = firebase.get("/users",usernaam)
+		newcover="/media/images/cover.jpeg"
+		firebase.put('/users',usernaam,{'Name':result['Name'],"Password":result['Password'],'Email':result['Email'],'Mobile':result['Mobile'],'Birtdate':result['Birtdate'],'Gender':result['Gender'],"School":result['School'],"College":result["College"],"Higher":result["Higher"],"FB":result['FB'],"Insta":result["Insta"],"Twitter":result["Twitter"],"Tok":result["Tok"],"DP":result["DP"],"Cover":newcover})
+		return redirect('/profile')
+
 
 def detupt(request):
 	if request.method == "POST":
@@ -369,7 +450,7 @@ def detupt(request):
 		try:
 			mob = request.POST["newMOBILE"]
 		except:
-			mob = str(result['Mobile'])	
+			mob = str(result['Mobile'])
 		try:
 			fb = request.POST["newFB"]
 		except:
@@ -463,7 +544,7 @@ def changepass(request):
 			else:
 				print("currne")
 				errormsg.append('Current password does not match.')
-				
+
 		if(len(errormsg)>0):
 			return HttpResponse(errormsg)
 	else:
@@ -489,7 +570,7 @@ def delacc(request):
 		redirect('settings')
 
 
-### Message section 
+### Message section
 
 def newmsg(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
@@ -507,7 +588,7 @@ def newmsg(request):
 				timestamp = dt_string
 				sender = username
 
-				#for sender side message 
+				#for sender side message
 
 				data = firebase.get('/sentmessage',sender)
 				res = {'message': msg,'recipient':recipient,'time':timestamp}
@@ -527,6 +608,16 @@ def newmsg(request):
 				else:
 				    another.append(sen)
 				firebase.put('/recieved',recipient,another)
+				query = recipient+"/NewMsg"
+				result = firebase.get("otp",query)
+				if result is None:
+					result = 0
+				query1 ="otp/"+recipient
+				firebase.patch_async(query1,{"NewMsg":result+1})
+				header = {"Content-Type":"application/json; charset=utf-8","Authorization": "Basic MzUyNjE4NDgtNWJlYy00ZTI1LTkzNDItMGU2M2RlNWMwNjg0"}
+				payload = {"app_id": "22619c08-de49-4043-9d0a-d4a7d1f0b2ed","include_external_user_ids":[recipient],"contents":{"en":"You have recieved a new message"},"headings":{"en":"Agyavart"},"url":"https://rajathandsom.pythonanywhere.com/recieve.html","chrome_web_icon":"https://rajathandsom.pythonanywhere.com/static/images/pwa-192x192.png","chrome_web_badge":"https://rajathandsom.pythonanywhere.com/static/images/pwa-192x192.png"}
+				req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
+				print(req.status_code, req.reason,req.text,sep="----000----")
 				return HttpResponse("Message sent successfull.")
 			else:
 				return HttpResponse("Recipient not valid.")
@@ -548,6 +639,8 @@ def recieve(request):
 				name.time = result[i]['time']
 				name.photo = "/media/images/user.png"
 				data.append(name)
+			query = "otp/" + username
+			firebase.patch(query,{"NewMsg":0})
 			return render(request,'recieve.html',{'data':data})
 		else:
 			return render(request,'recieve.html',{'warning':"No message sent yet."})
@@ -559,6 +652,7 @@ def message(request):
 	if(request.session.has_key('is_logged') and request.session['is_logged']==True):
 		username = request.session['username']
 		result = firebase.get('/sentmessage',username)
+		usersdet = firebase.get('/users',None)
 		if(result is not None):
 			data = []
 			for i in range((len(result)-1),-1,-1):
@@ -567,20 +661,19 @@ def message(request):
 				name.recipient = result[i]['recipient']
 				name.message = result[i]['message']
 				name.time = result[i]['time']
-				getnaam = result[i]['recipient']+'/'+"Name"
-				name.name = firebase.get("/users",getnaam)
-				if(name.name is None):
+				try:
+					name.name = usersdet[name.recipient]["Name"]
+				except:
 					name.name = "Agyavart User"
-				print(name.name)
-				getphotu = result[i]['recipient']+'/'+"DP"
-				name.photo = firebase.get("/users",getphotu)
-				if(name.photo is None):
+				try:
+					name.photo = usersdet[name.recipient]["DP"]
+				except:
 					name.photo = "/media/images/user.png"
 				data.append(name)
 			return render(request,'msg.html',{'data':data})
 		else:
 			return render(request,'msg.html',{'warning':"No message recieved Yet"})
-		
+
 	else:
 		return render(request,'rmail.html')
 
@@ -600,3 +693,300 @@ def viewsent(request):
 		return render(request,"viewsent.html",{"user":user,"msg":msg,"time":time,"name":name,"photo":photo})
 	else:
 		redirect('message')
+
+
+def chkfornew(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+    	username = request.session['username']
+    	query = username+"/NewMsg"
+    	result = firebase.get("otp/",query)
+    	if(result is not None or result>0):
+    		return HttpResponse(result)
+    	else:
+    		return HttpResponse("0")
+
+
+def displaymsg(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+    	if(request.method=="POST"):
+    		username = request.session['username']
+    		result = firebase.get('/recieved',username)
+    		if(result is not None):
+    			data = []
+    			for i in range((len(result)-1),-1,-1):
+    				name = 'obj'+str(i)
+    				name = recievedmessage()
+    				name.message = result[i]['message']
+    				name.time = result[i]['time']
+    				name.photo = "/media/images/user.png"
+    				data.append(name)
+    			query = "otp/" + username
+    			firebase.patch_async(query,{"NewMsg":0})
+    			return render(request,'displaymsg.html',{'data':data})
+    		else:
+    			return render(request,'displaymsg.html',{'warning':"No message sent yet."})
+    	else:
+    		return redirect('recieve')
+    else:
+        return redirect("/login")
+
+
+#IMPLEMENTING  CHAT
+
+def chatroom(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+        username = request.session['username']
+        try:
+            recipient  = request.GET['recipient']
+            if(recipient==username):
+                return redirect("/thread")
+        except:
+            return redirect("/thread")
+        result = firebase.get('users/',username)
+        rec = firebase.get('users/',recipient)
+        roomcode = firebase.get('chat/',username+"/"+recipient+"/roomcode")
+        if(roomcode==None):
+        	roomcode = hash_password(username+recipient)
+        	firebase.patch('chat/'+username+"/"+recipient,{"roomcode":roomcode})
+        	firebase.patch('chat/'+recipient+"/"+username,{"roomcode":roomcode})
+        chatlog = firebase.get("chatlog/",roomcode)
+        pastmsg = []
+        if(chatlog is not None):
+        	for i in chatlog:
+        		obj = chatmsg()
+        		obj.message = i["message"]
+        		obj.sender = i["sender"]
+        		obj.name = i["name"]
+        		if("time" in i.keys()):
+        			obj.time = i["time"]
+        		pastmsg.append(obj)
+        data = firebase.get("newmsg/",username)
+        if(data is not None):
+        	if(recipient in data):
+        	    data.remove(recipient)
+        	elif(recipient.upper() in data):
+        	    data.remove(recipient.upper())
+        	firebase.put("newmsg/",username,data)
+        return render(request,'rajat.html',{"chatlog":pastmsg,"roomcode":roomcode,"recipient":recipient,"username":username,"recName":rec["Name"],"photo":rec['DP']})
+    else:
+        return redirect("/login")
+
+def save_message(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+        if(request.method=="POST"):
+            roomcode = request.POST["roomcode"]
+            message = request.POST['message']
+            sender = request.session['username']
+            recipient = request.POST['recipient']
+            time = request.POST['time']
+            res = firebase.get('users/',sender)
+            chatlog = firebase.get('chatlog/',roomcode)
+            if(chatlog==None):
+            	chatlog = []
+            	chatlog.append({"message":message,"sender":sender,"name":res['Name'],"time":time})
+            else:
+            	chatlog.append({"message":message,"sender":sender,"name":res['Name'],"time":time})
+            #time = request.POST["time"]
+            firebase.put_async('chatlog/',roomcode,chatlog)
+            result = firebase.get_async("newmsg/",sender)
+            if(result is None):
+            	result =[]
+            	result.insert(0,recipient.upper())
+            else:
+            	result.remove(recipient)
+            	result.insert(0,recipient.upper())
+            result1 = firebase.get_async("newmsg/",recipient)
+            if(result1 is None):
+            	result1 =[]
+            	result1.insert(0,sender)
+            else:
+            	result.insert(0,sender)
+            firebase.put_async('newmsg/',sender,result)
+            firebase.put_async('newmsg/',recipient,result1)
+            urltodisp = "https://rajathandsom.pythonanywhere.com/chatroom?recipient="+sender
+            header = {"Content-Type":"application/json; charset=utf-8","Authorization": "Basic MzUyNjE4NDgtNWJlYy00ZTI1LTkzNDItMGU2M2RlNWMwNjg0"}
+            payload = {"app_id": "22619c08-de49-4043-9d0a-d4a7d1f0b2ed","include_external_user_ids":[recipient],"contents":{"en":"You have recieved a new chat message from "+res["Name"]},"headings":{"en":"Agyavart"},"url":urltodisp,"chrome_web_icon":"https://rajathandsom.pythonanywhere.com"+res["DP"],"chrome_web_badge":"https://rajathandsom.pythonanywhere.com/static/images/pwa-192x192.png"}
+            req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
+            print(req.status_code, req.reason,req.text,sep="----000----")
+            return HttpResponse("done")
+        else:
+            return redirect("/thread")
+    else:
+        return redirect("/login")
+
+def msgthread(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+    	username = request.session['username']
+    	new = firebase.get("newmsg/",username)
+    	thread = firebase.get("threads/",username)
+    	result = firebase.get("users/",None)
+    	newthread = []
+    	todeliver = []
+    	if(new is not None):
+    		for i in new:
+    			if(i not in newthread):
+    				obj = threads()
+    				if(i.isupper() == True):
+    					obj.isread = True
+    				else:
+    					obj.isread = False
+    				i = i.lower()
+    				obj.username = i
+    				obj.name = result[i]["Name"]
+    				obj.photo = result[i]["DP"]
+    				todeliver.append(obj)
+    				newthread.append(i)
+
+    	if(thread is not None):
+    		for i in thread:
+    			if(i not in newthread):
+    				obj = threads()
+    				i = i.lower()
+    				obj.username = i
+    				obj.name = result[i]["Name"]
+    				obj.photo = result[i]["DP"]
+    				obj.isread = True
+    				print(obj.photo,result[i]["DP"])
+    				todeliver.append(obj)
+    				newthread.append(i)
+    	firebase.put('threads/',username,newthread)
+    	return render(request,"chat_template.html",{"messages":todeliver})
+    else:
+        return redirect("/login")
+
+def refresh(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+    	username = request.session['username']
+    	new = firebase.get("newmsg/",username)
+    	thread = firebase.get("threads/",username)
+    	result = firebase.get("users/",None)
+    	newthread = []
+    	todeliver = []
+    	if(new is not None):
+    		for i in new:
+    			if(i not in newthread):
+    				obj = threads()
+    				if(i.isupper() == True):
+    					obj.isread = True
+    				else:
+    					obj.isread = False
+    				i = i.lower()
+    				obj.username = i
+    				obj.name = result[i]["Name"]
+    				obj.photo = result[i]["DP"]
+    				todeliver.append(obj)
+    				newthread.append(i)
+
+    	if(thread is not None):
+    		for i in thread:
+    			if(i not in newthread):
+    				obj = threads()
+    				i = i.lower()
+    				obj.username = i
+    				obj.name = result[i]["Name"]
+    				obj.photo = result[i]["DP"]
+    				print(obj.photo,result[i]["DP"])
+    				obj.isread = True
+    				todeliver.append(obj)
+    				newthread.append(i)
+    	firebase.put('threads/',username,newthread)
+    	return render(request,"temp.html",{"messages":todeliver})
+    else:
+        return redirect("/login")
+
+
+#IMPLEMENTING CALLING LOGIC
+def videocall(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+    	username = request.session['username']
+    	roomcode = request.GET['roomcode']
+    	recipient = request.GET['recipient']
+    	status = firebase.get("calling/",recipient)
+    	result = firebase.get("users/",None)
+    	try:
+    		audio = request.GET['audio']
+    	except:
+    		audio = "no"
+    	if(status is not None):
+    		if(status["current"].lower()!=username):
+    			return render(request,'videocall.html',{"roomcode":roomcode,"RecName":result[recipient]["Name"],"warning":"is on another call","tune":"no"})
+    	if(audio=="yes"):
+    		firebase.put("calling/",username,{"current":recipient.upper()})
+    		firebase.put("calling/",recipient,{"current":username.upper()})
+    		urltodisp = "https://rajathandsom.pythonanywhere.com/profile"
+    		header = {"Content-Type":"application/json; charset=utf-8","Authorization": "Basic MzUyNjE4NDgtNWJlYy00ZTI1LTkzNDItMGU2M2RlNWMwNjg0"}
+    		payload = {"app_id": "22619c08-de49-4043-9d0a-d4a7d1f0b2ed","include_external_user_ids":[recipient],"contents":{"en":"Incomming Audio Call from "+result[username]["Name"]},"headings":{"en":"Agyavart"},"url":urltodisp,"chrome_web_icon":"https://rajathandsom.pythonanywhere.com"+result[username]["DP"],"chrome_web_badge":"https://rajathandsom.pythonanywhere.com/static/images/pwa-192x192.png"}
+    		req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
+    		return render(request,'audiocall.html',{"roomcode":roomcode,"RecName":result[recipient]["Name"],"DP":result[username]["DP"],"RecDP":result[recipient]["DP"],"tune":"yes"})
+    	else:
+    	    firebase.put_async("calling/",username,{"current":recipient})
+    	    firebase.put_async("calling/",recipient,{"current":username})
+    	    urltodisp = "https://rajathandsom.pythonanywhere.com/profile"
+    	    header = {"Content-Type":"application/json; charset=utf-8","Authorization": "Basic MzUyNjE4NDgtNWJlYy00ZTI1LTkzNDItMGU2M2RlNWMwNjg0"}
+    	    payload = {"app_id": "22619c08-de49-4043-9d0a-d4a7d1f0b2ed","include_external_user_ids":[recipient],"contents":{"en":"Incomming Video Call from "+result[username]["Name"]},"headings":{"en":"Agyavart"},"url":urltodisp,"chrome_web_icon":"https://rajathandsom.pythonanywhere.com"+result[username]["DP"],"chrome_web_badge":"https://rajathandsom.pythonanywhere.com/static/images/pwa-192x192.png"}
+    	    req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
+    	    return render(request,'videocall.html',{"roomcode":roomcode,"RecName":result[recipient]["Name"],"tune":"yes"})
+    else:
+        return render("/login")
+
+def answercall(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+        username = request.session['username']
+        roomcode = request.GET['roomcode']
+        recipient = request.GET['recipient']
+        result = firebase.get("users/",None)
+        try:
+            audio = request.GET['audio']
+        except:
+            audio="no"
+        if(audio=="yes"):
+            return render(request,'audiocall.html',{"roomcode":roomcode,"RecName":result[recipient]["Name"],"DP":result[username]["DP"],"RecDP":result[recipient]["DP"],"tune":"no"})
+        else:
+            return render(request,'videocall.html',{"roomcode":roomcode,"RecName":result[recipient]["Name"],"tune":"no"})
+    else:
+        return render("/login")
+
+def cutcall(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+    	username = request.session['username']
+    	recipient = request.GET['recipient']
+    	firebase.delete("calling/",username.lower())
+    	firebase.delete("calling/",recipient.lower())
+    	return redirect('/thread')
+    else:
+        return render("/login")
+
+def status(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+    	username = request.session["username"]
+    	ownsta = firebase.get("calling/",username)
+    	if(ownsta is None):
+    		return HttpResponse("ended")
+    	else:
+    		return HttpResponse("going")
+    else:
+        return render("/login")
+
+def chkforcall(request):
+    if(request.session.has_key('is_logged') and request.session['is_logged']==True):
+    	username = request.session["username"]
+    	ownsta = firebase.get("calling/",username)
+    	if(ownsta is None):
+    		return HttpResponse("no")
+    	else:
+    		recipient = ownsta["current"]
+    		if(recipient.isupper()==True):
+    			recipient = recipient.lower()
+    			result = firebase.get("users/",recipient)
+    			roomcode = firebase.get('chat/',username+"/"+recipient+"/roomcode")
+    			url = "/answercall?roomcode="+roomcode+"&recipient="+recipient+"&audio=yes"
+    			cuturl = "/cutcall?recipient="+recipient
+    			return render(request,"callingmsg.html",{"Name":result["Name"],"url":url,"cuturl":cuturl,"audio":"yes"})
+    		else:
+    			result = firebase.get("users/",recipient)
+    			roomcode = firebase.get('chat/',username+"/"+recipient+"/roomcode")
+    			url = "/answercall?roomcode="+roomcode+"&recipient="+recipient
+    			cuturl = "/cutcall?recipient="+recipient
+    			return render(request,"callingmsg.html",{"Name":result["Name"],"url":url,"cuturl":cuturl})
+    else:
+        return render("/login")

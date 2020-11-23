@@ -1,6 +1,6 @@
 * {box-sizing: border-box;}
 
-body { 
+body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -62,6 +62,7 @@ color:white;}
 
 .cover {
 	margin:0px auto;
+	cursor: pointer;
 }
 
 .dp {
@@ -74,42 +75,22 @@ color:white;}
 }
 .dpimg {
 	width:300px;
-	height: 300px;	
+	height: 300px;
 	border-radius: 100%;
 	border:3px solid #fff;
 	align-self: center;
+	cursor:pointer;
+	transition: border 0.1s ease;
 
-} 
-
-
-
-
-.overlay {
-  position: absolute;
-  bottom: 0;
-  background: rgb(0, 0, 0);
-  background: rgba(0, 0, 0, 0.5); /* Black see-through */
-  color: #f1f1f1;
-  width: 100%;
-  height: 100%;
-  transition: .5s ease;
-  opacity:0;
-  color: white;
-  font-size: 30px;
-  padding: 20px;
-  text-align: center;
-  border-radius: 100%;
-  vertical-align: center;
-  padding-top: 45%; 
-  cursor: pointer;
 }
 
-/* When you mouse over the container, fade in the overlay title */
-.dp:hover .overlay {
-  opacity: 1;
+.dpimg:active {
+	border:6px solid #fff;
 }
+
 
 .name {
+	padding-top: 20px;
 	position: absolute;
 	left:340px;
 }
@@ -120,37 +101,48 @@ color:white;}
 body, html {
   height: 100%;
   margin: 0;
-  font-family: Arial;
+  font-family: 'Jost', sans-serif;
 }
 
 /* Style tab links */
 .tablink {
+	outline: none;
   background-color: #555;
   color: white;
   float: left;
-  border: none;
-  outline: none;
+  border: 0px;
   cursor: pointer;
-  padding: 14px 16px;
-  font-size: 17px;
-  width: 25%;
+  padding: 8px;
+  font-size: 34px;
+  width: 33.33%;
+  transition: 0.3s ease;
 }
 
 .tablink:hover {
   background-color: #777;
 }
-
+.tablink:focus{
+	outline:none;
+	font-size: 28px;
+}
 /* Style the tab content (and add height:100% for full page content) */
 .tabcontent {
   color: white;
   display: none;
-  padding: 100px 20px;
+  padding: 40px 0px 80px 20px;
+  border-top-left-radius: 18px;
+  border-top-right-radius:18px;
+  box-shadow:0 8px 16px 0 #00000073,0 6px 20px 0 #00000073;
+  margin-top: 22px;
+  margin-bottom: 0;
+  font-size: 24px;
+  bottom:0;
 }
 
-#Home {background-color: #fff;}
-#News {background-color: #fff;}
-#Contact {background-color: #fff;}
-#About {background-color: #fff;}
+#Home {background-color: #7236aa;}
+#News {background-color: #7236aa;}
+#Contact {background-color: #7236aa;}
+#About {background-color: #7236aa;}
 
 
 .content {
@@ -158,11 +150,14 @@ body, html {
 	width: 100%;
 }
 .table {
-	margin-left: 30px;
-
+	margin-left: 0px;
+	bottom:0px;
+	font-size: 18px;
+	color:white
 }
 .secondname {
 	display: none;
+	margin-bottom: 44px;
 }
 
 .cover .blck {
@@ -197,6 +192,89 @@ body, html {
       transform: translate(50%,0%);
     }
 
+
+
+ #menucontainer {
+ 	z-index: 3000;
+ 	top: 0px;
+ 	width: 400px;
+ 	border-radius: 0px 0px 10px 10px;
+ 	vertical-align: middle;
+ 	background-color: #fff;
+ 	border:3px solid #333;
+ 	padding:3px;
+ 	margin-top:-2.25rem;
+ 	padding-top: 0px;
+
+ }
+ #menucontainer ul {
+ 	list-style-type: none;
+ 	padding:0px;
+ 	margin-bottom: 0px;
+ }
+
+ #menucontainer li {
+ 	margin-top:2px;
+ 	vertical-align: middle;
+ 	 width: 100%;
+ 	height: 50px;
+ 	border-radius: 10px;
+ 	font-size: 20px;
+ 	font-family: Jost,sans-seri;
+ 	color: #333;
+ 	padding-top:10px;
+ 	background-color: #fff;
+ 	cursor:pointer;
+ 	transition: 0.6s ease;
+
+ }
+
+ #menucontainer li:hover {
+ 	background-color: rgba(0,0,0,0.5);
+ 	color: #fff;
+ }
+
+
+/* Modal Content (Image) */
+.dpmodal .modal-content {
+  margin: auto;
+  width: 80%;
+  margin-bottom: 20px;
+  height: 80%;
+  border-radius: 10px;
+  box-shadow: 2px 2px solid #333;
+  border: 2px solid #fff;
+}
+
+
+
+
+/* Add Animation - Zoom in the Modal */
+.dpmodal .modal-content {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+
+/* 100% Image Width on Smaller Screens */
+@media screen and (max-width:575px)
+{
+#menucontainer{
+	margin-top:-0.5rem;
+}
+
+
+.domodal .modal-content {
+	height: 100%;
+	width: 100%;
+}
+
+}
 @media screen and (max-width:991px)
 {
 	.name {

@@ -1,37 +1,823 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html>
 <head>
   {% block title %}
 	<title>{{title }}</title>
   {% endblock %}
+ <script type = "text/javascript" >
+   function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+</script>
+  <script>
+
+  setTimeout( function(){
+      document.getElementById("pageloader").style.display="none";
+  },1000);
+//  window.onload =  setTimeout( function(){
+//     Notification.requestPermission().then((permission) => {
+//       if (permission === 'granted') {
+//         console.log('Notification permission granted.');
+//       } else {
+//         console.log('Unable to get permission to notify.');
+//       }
+//     });
+//       },3000 );
+
+var myVar;
+function myFunction() {
+  document.getElementById("loaderbackground").style.display = "block";
+}
+
+function showPage() {
+  document.getElementById("loaderbackground").style.display = "none";
+}
+</script>
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script>
+let myCustomUniqueUserId = "{{username}}";
+  var OneSignal = window.OneSignal || [];
+  OneSignal.push(function() {
+    OneSignal.init({
+      appId: "22619c08-de49-4043-9d0a-d4a7d1f0b2ed",
+      promptOptions: {
+        slidedown: {
+          enabled: true,
+          autoPrompt: true,
+          timeDelay: 3,
+          pageViews: 1
+        }
+      }
+    });
+    OneSignal.setExternalUserId(myCustomUniqueUserId);
+  });
+
+function logout(){
+    myFunction();
+    OneSignal.push(function() {
+    OneSignal.removeExternalUserId();
+});
+window.location.replace('logout.html');
+}
+</script>
 	<!-- CSS only -->
 <link rel="icon" href="{% static 'images/rmailLogoConcept.svg' %}">
-<meta content=’width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0′ name=’viewport’ />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-16LE">
+<meta name=”description” content="Building a world of anonymity, yet closer together. Join our community now!">
+<meta property="og:title" content="Agyavart">
+<meta property="og:type" content="Social Platform">
+<meta property="og:url" content="https://rajathandsom.pythonanywhere.com/">
+<meta property="og:description" content="Building a world of anonymity, yet closer together. Join our community now!">
+<meta property="og:image" content="https://rajathandsom.pythonanywhere.com/static/images/agyavartsocial.jpg">
+<meta name="favicon" content="https://rajathandsom.pythonanywhere.com/static/images/rmailLogoConcept.png">
+<meta name="twitter:card" content="https://rajathandsom.pythonanywhere.com/static/images/agyavartsocial.jpg">
+<meta name="linkedin:card" content="https://rajathandsom.pythonanywhere.com/static/images/agyavartsocial.jpg">
+<meta name="theme-color" content="#008080">
+<link rel="apple-touch-icon" href="https://rajathandsom.pythonanywhere.com/static/images/apple-touch-icon-180x180.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://rajathandsom.pythonanywhere.com/static/images/pwa-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://rajathandsom.pythonanywhere.com/static/images/apple-touch-icon-180x180.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="{% static '/styles/profile.css' %}">
-<link rel="stylesheet" href="{% static '/styles/fmt.css' %}">
-<link rel="stylesheet" href="{% static '/styles/mainsetup.css' %}">
-<link rel="stylesheet" href="{% static '/styles/side_nav.css' %}">
+<link rel="stylesheet" href="{% static 'styles/fmt.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/loader.css' %}">
+<link rel="stylesheet" href="{% static 'styles/mainsetup.css' %}">
+<link rel="stylesheet" href="{% static 'styles/snackbar.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Jost" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-analytics.js"></script>
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyBp17YUm4uju7nqT5syTdGIUc_mJ253PH0",
+    authDomain: "agyavart-27f8b.firebaseapp.com",
+    databaseURL: "https://agyavart-27f8b.firebaseio.com",
+    projectId: "agyavart-27f8b",
+    storageBucket: "agyavart-27f8b.appspot.com",
+    messagingSenderId: "223304863434",
+    appId: "1:223304863434:web:585b9e9ace6b42ad51ee33",
+    measurementId: "G-7KW9B9M084"
+  };
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+<style>
+  a{
+	text-decoration: none;
+	color:white;
+    transition:0.3s ease
+}
+
+a:hover{
+    text-decoration: none;
+    color:#2196f3;
+}
+
+a:focus{
+    text-decoration: none;
+    color:#2195f38c;
+}
+
+.pageloader{
+    width: 100%;
+  height: 100%;
+  position: fixed;
+  top:0px;
+  left: 0px;
+  z-index: 1789;
+  background-color: rgba(0,0,0,0.6);
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+ }
+
+/* Center the loader */
+#loaderbackground {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top:0px;
+  left: 0px;
+  z-index: 1789;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.dot {
+  position: absolute;
+  left: 45%;
+  top: 50%;
+  z-index: 1789;
+  width: 20px;
+  height: 20px;
+  margin: -75px 0 0 -75px;
+  border-radius: 100%;
+  color: #456;
+  background-color:#456;
+
+}
+
+#loadertext {
+  position:relative;
+  top:51%;
+}
+
+#loader21{
+    margin-left: 0px;
+    color: #E74C3C;
+  background-color:#E74C3C;
+    -webkit-animation: jump1 1s linear infinite;
+  animation: jump1 1s linear infinite;
+}
+#loader22{
+  margin-left: 25px;
+      color: #3498DB;
+  background-color:#3498DB;
+    -webkit-animation: jump2 1s linear infinite;
+  animation: jump2 1s linear infinite;
+}
+#loader23{
+  margin-left: 50px;
+    color: #2ECC71;
+    background-color:#2ECC71;
+    -webkit-animation: jump3 1s linear infinite;
+  animation: jump3 1s linear infinite;
+}
+#loader24{
+  margin-left: 75px;
+    color: #F1C40F;
+  background-color:#F1C40F;
+    -webkit-animation: jump4 1s linear infinite;
+  animation: jump4 1s linear infinite;
+}
+
+@-webkit-keyframes jump1 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,-30px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@-webkit-keyframes jump2 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,-30px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@-webkit-keyframes jump3 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,-30px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@-webkit-keyframes jump4 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,-30px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+@keyframes jump1 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,-30px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@keyframes jump2 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,-30px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@keyframes jump3 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,-30px);  }
+  80% { -webkit-transform: translate(0,0px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+
+@keyframes jump4 {
+  0% { -webkit-transform: translate(0,0px); }
+  20% { -webkit-transform: translate(0,0px); }
+  40% { -webkit-transform: translate(0,0px); }
+  60% { -webkit-transform: translate(0,0px);  }
+  80% { -webkit-transform: translate(0,-30px); }
+  100% { -webkit-transform: translate(0,0px); }
+}
+* {box-sizing: border-box;}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bar {
+	width: 0px;
+	transition: width 0.5s ease;
+}
+
+#sidenav {
+background-color:#333;
+height:100%;
+position: fixed;
+top:70px;
+left:0px;
+overflow-y:auto;
+margin:0 auto;
+margin-left:0px;
+padding:0;
+overflow-x:hidden;
+overflow-y:auto;
+text-align:center;
+border-radius:0px 3px;
+z-index: 10;
+transition: 0.05s ease-in-out;
+
+}
+
+#sidenav a {text-decoration:none;
+display:block;
+margin-top:1px;
+background-color:#f1f1f1;
+color:black;
+text-align:center;
+padding:10px;
+font-size:15px;
+border-right: 1px solid #333;
+font-family:Britannic Bold;
+border-left: 2px solid #333;
+line-height:40px;
+
+
+}
+
+
+#sidenav a:hover:not(.active) {background-color:#555;
+	color:white;
+}
+
+#sidenav a.active {  background-color:  #4CAF50;
+color:white;}
+
+
+#sidenav #cross {display: none;
+
+}
+.change {
+		width:250px;
+		transition: width 0.05s ease-in-out;
+}
+
+.cover {
+	margin:0px auto;
+	cursor: pointer;
+}
+
+.dp {
+	position: absolute;
+	top:100px;
+	left:30px;
+	border-radius: 100%;
+}
+.dpimg {
+	width:300px;
+	height: 300px;
+	border-radius: 100%;
+	border:3px solid #fff;
+	align-self: center;
+	cursor:pointer;
+	transition: border 0.1s ease;
+
+}
+
+.dpimg:active {
+	border:6px solid #fff;
+}
+
+
+.name {
+	padding-top: 20px;
+	position: absolute;
+	left:340px;
+}
+
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Jost', sans-serif;
+}
+
+/* Style tab links */
+.tablink {
+	outline: none;
+  background-color: #555;
+  color: white;
+  float: left;
+  border: 0px;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 34px;
+  width: 33.33%;
+  transition: 0.3s ease;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+.tablink:focus{
+	outline:none;
+	font-size: 28px;
+}
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 40px 0px 80px 20px;
+  border-top-left-radius: 18px;
+  border-top-right-radius:18px;
+  box-shadow:0 8px 16px 0 #00000073,0 6px 20px 0 #00000073;
+  margin-top: 22px;
+  margin-bottom: 0;
+  font-size: 24px;
+  bottom:0;
+}
+
+#Home {background-color: #7236aa;}
+#News {background-color: #7236aa;}
+#Contact {background-color: #7236aa;}
+#About {background-color: #7236aa;}
+
+
+.content {
+	height: 180px;
+	width: 100%;
+}
+.table {
+	margin-left: 0px;
+	bottom:0px;
+	font-size: 18px;
+	color:white
+}
+.secondname {
+	display: none;
+	margin-bottom: 44px;
+}
+
+.cover .blck {
+	width: 100%;
+	position: absolute;
+	height:250px;
+	opacity: 0;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.cover .blck .btn {
+	position: absolute;
+	top:80px;
+	right: 20px;
+}
+
+
+.cover:hover .blck {
+		opacity: 1;
+		transition: opacity 0.5s ease;
+}
+
+.hide {
+	display: none;
+}
+
+.slow {
+		display: inline-block;
+	}
+
+#navbarTogglerDemo02{
+      transform: translate(50%,0%);
+    }
+
+
+
+ #menucontainer {
+ 	z-index: 3000;
+ 	top: 0px;
+ 	width: 400px;
+ 	border-radius: 0px 0px 10px 10px;
+ 	vertical-align: middle;
+ 	background-color: #fff;
+ 	border:3px solid #333;
+ 	padding:3px;
+ 	margin-top:-2.25rem;
+ 	padding-top: 0px;
+
+ }
+ #menucontainer ul {
+ 	list-style-type: none;
+ 	padding:0px;
+ 	margin-bottom: 0px;
+ }
+
+ #menucontainer li {
+ 	margin-top:2px;
+ 	vertical-align: middle;
+ 	 width: 100%;
+ 	height: 50px;
+ 	border-radius: 10px;
+ 	font-size: 20px;
+ 	font-family: Jost,sans-seri;
+ 	color: #333;
+ 	padding-top:10px;
+ 	background-color: #fff;
+ 	cursor:pointer;
+ 	transition: 0.6s ease;
+
+ }
+
+ #menucontainer li:hover {
+ 	background-color: rgba(0,0,0,0.5);
+ 	color: #fff;
+ }
+
+
+/* Modal Content (Image) */
+.dpmodal .modal-content {
+  margin: auto;
+  width: 80%;
+  margin-bottom: 20px;
+  height: 80%;
+  border-radius: 10px;
+  box-shadow: 2px 2px solid #333;
+  border: 2px solid #fff;
+}
+
+
+
+
+/* Add Animation - Zoom in the Modal */
+.dpmodal .modal-content {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+.navbar-toggler-icon{
+  display:none;
+}
+
+.coverbtn {
+  position: absolute;
+  right: 60px;
+  top: 80px;
+  background-color: #2196F3;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: absolute;
+  right:-30px;
+  top:100px;
+  z-index: 10;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 100%;
+  color:#333;
+  display: inline-block;
+  display: none;
+  transition: 0.3s ease;
+}
+
+.cover:hover .dropdown {
+  display: inline-block;
+}
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right:60px;
+  top:128px;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.showdropdown {
+  display: block;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+
+.dropdown-content a:hover {background-color: #ddd}
+
+
+.coverbtn:hover, .dropdown:hover .coverbtn  {
+  background-color: #0b7dda;
+}
+
+.coverbtn {
+  position: absolute;
+  right: 60px;
+  top: 80px;
+  background-color: #333;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: absolute;
+  right:-30px;
+  top:100px;
+  z-index: 10;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 100%;
+  color:#333;
+  border:none;
+  display: inline-block;
+  transition: 0.3s ease;
+}
+
+.cover:hover .dropdown {
+  display: inline-block;
+}
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right:60px;
+  top:128px;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.showdropdown {
+  display: block;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+#imag {
+   font-size: 40px;
+  font-weight:bold;
+  margin-left:5px;
+  background-color: #f8f8f8;
+  border-radius: 100%;
+  border:1px solid #333;
+  padding:3px;
+  height: 50px;
+  width: 50px;
+  padding-left:20px;
+  box-shadow: 2px 2px solid #333;
+  transition: 0.5s ease;
+  opacity: 0.9;
+  }
+
+  #imag:hover{
+    opacity: 1;
+  }
+
+  #imag:active {
+    border:3px solid #333;
+  }
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+ .badge {
+  position: relative;
+  border-radius: 50%;
+  background: #fff;
+  color: #333;
+  border:2px solid black;
+  right:10px;
+  top:5px;
+  margin-left: 10px;
+  margin: 1px auto;
+  font-size: 20px;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media screen and (max-width:575px)
+{
+#menucontainer{
+	margin-top:-0.5rem;
+}
+
+
+.domodal .modal-content {
+	height: 100%;
+	width: 100%;
+}
+
+}
+
+@media screen and (max-width:424px)
+{
+
+  .dpimg {
+    width:200px;
+    height:200px;
+  }
+
+  .dp {
+    position: absolute;
+    top:150px;
+    left:10px;
+  }
+
+  .content{
+    height: 140px;
+  }
+
+  }
+@media screen and (max-width:391px)
+{
+    .button-chip{padding: 5px 3px 3px 5px;
+}
+}
+@media screen and (max-width:991px)
+{
+    .navbar-toggler-icon{
+                  display:block;
+                }
+
+	.name {
+		display: none;
+	}
+	.secondname {
+		display: block;
+		width: :100%;
+		margin-left: 50px;
+		margin-bottom: 30px;
+	}
+
+
+	.hide {
+		display: block;
+	}
+
+	.slow {
+	display: none;
+}
+
+
+	#navbarTogglerDemo02{
+      transform: translate(0%,0%);
+    }
+
+    .notshow {
+		display: none;
+	}
+
+
+}
+
+</style>
 </head>
-<body>
+<body style="font-family: Jost, sans-serif;">
+<!-- website loader -->
+<div class="pageloader" id="pageloader">
+<div id ="loader21" class="dot"></div>
+<div id ="loader22" class="dot"></div>
+<div id ="loader23" class="dot"></div>
+<div id ="loader24" class="dot"></div>
+</div>
+<!--<div class="pageloader" id="pageloader">-->
+<!--<div id="pageloadcontainer">-->
+<!--  <span class="pageloadbrand">-->
+<!--  <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" alt="Agyavart Icon">-->
+<!--  </span>-->
+<!--  <div class="pageloaddivider" aria-hidden="true"></div>-->
+<!--  <p class="loading-text" aria-label="Loading">-->
+<!--    <span class="letter L" aria-hidden="true">L</span>-->
+<!--    <span class="letter" aria-hidden="true">o</span>-->
+<!--    <span class="letter" aria-hidden="true">a</span>-->
+<!--    <span class="letter" aria-hidden="true">d</span>-->
+<!--    <span class="letter" aria-hidden="true">i</span>-->
+<!--    <span class="letter" aria-hidden="true">n</span>-->
+<!--    <span class="letter" aria-hidden="true">g</span>-->
+<!--  </p>-->
+<!--</div>-->
+<!--<br>-->
+<!--<div class="bottom">-->
+<!--  Agyavart-->
+<!--  </div>-->
+<!--</div>-->
+  <!-- In page loader -->
+<div id="loaderbackground" style="display: none;">
+<div id ="loader21" class="dot"></div>
+<div id ="loader22" class="dot"></div>
+<div id ="loader23" class="dot"></div>
+<div id ="loader24" class="dot"></div>
+<div id="loadertext" class="sub-catch-line fmt-center">Hold up</div>
+</div>
 <!--top nav bar -->
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-	<img src="{% static 'images/graphic.png' %}" class ="imag" width="30" height="30" class="d-inline-block align-top" alt="" style="margin-right: 10px; cursor: pointer;" onclick="openNav()">
-   <a class="navbar-brand" href="rmail.html" style="font-size: 30px;">
-    <img src="{% static 'images/rmailLogoConcept.svg' %}" width="25" class="align-top" alt="Rmail Logo">
-    gyavart
-  </a>
-  
+<nav class="navbar fixed-top navbar-expand-lg navbar-light profile-menu-bar">
+	<i id="imag" width="30" height="30" class="fa fa-angle-right d-inline-block align-top" aria-hidden="true" alt="Open Navbar" style="margin-right: 10px; cursor: pointer;" onclick="openNav()"></i>
+   <a class="button-chip navbar-brand" href="rmail" style="color:white;background-color: #008080;" onclick="myFunction()">
+    <img src="{% static 'images/rmailLogoConcept.svg' %}" width="35" class="align-top" alt="Rmail Logo">
+    Agyavart
+    </a>
+
   <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
         <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
@@ -40,20 +826,14 @@
         <a class="nav-link" href="#"> </a>
       </li>
     </ul>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="nav nav-pills" >
-    <li class="nav-item">
-      <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top slow" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"><button class="btn btn-secondary hide" data-toggle="modal" data-target="#messageModal" onclick="yoyo()" >Send new message </button> </a>
-    </li>
-  </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search(available soon)" disabled>
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
-    </form>
-  </div>
+      <li class="nav-item">
+        <a class="nav-link" href="#fat"><img src="{%static 'images/plus.png' %}" width="35" height="30" class=" align-top" onclick="yoyo()" style="margin-right: 10px; cursor: pointer;" data-toggle="modal" data-target="#messageModal"></a>
+      </li>
+      <li class="nav-item">
+        <a href="recieve" onclick="myFunction()"><span class="badge align-top" id="noofmsg"><i class="fa fa-paper-plane"></i></span></a>
+      </li>
+    </ul>
 </nav>
 
 
@@ -64,153 +844,192 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" id="closemsgmodal" aria-label="Close">
           <span aria-hidden="true" onclick="revyoyo()">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div id="dabba" style="display: none; z-index: 10;"> 
+        <div id="dabba" style="display: none; z-index: 10;">
       <div class="alert alert-danger alert-dismissible fade show" >
           <a href="#" class="close" id="close" onclick="gayaalertmsg()">&times;</a>
-          <strong><h4 id ="dabbaerrormsg"></h4></strong> 
+          <strong><h4 id ="dabbaerrormsg"></h4></strong>
         </div>
       </div>
         <form>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient" name="recipient" value="">
+            <label for="recipient-name" class="col-form-label">Recipient (username):</label>
+            <input type="text" class="form-control" id="recipient" name="recipient" value="" placeholder="Enter recipient's username">
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text" rows="6" name="message"></textarea>
+            <textarea class="form-control" id="message-text" rows="6" name="message" placeholder="Enter your message"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="revyoyo()">Close</button>
-        <button type="submit" class="btn btn-primary" onclick="bhejnahai()">Send message</button>
+        <button type="submit" class="btn btn-primary" id="msgsubmit" onclick="bhejnahai()">Send message</button>
+        <button class="btn btn-primary" type="button" id="msgloader" disabled style="display: none;">
+         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Hold up
+      </button>
       </div>
     </div>
   </div>
 </div>
 
+<!--videocalling -->
+<div id="videocallingmodal">
+
+</div>
 <!--side Navbar -->
 {% block sidenav %}
-<div id="sidenav" class="bar">
+<div id="sidenav" class="bar fmt-shadow" style="background-color: #0a14507e;">
 <div class="navhead">
-<a href="profile.html" class="active">PROFILE</a>
-<a href="message.html" >SENT MESSAGE</a>
-<a href="recieve.html" >RECIEVED MESSAGE</a>
-<a href="setting.html">SETTINGS</a>
-<a href="logout.html" class="spcl">LOGOUT</a>
+<a href="profile" class="active button-chip" onclick="myFunction()">PROFILE</a>
+<a href="message" class="button-chip" onclick="myFunction()">SENT MESSAGE</a>
+<a href="recieve" class="button-chip" onclick="myFunction()">RECIEVED MESSAGE</a>
+<a href="thread" class="button-chip" onclick="myFunction()">CHATS</a>
+<a href ="alluser" class="button-chip" onclick="myFunction()" >VIEW ALL USERS</a>
+<a href="setting" class="button-chip" onclick="myFunction()">SETTINGS</a>
+<a href="logout.html" class="spcl button-chip"  onclick="myFunction()">LOGOUT</a>
 </div>
 </div>
 {% endblock %}
 
 {% block content %}
 <div class="cover">
-	<div class ="blck">
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#coverModal">
-  		Change Cover Image
-		</button>
-</form>
+	<div class ="blck"  data-toggle="modal" data-target=".cover-modal"></div>
 	</div>
+<div class="dropdown">
+  <button class="coverbtn" style="border-radius: 100%;" onclick="showmenu()">
+    <i class='fa fa-pencil' style="color: #fff;"></i>
+  </button>
+  <div class="dropdown-content" id="dropdowncontent">
+    <a href="#" data-toggle="modal" data-target="#coverModal">Change Cover Photo</a>
+    <a href="delcover" onclick="myFunction()">Delete Cover Image</a>
+  </div>
+</div>
 	<img src="{{curl}}" width="100%" height ="250px" alt="">
 </div>
 <div class = "content">
-	<div class= "dp">
-		<img src="{{durl}}" class="dpimg" >
-    <div class="overlay" data-toggle="modal" data-target="#exampleModal">Change</div>
+	<div class= "dp fmt-shadow">
+		<img src="{{durl}}" class="dpimg" alt="{{Name}}" data-toggle="modal" data-target=".bd-example-modal-sm">
+    <!-- <div class="overlay" data-toggle="modal" data-target="#exampleModal">Change</div> -->
 	</div>
 	<div class="name">
-		<h1>{{Name }}</h1>
-    <h3>@{{ username}}</h3>
+		<h1 style="font-size: 64px;font-family: Jost,sans-serif;">{{Name }}</h1>
+    <h3 style="font-size: 26px;font-family: Jost,sans-serif;">@{{ username}}</h3>
 	</div>
 </div>
+<center>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+<div id="menucontainer" class="modal-content">
+  <ul data-toggle="modal" data-target=".bd-example-modal-sm">
+    <li data-toggle="modal" data-target="#exampleModal" >Change Profile Picture</li>
+    <li id="myImg" data-toggle="modal" data-target=".rajat-modal">View Profile Picture</li>
+    <a href="deldp"><li onclick="myFunction()">Delete Profile Picture</li></a>
+  </ul>
+</div>
+</div>
+</div>
+<div class="modal fade cover-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+<div class="dpmodal" id="mydpModal">
+  <!-- The Close Button -->
 
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content" id="img01" src="{{curl}}" alt="{{Name}} Cover Photo" width="100%"; height="100%">
+</div>
+</div>
+</div>
+</center>
+<div class="modal fade rajat-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+<div class="dpmodal" id="mydpModal">
+  <!-- The Close Button -->
+
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content" id="img01" src="{{durl}}" alt="{{Name}}" width="500px;" height="100%">
+</div>
+</div>
+</div>
 	<div class="secondname">
-		<h1>{{Name }}</h1>
-    <h3>@{{ username}}</h3>	</div>
+		<h1 style="font-size: 36px;font-family: Jost,sans-serif;">{{Name }}</h1>
+    <h3 style="font-size: 22px;font-family: Jost,sans-serif;">@{{ username}}</h3>	</div>
 
-
-<button class="tablink" onclick="openPage('Home', this, '#5DADE2 ')" id="defaultOpen">Basic Details</button>
-<button class="tablink" onclick="openPage('News', this, '#5DADE2 ')">Educational Details</button>
-<button class="tablink" onclick="openPage('Contact', this, '#5DADE2 ')">Contact Details</button>
-<button class="tablink" onclick="openPage('About', this, '#5DADE2 ')">Feature Photos</button>
-<div id="Home" class="tabcontent">
-	<center>
-<table class="table table-borderless">
+<div id="Home" class="tabcontent fmt-animate-bottom">
+<table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-user-circle-o" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Name</strong></td>
-      <td>{{ Name }}</td>
+      <td><i class="fa fa-envelope" ></i>&nbsp;&nbsp;Email</td>
+      <td><a href="mailto:{{ Email }}">{{ Email }}</a></td>
     </tr>
     <tr>
-      <td><i class="fa fa-envelope" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Email</strong></td>
-      <td>{{ Email }}</td>
+      <td><i class="fa fa-phone" ></i>&nbsp;&nbsp;Phone</td>
+      <td>{{ Mobile }}</td>
     </tr>
     <tr>
-
-      <td><i class="fa fa-id-card-o" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Date of Birth</strong></td>
+      <td><i class="fa fa-id-card" ></i>&nbsp;&nbsp;Birthday</td>
       <td>{{ DOB }}</td>
     </tr>
     <tr>
-      <td><i class="fa fa-group" style="font-size:20px"></i>&nbsp;&nbsp;<strong>Gender</strong></td>
+      <td><i class="fa fa-group" ></i>&nbsp;&nbsp;Gender</td>
       <td>{{ Gender }}</td>
     </tr>
   </tbody>
 </table>
-</center>
 </div>
 
-<div id="News" class="tabcontent">
+<div id="News" class="tabcontent fmt-animate-bottom ">
 	<center>
-<table class="table table-borderless">
+<table class="table table-borderless fmt-animate-left">
   <tbody>
     <tr>
-      <td ><i class="fa fa-pencil" style="font-size:20px"></i>&nbsp;&nbsp;<strong>School</strong></td>
+      <td ><i class="fas fa-book-reader" ></i>&nbsp;&nbsp;School</td>
       <td>{{school }}</td>
     </tr>
     <tr>
-      <td><i class="fa fa-graduation-cap" style="font-size:20px"></i>&nbsp;&nbsp;<strong>College</strong></td>
+      <td><i class="fa fa-graduation-cap" ></i>&nbsp;&nbsp;College</td>
       <td>{{college }}</td>
     </tr>
         <tr>
-      <td><i class="fa fa-institution" style="font-size:20px;"></i>&nbsp;&nbsp;<strong>Higher Education</strong></td>
-      <td>{{higher }}</td>
+      <td><i class="fa fa-institution" ></i>&nbsp;&nbsp;Higher Education</td>
+      <td>{{higher}}</td>
     </tr>
   </tbody>
 </table>
 </center>
 </div>
 
-<div id="Contact" class="tabcontent">
+<div id="Contact" class="tabcontent fmt-animate-bottom " >
 	<center>
-<table class="table table-borderless">
+<table class="table table-borderless fmt-animate-left">
   <tbody>
-    <tr>
-      <td ><i class="fa fa-facebook-official" style="font-size:20px;color:rgb(59,89,152);"></i><strong>&nbsp;&nbsp;Facebook</strong> </td>
-      <td><a href="https://www.facebook.com/{{fb}}">https://www.facebook.com/{{fb}}</a></td>
+     <tr>
+      <td ><i class="fa fa-facebook-official" style="font-size:28px;" aria-hidden="true"></i> </td>
+      <td>{% if fb|length > 3 %}<a href="https://www.facebook.com/{{fb}}">@{{fb}}</a>{% else %}UA{% endif %}</td>
     </tr>
     <tr>
-      <td><i class="fa fa-instagram" style="font-size:20px;color:#3f729b;"></i>&nbsp;&nbsp;<strong>Instagram</strong></td>
-      <td><a href=" https://www.instagram.com/{{insta}}"> https://www.instagram.com/{{insta}}</a></td>
+      <td><i class="fa fa-instagram" aria-hidden="true" style="font-size:28px;color:#3f729b;"></i></td>
+      <td>{% if insta|length > 3 %}<a href="https://www.instagram.com/{{insta}}">@{{insta}}{% else %}UA{% endif %}</a></td>
     </tr>
         <tr>
-      <td><i class="fa fa-twitter" style="font-size:20px;color:#38A1F3;"></i><strong>&nbsp;&nbsp;Twitter</strong></td>
-      <td><a href="https://www.twitter.com/{{twitter}}">https://www.twitter.com/{{twitter}}</td>
+      <td><i class="fa fa-twitter" aria-hidden="true" style="font-size:28px;color:#38A1F3;"></i></td>
+      <td>{% if twitter|length > 3 %}<a href="https://www.twitter.com/{{twitter}}">@{{twitter}}{% else %}UA{% endif %}</td>
     </tr>
         <tr>
-      <td><strong>Tik Tok</strong></td>
-      <td>@{{tok}}</td>
+      <td><i class="fa fa-linkedin" aria-hidden="true" style="font-size:28px;"></i></td>
+      <td>{% if tok|length > 3 %}<a href="https://www.linkedin.com/in/{{tok}}">@{{tok}}{% else %}UA{% endif %}</td>
     </tr>
   </tbody>
 </table>
 </center></div>
-
-<div id="About" class="tabcontent">
-  <h3>About</h3>
-  <p>Who we are and what we do.</p>
+<div class="fmt-bottom fmt-shadow" style="z-index: 3;">
+  <button class="tablink" style="outline: none;" onclick="openPage('Home', this, '#7236aa ')" id="defaultOpen"><i class="fa fa-user"></i></button>
+  <button class="tablink" style="outline: none;" onclick="openPage('News', this, '#7236aa ')"><i class="fa fa-book"></i></button>
+  <button class="tablink" style="outline: none;" onclick="openPage('Contact', this, '#7236aa ')"><i class="fa fa-link"></i></button>
 </div>
 
 
@@ -231,7 +1050,7 @@
     <label for="exampleFormControlFile1">Choose Profile Picture</label>
     <input type="file" class="form-control-file" name ="dp" id="exampleFormControlFile">
  		 </div>
- 		 <button type="submit" class="btn btn-primary">Save changes</button>
+ 		 <button type="submit" class="btn btn-primary" onclick="myFunction()">Save changes</button>
  		</form>
       </div>
     </div>
@@ -256,13 +1075,17 @@
     <input type="tezt" name="username" value="{{username}}" style="display: none;">
     <input type="file" class="form-control-file" name ="cover" id="exampleFormControlFile">
      </div>
-     <button type="submit" class="btn btn-primary">Save changes</button>
+     <button type="submit" class="btn btn-primary" onclick="myFunction()">Save changes</button>
     </form>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
+
+ function showmenu() {
+    document.getElementById('dropdowncontent').classList.toggle('showdropdown');
+  }
 
 
 $('#exampleModal').on('shown.bs.modal', function () {
@@ -284,11 +1107,15 @@ function openPage(pageName,elmnt,color) {
 }
 
 // Get the element with id="defaultOpen" and click on it
-
+document.getElementById("defaultOpen").click();
 </script>
 
 {% endblock %}
-
+ <div id="snackBar" class="snackbar snack-show">
+    <span class="snackText" id="snackText"></span>
+    <button class="snack-button" id="snackButton"></button>
+    </div>
+<script type="text/javascript" src="{% static 'scripts/snackbar.js' %}"></script>
 <script type="text/javascript">
 
   function yoyo()
@@ -308,7 +1135,7 @@ function revyoyo()
 
 function gayaalertmsg(){
   document.getElementById("dabba").style.display="none";
-  
+
 }
 
 function bhejnahai() {
@@ -320,38 +1147,84 @@ function bhejnahai() {
   if(kisko =="")
   {
    document.getElementById("dabba").style.display = "block";
-   document.getElementById("dabbaerrormsg").innerHTML = "Please Fill a recipient"; 
+   document.getElementById("dabbaerrormsg").innerHTML = "Please Fill a recipient";
    flag =0;
   }
   if(sandhesa=="")
   {
     document.getElementById("dabba").style.display = "block";
-   document.getElementById("dabbaerrormsg").innerHTML = "Please input some text to send"; 
+   document.getElementById("dabbaerrormsg").innerHTML = "Please input some text to send";
    flag = 0;
   }
 
   if(flag==1)
   {
+   document.getElementById("closemsgmodal").click();
+    document.getElementById('message-text').value = "";
+    document.getElementById('recipient').value = "";
+    showSnackBar(text ='Sending Message.....',hasAction = false,actionText = String(),isNormal = true,isWarning = false);
   var url = "recipient="+kisko+"&message="+sandhesa+"&csrfmiddlewaretoken="+"{{csrf_token}}";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-
-    document.getElementById("dabba").style.display = "block";
-    document.getElementById("dabbaerrormsg").innerHTML = this.responseText;
+        if(this.responseText=='Message sent successfull.')
+          showSnackBar(text =this.responseText,hasAction = false,actionText = String(),isNormal = true,isWarning = false);
+        else{
+          showSnackBar(text =this.responseText,hasAction = false,actionText = String(),isNormal = false,isWarning = true);
+        }
     }
   };
   xhttp.open("POST","newmsg/", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(url);
 }
-  
+
 }
 
-document.getElementById("defaultOpen").click();
+
 function openNav() {
+  document.getElementById('imag').classList.toggle("rotate");
   document.getElementById("sidenav").classList.toggle("change")
 }
-</script> 
+
+setInterval(function(){
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+          if(this.responseText!="0")
+          {
+              document.getElementById("noofmsg").innerHTML = this.responseText;
+              document.getElementById("noofmsg").style.color = "red";
+              document.getElementById("noofmsg").style.padding = "7px";
+
+          }
+    }
+  };
+  xhttp.open("GET","chkfornew/", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+
+
+}, 2000);
+
+setInterval(function(){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+         if(this.responseText!="no")
+         {
+         document.getElementById('videocallingmodal').innerHTML = this.responseText;
+      }
+      else{
+          document.getElementById('videocallingmodal').innerHTML ="";
+      }
+        }
+        };
+  xhttp.open("GET","/chkforcall", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+},2000);
+</script>
 </body>
 </html>

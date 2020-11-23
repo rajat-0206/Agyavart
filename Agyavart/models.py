@@ -7,7 +7,7 @@ class Rmail(models.Model):
 
 	def delete(self, *args, **kwargs):
 		self.pic.delete()
-		super().delete(*args, **kwargs) 
+		super().delete(*args, **kwargs)
 
 class sentmessage:
 	recipient: str
@@ -20,4 +20,23 @@ class recievedmessage:
 	message: str
 	time : str
 	photo : str
+
+class users:
+	photo: str
+	name: str
+	username: str
+
+class chatmsg:
+	message: str
+	sender: str
+	name : str
+	time : str
+
+class threads:
+	uesrname: str
+	name : str
+	photo : str
+	isread: bool
+
+
 

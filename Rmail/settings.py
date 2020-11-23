@@ -15,6 +15,8 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/scripts/', 'serviceworker.js')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -23,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+o!69rlly#54tqli5jo$z8)irb^po5rqpx&^!w7!#s7umz0*@)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['rajathandsom.pythonanywhere.com']
 
 
 # Application definition
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Agyavart',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -124,8 +127,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
     ]
 
-STATIC_ROOT = os.path.join(BASE_DIR,'assets')
+STATIC_ROOT = '/home/rajathandsom/Django-Project/static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'noreply.jumblejuggle@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = "Anushka@7500"
 

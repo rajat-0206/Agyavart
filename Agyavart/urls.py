@@ -4,14 +4,19 @@ from . import views
 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    path('',views.home,name='home'),
+    #path('OneSignalSDKUpdaterWorker.js', (TemplateView.as_view(template_name="OneSignalSDKUpdaterWorker.js", content_type='application/javascript', )), name='OneSignalSDKUpdaterWorker.js'),
+   # path('OneSignalSDKWorker.js', (TemplateView.as_view(template_name="OneSignalUpdaterWorker.js", content_type='application/javascript', )), name='OneSignalWorker.js'),
+    path('',views.loader,name='loader'),
     path('rmail.html',views.home,name='home'),
+    path('rmail',views.home,name='home'),
     path('login',views.login,name='login'),
     path('login.html',views.login,name='login'),
     path('about.html',views.about,name='about'),
+    path('about',views.about,name='about'),
     path('signup',views.register,name='register'),
     path('signup.html',views.register,name='register'),
     path('message.html',views.message,name="message"),
@@ -20,7 +25,7 @@ urlpatterns = [
     path('recieve',views.recieve,name="message"),
     path('register',views.banao,name="create_user"),
     path('auth',views.login,name="auth"),
-    path('fpass',views.forgotpass,name="password"),
+    path('fpass/',views.forgotpass,name="password"),
     path('fuser',views.forgotusername,name="username"),
     path("temp",views.temp,name ="temp"),
     path('imgcng',views.imgcng,name="DP change"),
@@ -30,6 +35,7 @@ urlpatterns = [
     path('profile.html',views.profile,name='profile'),
     path('profile',views.profile,name='profile'),
     path('logout.html',views.logout,name="logout"),
+    path('logout',views.logout,name="logout"),
     path('newmsg/',views.newmsg,name = "newmsg"),
     path('detupt',views.detupt,name="Details"),
     path('changepass/',views.changepass,name="password"),
@@ -37,11 +43,31 @@ urlpatterns = [
     path('viewsent/',views.viewsent,name="account"),
     path('user/<str:username>',views.user,name="account"),
     path('manifest.json',views.manifest,name="manifest"),
-    path('serviceworker.js',views.sw,name="serviceworker"),
+    path('alluser.html',views.alluser,name="alluser"),
+    path('alluser',views.alluser,name="alluser"),
+    path('offline.html',views.offline,name="offline"),
+    path('sendotp/',views.sendotp,name="otp"),
+    path('deldp/',views.deldp,name="deldp"),
+    path('delcover/',views.delcover,name="cover"),
+    path('loader.html',views.loader,name="loader"),
+    path('loader',views.loader,name="loader1"),
+    path('chkfornew/',views.chkfornew,name="checker"),
+    path('displaymsg/',views.displaymsg,name="msgdisp"),
+    path('sendmail/',views.sendmail,name="mailotp"),
+    path('privacy',views.privacy,name="privacy"),
+    path('chatroom',views.chatroom,name="chat"),
+    path('save_message/',views.save_message,name="Save message"),
+    path('thread',views.msgthread,name="temp"),
+    path('refresh',views.refresh,name="refersh"),
+    path('videocall',views.videocall,name="videocall"),
+    path('cutcall',views.cutcall,name='callcutt'),
+    path('status',views.status,name="status"),
+    path('chkforcall',views.chkforcall,name="call"),
+    path('answercall',views.answercall,name="answercall"),
+
 
 
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-    

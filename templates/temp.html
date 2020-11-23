@@ -1,0 +1,29 @@
+{% for i in messages %}
+						{% if i.isread is False %}
+						<a href="/chatroom?recipient={{i.username}}" onclick="myFunction()">
+						<li class="active">
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="{{i.photo}}" class="rounded-circle user_img">
+								</div>
+								<div class="user_info">
+									<span>{{i.name}}</span>
+								</div>
+							</div>
+						</li>
+					</a>
+					{%else %}
+						<a href="/chatroom?recipient={{i.username}}" onclick="myFunction()">
+						<li class="normal">
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="{{i.photo}}" class="rounded-circle user_img">
+								</div>
+								<div class="user_info">
+									<span>{{i.name}}</span>
+								</div>
+							</div>
+						</li>
+					</a>
+					{% endif %}
+					{% endfor %}

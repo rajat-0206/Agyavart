@@ -3,9 +3,6 @@
 {%block temp %}
 <head>
   <title>Login | Agyavart</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="theme-color" content="#498dcc">
   <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
   <link rel="stylesheet" href="{% static 'styles/fmt.css' %}">
   <link rel="stylesheet" href="{% static 'styles/mainsetup.css' %}">
@@ -25,7 +22,7 @@
 <div id="error" class="fmt-animate-bottom" style="display: none; margin-top:100px;padding:0 42px 0 42px">
   <div class="alert alert-danger alert-dismissible fade show" style="padding:22px">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong><h1 class="fmt-center" style="font-size:36px ; color:#b85b5b">{{ title}}</h1></strong>
+    <strong><h1 id="errordisp" class="fmt-center" style="font-size:36px ; color:#b85b5b">{{ title}}</h1></strong>
     <br/>
     <ol>
       {% for i in warning %}
@@ -43,7 +40,7 @@
 
 <div class="fmt-col m6 loginbox" style="margin-bottom:80px">
   <div class="work-box fmt-animate-bottom">
-    <form action="auth" method = "post">
+    <form action="auth" method = "post" onsubmit="myFunction()">
       {% csrf_token %}
       <label class="input-label fmt-animate-left" for="email">Your username.</label>
       <input class="edit-text-box fmt-animate-right" type="text" id="email" name="username" value = "{{username}}" required>
@@ -65,14 +62,14 @@
   <br/>
   <div class="fmt-center">
     <span class="normal-body-text fmt-animate-left">You new here?&#160;</span>
-    <a href="signup.html"><span class="button-normal-body fmt-animate-right">Join us</span></a>
+    <a href="signup"><span class="button-normal-body fmt-animate-right">Join us</span></a>
   </div>
 </div>
 
 <!-- Forgot password section -->
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">    
+  <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -86,27 +83,50 @@
           <button class="tablinks" onclick="openCity(event, 'funame')">Forgot Username</button>
         </div>
         <div id="fpassword" class="tabcontent">
-          <form method="post" action="fpass">
-            {% csrf_token %}
+           <div id="dabba" style="display: none; z-index: 10;">
+      <div class="alert alert-primary alert-dismissible fade show" >
+          <a href="#" class="close" id="close" onclick="gayaalertmsg()">&times;</a>
+          <strong><h4 id ="dabbaerrormsg"></h4></strong>
+        </div>
+      </div>
+          <div id="firstpass" style="display: block">
             <div class="form-group">
-              <input type="text" class="form-control" name="fuser" placeholder="Username" required>
+              <input type="text" class="form-control" name="ffuser" id="ffuser" placeholder="Username" required>
+            </div>
+            <button type="button" id="otpbutton" class="btn btn-block btn-primary" onclick="sendotp(this)">Send OTP</button>
+            <button class="btn btn-block btn-primary" type="button" id="floaderone" disabled style="display: none;">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Hold up
+         </button>
+          </div>
+          <div id ="secondpass" style="display: none;">
+            <div class="form-group">
+              <input type="text" class="form-control" name="fsuser" id= fsuser placeholder="Username" disabled>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="fmob" placeholder="Mobile number" required>
+              <input type="text" class="form-control" name="fotp" id="fotp" placeholder="Enter OTP" required>
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" name="newpwd" placeholder="New Password" required>
+              <input type="password" class="form-control" name="newpwd" id ="newpwd" placeholder="New Password" required>
             </div>
-            <button type="submit" class="btn btn-block btn-primary">Submit</button>
-          </form>
+            <div class="form-group">
+              <input type="password" class="form-control" name="connewpwd" id="connewpwd" placeholder="Confirm Password" required>
+            </div>
+            <button type="button" id="psubmit" class="btn btn-block btn-primary" onclick="checkpwd()">Submit</button>
+            <button class="btn btn-block btn-primary" type="button" id="floadertwo" disabled style="display: none;">
+           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Hold up
+        </button>
+        </div>
         </div>
         <div id="funame" class="tabcontent">
-          <form method="post" action="fuser">
+          <form method="post" action="fuser" onsubmit="myFunction()">
             {% csrf_token %}
             <div class="form-group">
               <input type="text" class="form-control" name="mobile" placeholder="Mobile number" required>
             </div>
             <button type="submit" class="btn btn-block btn-success">Submit</button>
+
           </form>
         </div>
       </div>
@@ -135,6 +155,106 @@ ifo.style.display = 'block';
   {% if warning %}
   error.style.display ='block';
   {% endif %}
+
+function gayaalertmsg(){
+  document.getElementById("dabba").style.display="none";
+
+}
+
+function reset() {
+  document.getElementById("firstpass").style.display = "block";
+      document.getElementById("secondpass").style.display = "none";
+}
+
+function sendotp(id) {
+  var user = document.getElementById('ffuser').value;
+  if(user=="")
+  {
+    document.getElementById("dabba").style.display = "block";
+    document.getElementById("dabbaerrormsg").innerHTML = "Please enter a username";
+  }
+  else
+  {
+    document.getElementById('otpbutton').style.display = "none";
+    document.getElementById('floaderone').style.display = "block";
+    var url = "username="+user+"&csrfmiddlewaretoken="+"{{csrf_token}}";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById('otpbutton').style.display = "block";
+    document.getElementById('floaderone').style.display = "none";
+      document.getElementById("dabba").style.display = "block";
+      document.getElementById("dabbaerrormsg").innerHTML = this.responseText  ;
+      if(this.responseText=="OTP sent on register Email")
+      {
+      document.getElementById("fsuser").value = user;
+      document.getElementById("firstpass").style.display = "none";
+      document.getElementById("secondpass").style.display = "block";
+     }
+    }
+  };
+  xhttp.open("POST","sendotp/", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send(url);
+}
+  }
+
+function checkpwd() {
+  var flag = 0;
+  var otp = document.getElementById('fotp').value;
+  var newpwd = document.getElementById('newpwd').value;
+  var conpwd = document.getElementById('connewpwd').value;
+
+  if(otp.length<6)
+  {
+    document.getElementById("dabba").style.display = "block";
+    document.getElementById("dabbaerrormsg").innerHTML = "OTP should be 6 digit long";
+  }
+
+  else if(newpwd.length<8)
+  {
+    document.getElementById("dabba").style.display = "block";
+    document.getElementById("dabbaerrormsg").innerHTML = "Password should be at least 8 character long";
+  }
+  else if(newpwd!=conpwd)
+  { console.log(newpwd+" "+conpwd)
+    document.getElementById("dabba").style.display = "block";
+    document.getElementById("dabbaerrormsg").innerHTML = "Confirm Password not matched";
+  }
+  else
+  { document.getElementById('psubmit').style.display = "none";
+    document.getElementById('floadertwo').style.display = "block";
+    user = document.getElementById("fsuser").value;
+    var url = "username="+user+"&password="+newpwd+"&otp="+otp+"&conpass="+conpwd+"&csrfmiddlewaretoken="+"{{csrf_token}}";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById('psubmit').style.display = "block";
+    document.getElementById('floadertwo').style.display = "none";
+      if(this.responseText=="Password changed successfully. Now you can login")
+      {
+       document.getElementById("dabba").style.display = "block";
+      document.getElementById("dabbaerrormsg").innerHTML = this.responseText  ;
+        document.getElementById('fotp').value ="";
+        document.getElementById('newpwd').value = "";
+        document.getElementById('connewpwd').value = "";
+        document.getElementById("firstpass").style.display = "block";
+      document.getElementById("secondpass").style.display = "none";
+      }
+      else
+      {
+      document.getElementById("dabba").style.display = "block";
+      document.getElementById("dabbaerrormsg").innerHTML = this.responseText  ;
+      }
+  }
+};
+  xhttp.open("POST","fpass/", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send(url);
+}
+}
+
+
 
 function openCity(evt, cityName) {
   var i, tabcontent, tablinks;

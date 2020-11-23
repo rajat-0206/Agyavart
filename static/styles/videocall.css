@@ -1,0 +1,67 @@
+body {
+  background-color: #000;
+}
+#video-container{
+	height: 100%;
+}
+
+#remoteVideo{
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+#localVideo {
+  position: absolute;
+  height: 150px;
+  width: 99px;
+  bottom: 70px;
+  left: calc(50% + 100px);
+  top:60px;
+  border-radius: 20px;
+  box-shadow: 2px 2px ;
+  background-color: chocolate;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+#localVideo:hover {
+  height:200px;
+  width:130px;
+  position: absolute;
+  top:40px;
+  left:calc(50%+50px);
+  margin-right: 50px;
+
+}
+
+.floating{
+	position: fixed;
+	bottom:20px;
+	right:calc(50%);
+}
+
+.rotation {
+	transform: rotate(225deg);
+}
+
+.title {
+  position: absolute;
+  margin:0px auto;
+
+}
+@media (max-width: 550px) {
+  #localVideo {
+    left: calc(50% + 61px);
+    bottom: 100px;
+  }
+
+  #localVideo:hover {
+  height:200px;
+  width:130px;
+
+}
+  .floating{
+  position: fixed;
+  bottom:20px;
+  right:calc(30%);
+}
+}
