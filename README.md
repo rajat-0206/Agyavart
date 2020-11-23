@@ -2,7 +2,7 @@
 <a href="https://rajathandsom.pythonanywhere.com/">
 	<img src="https://i.ibb.co/nsmqJDZ/Agyavart.png" alt="Agyavart" border="0">
 </a>
-	<h2 align="center"> Agyavart </h2>
+<h1 align="center"><a href="https://rajathandsom.pythonanywhere.com/"> Agyavart </a></h2>
 	<h4 align="center"> Agyavart is a Django based PWA which helps user to send secret message to someone. It also provides realtime chat, audio and video calling facility thorugh web RTC. It has facility to send push notification to the user when some important event occur. <h4>
 </p>
 
@@ -46,6 +46,8 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
+## License
+<a href="https://choosealicense.com/licenses/mit/">MIT</a>
 
 ## Contributors
 
@@ -74,5 +76,4 @@ Rajat Shrivastava
 <p align="center">
 	Made with :heart: by <a href="https://itsrajat.xyz">Rajat Shrivastava</a>
 </p>
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
