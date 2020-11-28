@@ -58,8 +58,12 @@ width="200"
 width="200"
     hspace="10" vspace="10">](https://i.ibb.co/rmbGDvr/Screenshot-2020-11-26-15-41-06-102-com-android-chrome.jpg)
     
+[<img src="https://i.ibb.co/d7nc868/Whats-App-Image-2020-11-28-at-7-38-05-PM-2.jpg" align="left"
+width="200"
+    hspace="10" vspace="10">](https://i.ibb.co/d7nc868/Whats-App-Image-2020-11-28-at-7-38-05-PM-2.jpg)
+    
 
-[<img src="https://i.ibb.co/qR5nhhc/Screenshot-2020-11-26-15-40-19-005-com-android-chrome.jpg" align="left" width="200"
+[<img src="https://i.ibb.co/qR5nhhc/Screenshot-2020-11-26-15-40-19-005-com-android-chrome.jpg" align="center" width="200"
     hspace="10" vspace="10">](https://i.ibb.co/qR5nhhc/Screenshot-2020-11-26-15-40-19-005-com-android-chrome.jpg)
 
 [<img src="https://i.ibb.co/jLFjNkF/Screenshot-2020-11-26-15-38-15-874-com-android-chrome.jpg" align="center"
