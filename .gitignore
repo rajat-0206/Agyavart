@@ -69,3 +69,4 @@ db.sqlite3
 assets
 Rmail
 Agyavart
+firebase-messaging-sw.js
