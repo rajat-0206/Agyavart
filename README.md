@@ -99,7 +99,7 @@ Rajat Shrivastava
 Priyanshu Ranjan
 
 <p align="center">
-<img src = "https://media-exp1.licdn.com/dms/image/C5103AQHJwPXzVLi6zA/profile-displayphoto-shrink_800_800/0?e=1611792000&v=beta&t=52r32EbqK3hmJFE-5KBCD_evRy1hun6GTk-rGTIYJEQ" width="180" height="150" alt="Priyanshu Ranjan">
+<img src = "https://avatars.githubusercontent.com/u/41323263?s=460&v=4" width="180" height="150" alt="Priyanshu Ranjan">
 </p>
 <p align="center">
 <a href = "https://github.com/ranjanistic"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36" alt="GitHub"/></a>
